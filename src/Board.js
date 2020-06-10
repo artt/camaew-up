@@ -1,9 +1,15 @@
 import React from 'react'
+import Cell from './Cell'
 
-function Board() {
-
-	return(<h1>Hii</h1>)
-
+function Board({G}) {
+	return(
+		<div className="board">
+			{
+				G.board.map((cell, i) => <Cell cellData={cell} key={i} />)
+			}
+		</div>
+	)
 }
 
 export default Board;
+
