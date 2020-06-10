@@ -1,0 +1,69 @@
+body {
+  background: #55aa99;
+}
+
+.board {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, 120px);
+  margin: 100px;
+}
+
+.cell {
+  height: 120px;
+  background-color: rgba(255, 255, 255, 0.8);
+  border-radius: 3px;
+  margin: 3px;
+  position: relative;
+}
+
+.cell-content {
+  position: absolute;
+  bottom: 0;
+}
+
+.token-1 {
+  width: 80px;
+  height: 30px;
+  border-radius: 5px;
+  margin: 5px;
+  text-align: center;
+  background-color: blue;
+}
+
+.token-2 {
+  width: 80px;
+  height: 30px;
+  border-radius: 5px;
+  margin: 5px;
+  text-align: center;
+  background-color: green;
+}
+
+.token-3 {
+  width: 80px;
+  height: 30px;
+  border-radius: 5px;
+  margin: 5px;
+  text-align: center;
+  background-color: orange;
+}
+
+.token-4 {
+  width: 80px;
+  height: 30px;
+  border-radius: 5px;
+  margin: 5px;
+  text-align: center;
+  background-color: yellow;
+}
+
+.token-5 {
+  width: 80px;
+  height: 30px;
+  border-radius: 5px;
+  margin: 5px;
+  text-align: center;
+  background-color: white;
+}
+
+/*# sourceMappingURL=style.css.map */
