@@ -1,7 +1,7 @@
 import React from 'react'
 import Cell from './Cell'
 
-function Board({G}) {
+function RaceTrack({G}) {
 	return(
 		<div className="board">
 			{
@@ -11,5 +11,5 @@ function Board({G}) {
 	)
 }
 
-export default Board;
+export default RaceTrack;
 

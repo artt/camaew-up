@@ -2,11 +2,13 @@ import React, {useState, useEffect} from 'react'
 import {Client} from 'boardgame.io/react'
 import {SocketIO} from 'boardgame.io/multiplayer'
 import {CamaewUp} from './CamaewUp'
-import Table from './Table'
-import Main from './Main'
+import Lobby from './Lobby'
+import GameScreen from './game/GameScreen'
+
+import './style.css'
 
 const CamaewUpClient = Client({game: CamaewUp,
-															 board: Main,
+															 board: GameScreen,
 															 numPlayers: 4,
 															 multiplayer: SocketIO({server: "localhost:8000"})
 														 })
@@ -14,7 +16,7 @@ const CamaewUpClient = Client({game: CamaewUp,
 function App() {
 
 	const [joinID, setJoinID] = useState('');
-	const [state, setState] = useState('table');
+	const [state, setState] = useState('lobby');
 
 	function onJoinChange(event) {
 		setJoinID(event.target.value);
@@ -29,17 +31,17 @@ function App() {
 		setState("game")
 	}
 
-	if (state === "table") {
+	if (state === "lobby") {
 		return(
 			<div>
-				<Table onJoinChange={onJoinChange} onJoinClick={onJoinClick} onCreateClick={onCreateClick} />
+				<Lobby onJoinChange={onJoinChange} onJoinClick={onJoinClick} onCreateClick={onCreateClick} />
 			</div>
 		)
 	}
 	else if (state === "game") {
 		return(
 			<div>
-				<CamaewUpClient playerID="0" gameID={joinID}/>
+				<CamaewUpClient playerID="2" gameID={joinID}/>
 			</div>
 		);
 	}

@@ -1,2 +1,76 @@
-@import 'Main';
-@import 'Board';
+@import url('https://fonts.googleapis.com/css2?family=Amaranth:ital,wght@0,400;0,700;1,400;1,700&display=swap');
+@import 'game/Game';
+
+// http://paletton.com/#uid=70j0u0kdXo45iA+9usMhTk2mtgd
+$color-1: #4B637D;
+$color-2: #C09E6C;
+$color-3: #48806D;
+$color-4: #C0886C;
+
+body {
+	color: white;
+	font-family: 'Amaranth', sans-serif;
+	background: darken($color-1, 10%);
+}
+
+$lobby-width: 500px;
+$lobby-height: 300px;
+
+#lobby-container {
+	// position
+	position: absolute;
+	width: $lobby-width;
+	height: $lobby-height;
+	left: 50%;
+	top: 40%;
+	margin-left: -$lobby-width/2;
+	margin-top: -$lobby-height/2;
+	// inside
+	display: grid;
+	grid-template-columns: repeat(2, 1fr);
+	grid-template-rows: 20% 80%;
+	border-style: solid;
+	border-color: white;
+	border-width: 2px;
+	border-radius: 10px;
+	padding: 20px;
+	// other
+	background-color: rgba(white, 0.1);
+}
+
+#lobby-name {
+	grid-column: 1 / 3;
+	grid-row: 1;
+	margin: auto;
+	display: flex;
+}
+
+#lobby-join {
+	grid-column: 1;
+	grid-row: 2;
+	margin: auto;
+}
+
+#lobby-create {
+	grid-column: 2;
+	grid-row: 2;
+	margin: auto;
+}
+
+.center {
+	text-align: center;
+}
+
+.lobby {
+	font-size: 24px;
+}
+
+input[type=text] {
+	font-family: 'Amaranth', sans-serif;
+	font-size: 24px;
+	border-radius: 4px;
+	outline: none;
+	box-shadow: none;
+	border: none;
+	border-color: transparent;
+}
