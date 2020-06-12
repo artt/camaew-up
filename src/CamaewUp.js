@@ -61,7 +61,8 @@ function rollDice(G, ctx) {
 
 }
 
-export const CamaewUp = {
+const CamaewUp = {
+	name: "CamaewUp",
 	setup: (ctx) => {
 		let G = {
 			dice: Array(NUM_CATS).fill(0),
@@ -83,3 +84,5 @@ export const CamaewUp = {
 		}
 	}
 }
+
+export default CamaewUp;

@@ -1,11 +1,4 @@
-<<<<<<< HEAD
 @import url("https://fonts.googleapis.com/css2?family=Amaranth:ital,wght@0,400;0,700;1,400;1,700&display=swap");
-=======
-body {
-  background: #55aa99;
-}
-
->>>>>>> 4749003d198ebdfbb473fab8e5bb7b7c3775644b
 .board {
   display: grid;
   grid-template-columns: repeat(auto-fit, 120px);
@@ -70,7 +63,6 @@ body {
   background-color: white;
 }
 
-<<<<<<< HEAD
 body {
   color: white;
   font-family: "Amaranth", sans-serif;
@@ -133,6 +125,4 @@ input[type=text] {
   border-color: transparent;
 }
 
-=======
->>>>>>> 4749003d198ebdfbb473fab8e5bb7b7c3775644b
 /*# sourceMappingURL=style.css.map */
