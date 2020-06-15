@@ -15,13 +15,13 @@ function Entry({onJoinClick, onCreateClick}) {
 				<Form.Label>Name</Form.Label>
 				<Form.Control type="text" onChange={onNameChange} />
 			</div>
-			<div className="center">
+			<div>
 				<div>Join Game</div>
-				<Button variant="primary" onClick={onJoinClick} disabled={!name}>Join</Button>
+				<Button variant="primary" onClick={() => onJoinClick(name)} disabled={!name}>Join</Button>
 			</div>
-			<div className="center">
+			<div>
 				<div>Create Game</div>
-				<Button variant="primary" onClick={onCreateClick} disabled={!name}>Create</Button>
+				<Button variant="primary" onClick={() => onCreateClick(name)} disabled={!name}>Create</Button>
 			</div>
 		</div>
 	)

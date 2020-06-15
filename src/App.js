@@ -30,7 +30,7 @@ function App() {
 	if (state.name === "lobby") {
 		return(
 			<div>
-				<Lobby />
+				<Lobby serverPath={serverPath} />
 			</div>
 		)
 	}

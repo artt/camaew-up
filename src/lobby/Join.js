@@ -1,6 +1,7 @@
 import React from 'react'
 import {Button, Form} from 'react-bootstrap'
 
+// function Join({onJoinJoinClick, onGameIDChange, gameID}) {
 function Join({onJoinJoinClick}) {
 
 	const [gameID, setGameID] = React.useState("");
@@ -17,7 +18,7 @@ function Join({onJoinJoinClick}) {
 			</div>
 			<div id="lobby-join" className="center">
 				<Form.Label>Join Game</Form.Label>
-				<Button variant="primary" onClick={onJoinJoinClick} disabled={!gameID}>Join</Button>
+				<Button variant="primary" onClick={() => onJoinJoinClick(gameID)} disabled={!gameID}>Join</Button>
 			</div>
 		</div>
 	);
