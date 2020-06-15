@@ -41,6 +41,9 @@ function Create({serverPath, name, onCreateCreateClick}) {
 				<Form.Check type="checkbox" label="Veil mode" />
 				<Form.Check type="checkbox" label="Random seat" />
 			</div>
+			<div>
+				<Button variant="primary" onClick={() => onCreateCreateClick({maxPlayers: maxPlayers, numCats: numCats})}>Create</Button>
+			</div>
 		</div>
 	)
 

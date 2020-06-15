@@ -1,13 +1,49 @@
 import React from 'react'
 import {Button, Form, ToggleButtonGroup, ToggleButton} from 'react-bootstrap'
 
-function Wait({serverPath, name, gameID}) {
+function Wait({serverPath, name, gameID, autoSit}) {
 
+	const [firstRun, setFirstRun] = React.useState(true)
 	const [gameInfo, setGameInfo] = React.useState(null)
-	const [playerID, setPlayerID] = React.useState("")
+	const [playerID, setPlayerID] = React.useState(-1)
 	const [playerCredentials, setPlayerCredentials] = React.useState("")
 
-	function getGameInfo(gameID) {
+	React.useEffect(() => {
+    const interval = setInterval(() => {
+      updateGameInfo();
+    }, 5000);
+    return () => {
+      clearInterval(interval);
+    };
+  }, []);
+
+  React.useEffect(() => {
+  	if (gameInfo != null && firstRun && autoSit) {
+  		console.log("Autositting...")
+			console.log(gameInfo)
+			sit()
+			setPlayerID("0")
+			console.log("Done sitting.")
+			console.log(gameInfo)
+			setFirstRun(false)
+  	}
+  	else {
+  		console.log(gameInfo)
+  		console.log(playerID)
+  		console.log(playerCredentials)
+  		console.log(firstRun)
+  	}
+  }, [gameInfo])
+
+	function updateGameInfo() {
+		getGameInfo(gameID)
+			.then(data => {
+				// console.log(data)
+				setGameInfo(data)
+			})
+	}
+
+	function getGameInfo() {
 		console.log("Getting game info...", gameID)
 		return fetch(serverPath + "/" + gameID, {
 			method: "get"
@@ -15,13 +51,20 @@ function Wait({serverPath, name, gameID}) {
 			.then(response => response.json())
 	}
 
-	function sit(seatID) {
-		console.log("Sitting...", seatID)
-		if (playerID) {
-			// already have a seat, so change seat
-			stand()
+	function findSeat() {
+		updateGameInfo()
+		for (let id=0; id < gameInfo.players.length; id ++) {
+			if (gameInfo.players[id].name == null) {
+				return id
+			}
 		}
-		// sit down	
+	}
+
+	function sit() {
+		console.log("Sitting...")
+		// TODO: deal with long waits
+		const seatID = findSeat()
+		console.log("Found empty seat", seatID)
 		const opts = {
 			playerID: seatID,
 			playerName: name
@@ -35,6 +78,7 @@ function Wait({serverPath, name, gameID}) {
 			.then(data => {
 				setPlayerCredentials(data.playerCredentials)
 				setPlayerID(seatID)
+				updateGameInfo()
 			})
 	}
 
@@ -42,21 +86,22 @@ function Wait({serverPath, name, gameID}) {
 		const opts = {
 				playerID: playerID,
 				credentials: playerCredentials
-			}
+			} 
 		fetch(serverPath + "/" + gameInfo.roomID + "/leave", {
 			method: "post",
 			headers: {"Content-Type": "application/json"},
 			body: JSON.stringify(opts)
 		})
-		setPlayerID("")
+			.then(() => updateGameInfo())
+		setPlayerID(-1)
 	}
 
 	function leave() {
-
+		stand()
 	}
 
 	if (gameInfo == null) {
-		getGameInfo(gameID).then(data => setGameInfo(data))
+		updateGameInfo()
 		return(<div>Connecting...</div>)
 	}
 	else {
@@ -71,22 +116,20 @@ function Wait({serverPath, name, gameID}) {
 						return(
 							<div>
 								{x.id} - {x.name}
-								{!x.name ? (
-									<Button variant="primary" onClick={() => sit(x.id)}>Sit</Button>	
+								{/*{!x.name ? (
+									<div>–</div>
+									// <Button variant="primary" onClick={() => sit(x.id)}>Sit</Button>	
 								) : (
-									<div>xx</div>
-								)}
+									<div>{x.name}</div>
+								)}*/}
 							</div>
 						);
 					})
 				}
 				</div>
 				<div>
-					{playerCredentials ? (
-						<Button variant="primary" onClick={stand}>Stand up</Button>
-					) : (
-						<div>xx</div>
-					)}
+					<Button variant="primary" onClick={sit} disabled={playerID >= 0}>Sit</Button>
+					<Button variant="primary" onClick={stand} disabled={playerID < 0}>Stand</Button>
 				</div>
 				<div>
 					<Button variant="primary" onClick={leave}>Leave</Button>

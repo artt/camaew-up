@@ -11,7 +11,6 @@ function Lobby({serverPath}) {
 	const [name, setName] = React.useState("");
 	const [lobbyState, setLobbyState] = React.useState("lobby");
 	const [gameID, setGameID] = React.useState("");
-	// const [gameInfo, setGameInfo] = React.useState({});
 
 	function onNameChange(event) {
 		setName(event.target.value);
@@ -29,14 +28,14 @@ function Lobby({serverPath}) {
 
 	function onJoinJoinClick(gameID) {
 		console.log("Joining a game...", gameID)
-		joinGame(gameID)
+		joinGame(gameID, "wait-join")
 	}
 
-	function onCreateCreateClick() {
+	function onCreateCreateClick(opts) {
 		console.log("Creating game...")
-		createGame().then(x => {
+		createGame(opts).then(x => {
 			console.log("Game created", x.gameID)
-			joinGame(x.gameID)
+			joinGame(x.gameID, "wait-create")
 		})
 	}
 
@@ -45,15 +44,15 @@ function Lobby({serverPath}) {
 	 *
 	 * @return     A promise to gameID.
 	 */
-	function createGame() {
+	function createGame(opts) {
 		// const opts = {numPlayers: numPlayers, setupData: {}}
 		console.log("Creating game...")
-		// return fetch(serverPath + "/create", {
-		// 	method: "post",
-		// 	headers: {"Content-Type": "application/json"},
-		// 	body: JSON.stringify(opts)
-		// })
-		// 	.then(response => response.json())
+		return fetch(serverPath + "/create", {
+			method: "post",
+			headers: {"Content-Type": "application/json"},
+			body: JSON.stringify({numPlayers: opts.maxPlayers, setupData: {numCats: opts.numCats}})
+		})
+			.then(response => response.json())
 	}
 
 	/**
@@ -65,7 +64,7 @@ function Lobby({serverPath}) {
 	 *
 	 * @param      {string}  gameID  The game ID.
 	 */
-	function joinGame(gameID) {
+	function joinGame(gameID, nextState) {
 		// getGameInfo(gameID)
 		// 	.then(gameInfo => {
 		// 		console.log("Received game info", gameInfo)
@@ -73,7 +72,7 @@ function Lobby({serverPath}) {
 		// 		setLobbyState("wait")
 		// 	})
 		setGameID(gameID)
-		setLobbyState("wait")
+		setLobbyState(nextState)
 	}
 
 	// function getGameInfo(gameID) {
@@ -93,10 +92,15 @@ function Lobby({serverPath}) {
 	else if (lobbyState === "create") {
 		return(<Create serverPath={serverPath} name={name} onCreateCreateClick={onCreateCreateClick} />)
 	}
-	else if (lobbyState === "wait") {
+	else if (lobbyState === "wait-create") {
 		// console.log("xxx", gameInfo)
 		console.log("name", name)
-		return(<Wait serverPath={serverPath} name={name} gameID={gameID} />)
+		return(<Wait serverPath={serverPath} name={name} gameID={gameID} autoSit={true} />)
+	}
+	else if (lobbyState === "wait-join") {
+		// console.log("xxx", gameInfo)
+		console.log("name", name)
+		return(<Wait serverPath={serverPath} name={name} gameID={gameID} autoSit={false} />)
 	}
 
 }
