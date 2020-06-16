@@ -11,7 +11,7 @@ function Entry({data, onJoinClick, onCreateClick}) {
 			</div>
 			<div>
 				<div>Join Game</div>
-				<Button variant="primary" onClick={onJoinClick} disabled={!data. name}>Join</Button>
+				<Button variant="primary" onClick={onJoinClick} disabled={!data.name}>Join</Button>
 			</div>
 			<div>
 				<div>Create Game</div>

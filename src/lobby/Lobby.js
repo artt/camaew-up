@@ -4,9 +4,7 @@ import Join from './Join'
 import Create from './Create'
 import Wait from './Wait'
 
-const serverPath = "http://localhost:8000/games/CamaewUp"
-
-function Lobby({serverPath}) {
+function Lobby({serverPath, startGame}) {
 
 	const [name, setName] = React.useState("");
 	const [lobbyState, setLobbyState] = React.useState("entry");
@@ -96,12 +94,12 @@ function Lobby({serverPath}) {
 	else if (lobbyState === "wait-create") {
 		// console.log("xxx", gameInfo)
 		console.log("name", name)
-		return(<Wait data={data} serverPath={serverPath} gameID={gameID} autoSit={true} />)
+		return(<Wait data={data} serverPath={serverPath} gameID={gameID} autoSit={true} startGame={startGame} />)
 	}
 	else if (lobbyState === "wait-join") {
 		// console.log("xxx", gameInfo)
 		console.log("name", name)
-		return(<Wait data={data} serverPath={serverPath} gameID={gameID} autoSit={false} />)
+		return(<Wait data={data} serverPath={serverPath} gameID={gameID} autoSit={false} startGame={startGame} />)
 	}
 
 }

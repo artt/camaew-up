@@ -1,7 +1,7 @@
 import React from 'react'
-import {Button, Form, ToggleButtonGroup, ToggleButton, Modal} from 'react-bootstrap'
+import {Button, Modal} from 'react-bootstrap'
 
-function Wait({data, serverPath, gameID, autoSit}) {
+function Wait({data, serverPath, gameID, autoSit, startGame}) {
 
 	const [firstRun, setFirstRun] = React.useState(true)
 	const [gameInfo, setGameInfo] = React.useState(null)
@@ -10,70 +10,28 @@ function Wait({data, serverPath, gameID, autoSit}) {
 	const [playerCredentials, setPlayerCredentials] = React.useState("")
 	const [showConfirmLeave, setShowConfirmLeave] = React.useState(false)
 
-	function countPlayers() {
-		if (gameInfo != null) {
-			let count = 0
-			for (let id=0; id < gameInfo.players.length; id ++) {
-				if (gameInfo.players[id].name != null) {
-					count ++
-				}
-			}
-			return count
-		}
-		return null
-	}
-
-	React.useEffect(() => {
-		const interval = setInterval(() => {
-			updateGameInfo();
-			setNumPlayers(countPlayers())
-		}, 5000);
-		return () => {
-			clearInterval(interval);
-		};
-	}, []);
-
-	React.useEffect(() => {
-		if (gameInfo != null && firstRun && autoSit) {
-			sit()
-			setPlayerID("0")
-			setFirstRun(false)
-		}
-		else {
-			console.log(gameInfo)
-			console.log(playerID)
-			console.log(playerCredentials)
-			console.log(firstRun)
-		}
-	}, [gameInfo])
-
-	function updateGameInfo() {
-		getGameInfo(gameID)
-			.then(data => {
-				setGameInfo(data)
-			})
-	}
-
-	function getGameInfo() {
+	// no idea why we need to use useCallback() :P
+	
+	const updateGameInfo = React.useCallback(() => {
 		console.log("Getting game info...", gameID)
-		return fetch(serverPath + "/" + gameID, {
+		fetch(serverPath + "/" + gameID, {
 			method: "get"
 		})
 			.then(response => response.json())
-	}
+			.then(data => setGameInfo(data))
+	}, [gameID, serverPath])
 
-	function findSeat() {
+	const findSeat = React.useCallback(() => {
 		updateGameInfo()
 		for (let id=0; id < gameInfo.players.length; id ++) {
 			if (gameInfo.players[id].name == null) {
 				return id
 			}
 		}
-	}
+	}, [gameInfo, updateGameInfo])
 
-	function sit() {
-		console.log("Sitting...")
-		// TODO: deal with long waits
+	const sit = React.useCallback(() => {
+		console.log("Sitting...", gameInfo)
 		const seatID = findSeat()
 		console.log("Found empty seat", seatID)
 		const opts = {
@@ -91,7 +49,40 @@ function Wait({data, serverPath, gameID, autoSit}) {
 				setPlayerID(seatID)
 				updateGameInfo()
 			})
-	}
+	}, [data.name, findSeat, gameInfo, serverPath, updateGameInfo])
+
+	React.useEffect(() => {
+		const interval = setInterval(() => {
+			updateGameInfo();
+		}, 2000);
+		return () => {
+			clearInterval(interval);
+		};
+	});
+
+	React.useEffect(() => {
+		if (gameInfo != null && firstRun && autoSit) {
+			sit()
+			setPlayerID("0")
+			setFirstRun(false)
+		}
+		else if (gameInfo != null) {
+			// console.log(gameInfo)
+			// console.log(playerID)
+			// console.log(playerCredentials)
+			// console.log(firstRun)
+			setNumPlayers(() => {
+				let count = 0
+				for (let id=0; id < gameInfo.players.length; id ++) {
+					if (gameInfo.players[id].name != null) {
+						count ++
+					}
+				}
+				console.log("Count", count)
+				return count
+			})
+		}
+	}, [gameInfo, autoSit, firstRun, playerCredentials, playerID, sit])
 
 	function stand() {
 		const opts = {
@@ -173,9 +164,10 @@ function Wait({data, serverPath, gameID, autoSit}) {
 				}
 				</div>
 				<div>
-					<Button variant="primary" onClick={sit} disabled={playerID >= 0}>Sit</Button>
-					<Button variant="primary" onClick={stand} disabled={playerID < 0 || numPlayers === 1}>Stand</Button>
-					<Button variant="primary" onClick={onLeaveClick}>Leave</Button>
+					<Button variant="secondary" onClick={sit} disabled={playerID >= 0}>Sit</Button>
+					<Button variant="secondary" onClick={stand} disabled={playerID < 0 || numPlayers === 1}>Stand</Button>
+					<Button variant="secondary" onClick={onLeaveClick}>Leave</Button>
+					<Button variant="primary" onClick={() => startGame(gameID, playerID, playerCredentials)}>Start</Button>
 				</div>
 
 				{/* Confirm leave dialog */}

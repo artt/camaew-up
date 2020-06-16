@@ -10,7 +10,6 @@ import './style.css'
 
 const CamaewUpClient = Client({game: CamaewUp,
 															 board: GameScreen,
-															 numPlayers: 4,
 															 multiplayer: SocketIO({server: "localhost:8000"})
 														 })
 
@@ -19,25 +18,31 @@ const history = createBrowserHistory()
 
 function App() {
 
-	const [state, setState] = useState({name: "lobby"});
+	const [state, setState] = useState("lobby");
+	const [data, setData] = useState({})
+
+	function startGame(gameID, playerID, credentials) {
+		setData({gameID: gameID, playerID: playerID, credentials: credentials})
+		setState("game")
+	}
 
 	useEffect(() => {
 		if (state.name === "game") {
 			history.push('?' + state.gameID)
 		}
-	}, [state.name])
+	}, [state.name, state.gameID])
 
-	if (state.name === "lobby") {
+	if (state === "lobby") {
 		return(
 			<div>
-				<Lobby serverPath={serverPath} />
+				<Lobby serverPath={serverPath} startGame={startGame}/>
 			</div>
 		)
 	}
-	else if (state.name === "game") {
+	else if (state === "game") {
 		return(
 			<div>
-				<CamaewUpClient playerID="0" gameID="0"/>
+				<CamaewUpClient gameID={data.gameID} playerID={String(data.playerID)} credentials={data.credentials} />
 			</div>
 		);
 	}
