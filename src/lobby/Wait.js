@@ -174,7 +174,7 @@ function Wait({data, serverPath, gameID, autoSit}) {
 				</div>
 				<div>
 					<Button variant="primary" onClick={sit} disabled={playerID >= 0}>Sit</Button>
-					<Button variant="primary" onClick={stand} disabled={playerID < 0 || countPlayers() === 1}>Stand</Button>
+					<Button variant="primary" onClick={stand} disabled={playerID < 0 || numPlayers === 1}>Stand</Button>
 					<Button variant="primary" onClick={onLeaveClick}>Leave</Button>
 				</div>
 
