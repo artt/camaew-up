@@ -9,20 +9,18 @@ const serverPath = "http://localhost:8000/games/CamaewUp"
 function Lobby({serverPath}) {
 
 	const [name, setName] = React.useState("");
-	const [lobbyState, setLobbyState] = React.useState("lobby");
+	const [lobbyState, setLobbyState] = React.useState("entry");
 	const [gameID, setGameID] = React.useState("");
 
 	function onNameChange(event) {
 		setName(event.target.value);
 	}
 
-	function onJoinClick(name) {
-		setName(name)
+	function onJoinClick() {
 		setLobbyState("join")
 	}
 
-	function onCreateClick(name) {
-		setName(name)
+	function onCreateClick() {
 		setLobbyState("create")
 	}
 
@@ -75,32 +73,35 @@ function Lobby({serverPath}) {
 		setLobbyState(nextState)
 	}
 
-	// function getGameInfo(gameID) {
-	// 	console.log("Getting game info...")
-	// 	return fetch(serverPath + "/" + gameID, {
-	// 		method: "get"
-	// 	})
-	// 		.then(response => response.json())
-	// }
+	function backToEntry() {
+		setGameID("")
+		setLobbyState("entry")
+	}
 
-	if (lobbyState === "lobby") {
-		return(<Entry onJoinClick={onJoinClick} onCreateClick={onCreateClick} />)
+	const data = {
+		name: name,
+		onNameChange: onNameChange,
+		backToEntry: backToEntry,
+	}
+
+	if (lobbyState === "entry") {
+		return(<Entry data={data} onJoinClick={onJoinClick} onCreateClick={onCreateClick} />)
 	}
 	else if (lobbyState === "join") {
-		return(<Join onJoinJoinClick={onJoinJoinClick} />)
+		return(<Join data={data} onJoinJoinClick={onJoinJoinClick} />)
 	}
 	else if (lobbyState === "create") {
-		return(<Create serverPath={serverPath} name={name} onCreateCreateClick={onCreateCreateClick} />)
+		return(<Create data={data} onCreateCreateClick={onCreateCreateClick} />)
 	}
 	else if (lobbyState === "wait-create") {
 		// console.log("xxx", gameInfo)
 		console.log("name", name)
-		return(<Wait serverPath={serverPath} name={name} gameID={gameID} autoSit={true} />)
+		return(<Wait data={data} serverPath={serverPath} gameID={gameID} autoSit={true} />)
 	}
 	else if (lobbyState === "wait-join") {
 		// console.log("xxx", gameInfo)
 		console.log("name", name)
-		return(<Wait serverPath={serverPath} name={name} gameID={gameID} autoSit={false} />)
+		return(<Wait data={data} serverPath={serverPath} gameID={gameID} autoSit={false} />)
 	}
 
 }

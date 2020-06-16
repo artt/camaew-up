@@ -8,7 +8,6 @@ $color-3: #48806D;
 $color-4: #C0886C;
 
 body {
-	color: white;
 	background: darken($color-1, 10%);
 }
 
@@ -25,6 +24,7 @@ $lobby-height: 300px;
 	margin-left: -$lobby-width/2;
 	margin-top: -$lobby-height/2;
 	// other
+	color: white;
 	background-color: rgba(white, 0.1);
 }
 

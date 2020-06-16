@@ -2,7 +2,7 @@ import React from 'react'
 import {Button, Form} from 'react-bootstrap'
 
 // function Join({onJoinJoinClick, onGameIDChange, gameID}) {
-function Join({onJoinJoinClick}) {
+function Join({data, onJoinJoinClick}) {
 
 	const [gameID, setGameID] = React.useState("");
 

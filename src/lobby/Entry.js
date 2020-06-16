@@ -1,27 +1,21 @@
 import React from 'react'
 import {Button, Form} from 'react-bootstrap'
 
-function Entry({onJoinClick, onCreateClick}) {
-
-	const [name, setName] = React.useState("");
-
-	function onNameChange(event) {
-		setName(event.target.value)
-	}
+function Entry({data, onJoinClick, onCreateClick}) {
 
 	return(
 		<div id="entry-container" className="lobby">
 			<div id="entry-name">
 				<Form.Label>Name</Form.Label>
-				<Form.Control type="text" onChange={onNameChange} />
+				<Form.Control type="text" value={data.name} onChange={data.onNameChange} />
 			</div>
 			<div>
 				<div>Join Game</div>
-				<Button variant="primary" onClick={() => onJoinClick(name)} disabled={!name}>Join</Button>
+				<Button variant="primary" onClick={onJoinClick} disabled={!data. name}>Join</Button>
 			</div>
 			<div>
 				<div>Create Game</div>
-				<Button variant="primary" onClick={() => onCreateClick(name)} disabled={!name}>Create</Button>
+				<Button variant="primary" onClick={onCreateClick} disabled={!data.name}>Create</Button>
 			</div>
 		</div>
 	)

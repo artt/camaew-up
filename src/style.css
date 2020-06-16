@@ -9974,7 +9974,6 @@ h3 {
 }
 
 body {
-  color: white;
   background: #384a5d;
 }
 
@@ -9986,6 +9985,7 @@ body {
   top: 40%;
   margin-left: -250px;
   margin-top: -150px;
+  color: white;
   background-color: rgba(255, 255, 255, 0.1);
 }
 

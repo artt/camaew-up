@@ -1,7 +1,7 @@
 import React from 'react'
 import {Button, Form, ToggleButtonGroup, ToggleButton} from 'react-bootstrap'
 
-function Create({serverPath, name, onCreateCreateClick}) {
+function Create({data, onCreateCreateClick}) {
 
 	const [maxPlayers, setMaxPlayers] = React.useState(4);
 	const [numCats, setNumCats] = React.useState(5);
