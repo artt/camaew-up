@@ -5,13 +5,28 @@ function Wait({data, serverPath, gameID, autoSit}) {
 
 	const [firstRun, setFirstRun] = React.useState(true)
 	const [gameInfo, setGameInfo] = React.useState(null)
+	const [numPlayers, setNumPlayers] = React.useState(0)
 	const [playerID, setPlayerID] = React.useState(-1)
 	const [playerCredentials, setPlayerCredentials] = React.useState("")
 	const [showConfirmLeave, setShowConfirmLeave] = React.useState(false)
 
+	function countPlayers() {
+		if (gameInfo != null) {
+			let count = 0
+			for (let id=0; id < gameInfo.players.length; id ++) {
+				if (gameInfo.players[id].name != null) {
+					count ++
+				}
+			}
+			return count
+		}
+		return null
+	}
+
 	React.useEffect(() => {
 		const interval = setInterval(() => {
 			updateGameInfo();
+			setNumPlayers(countPlayers())
 		}, 5000);
 		return () => {
 			clearInterval(interval);
@@ -20,12 +35,8 @@ function Wait({data, serverPath, gameID, autoSit}) {
 
 	React.useEffect(() => {
 		if (gameInfo != null && firstRun && autoSit) {
-			console.log("Autositting...")
-			console.log(gameInfo)
 			sit()
 			setPlayerID("0")
-			console.log("Done sitting.")
-			console.log(gameInfo)
 			setFirstRun(false)
 		}
 		else {
@@ -41,16 +52,6 @@ function Wait({data, serverPath, gameID, autoSit}) {
 			.then(data => {
 				setGameInfo(data)
 			})
-	}
-
-	function countPlayers() {
-		let count = 0
-		for (let id=0; id < gameInfo.players.length; id ++) {
-			if (gameInfo.players[id].name != null) {
-				count ++
-			}
-		}
-		return count
 	}
 
 	function getGameInfo() {
