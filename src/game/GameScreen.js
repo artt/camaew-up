@@ -11,7 +11,9 @@ function GameScreen({G, ctx, moves}) {
 	return(
 		<Fragment>
 			<h1>Camaew Up!</h1>
-			<Button variant="primary" onClick={roll}>Roll</Button>
+			<div>
+				<Button variant="primary" onClick={roll}>Roll</Button>
+			</div>
 			<RaceTrack G={G} />
 		</Fragment>
 	);

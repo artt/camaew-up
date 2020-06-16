@@ -10,12 +10,10 @@ function Entry({data, onJoinClick, onCreateClick}) {
 				<Form.Control type="text" value={data.name} onChange={data.onNameChange} />
 			</div>
 			<div>
-				<div>Join Game</div>
-				<Button variant="primary" onClick={onJoinClick} disabled={!data.name}>Join</Button>
+				<Button variant="primary" onClick={onJoinClick} disabled={!data.name} size="lg">Join Game</Button>
 			</div>
 			<div>
-				<div>Create Game</div>
-				<Button variant="primary" onClick={onCreateClick} disabled={!data.name}>Create</Button>
+				<Button variant="primary" onClick={onCreateClick} disabled={!data.name} size="lg">Create Game</Button>
 			</div>
 		</div>
 	)

@@ -84,7 +84,9 @@ const CamaewUp = {
 	},
 	turn: {
 		moveLimit: 1
-	}
+	},
+	minPlayers: 2,
+	maxPlayers: 8
 }
 
 export default CamaewUp;
