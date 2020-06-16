@@ -29,7 +29,6 @@ function moveCat(G, ctx, catID, roll) {
 		G.pos[curStack[i]] += roll	
 	}
 
-
 }
 
 function rollDice(G, ctx) {
@@ -82,6 +81,9 @@ const CamaewUp = {
 		roll: (G, ctx) => {
 			rollDice(G, ctx)
 		}
+	},
+	turn: {
+		moveLimit: 1
 	}
 }
 

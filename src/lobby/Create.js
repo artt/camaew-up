@@ -3,11 +3,11 @@ import {Button, Form, ToggleButtonGroup, ToggleButton} from 'react-bootstrap'
 
 function Create({data, onCreateCreateClick}) {
 
-	const [maxPlayers, setMaxPlayers] = React.useState(4);
+	const [numPlayers, setnumPlayers] = React.useState(4);
 	const [numCats, setNumCats] = React.useState(5);
 
-	function onMaxPlayersChange(val) {
-		setMaxPlayers(val)
+	function onNumPlayersChange(val) {
+		setnumPlayers(val)
 	}
 
 	function onNumCatsChange(val) {
@@ -17,8 +17,8 @@ function Create({data, onCreateCreateClick}) {
 	return(
 		<div className="lobby">
 			<div>
-				<Form.Label>Max players</Form.Label>
-				<ToggleButtonGroup type="radio" name="maxPlayers" value={maxPlayers} onChange={onMaxPlayersChange}>
+				<Form.Label>Number of players</Form.Label>
+				<ToggleButtonGroup type="radio" name="numPlayers" value={numPlayers} onChange={onNumPlayersChange}>
 					<ToggleButton value={2}>2</ToggleButton>
 					<ToggleButton value={3}>3</ToggleButton>
 					<ToggleButton value={4}>4</ToggleButton>
@@ -42,7 +42,7 @@ function Create({data, onCreateCreateClick}) {
 				<Form.Check type="checkbox" label="Random seat" />
 			</div>
 			<div>
-				<Button variant="primary" onClick={() => onCreateCreateClick({maxPlayers: maxPlayers, numCats: numCats})}>Create</Button>
+				<Button variant="primary" onClick={() => onCreateCreateClick({numPlayers: numPlayers, numCats: numCats})}>Create</Button>
 			</div>
 		</div>
 	)

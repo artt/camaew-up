@@ -167,7 +167,7 @@ function Wait({data, serverPath, gameID, autoSit, startGame}) {
 					<Button variant="secondary" onClick={sit} disabled={playerID >= 0}>Sit</Button>
 					<Button variant="secondary" onClick={stand} disabled={playerID < 0 || numPlayers === 1}>Stand</Button>
 					<Button variant="secondary" onClick={onLeaveClick}>Leave</Button>
-					<Button variant="primary" onClick={() => startGame(gameID, playerID, playerCredentials)}>Start</Button>
+					<Button variant="primary" onClick={() => startGame(gameID, playerID, playerCredentials)} disabled={numPlayers < gameInfo.players.length}>Start</Button>
 				</div>
 
 				{/* Confirm leave dialog */}
