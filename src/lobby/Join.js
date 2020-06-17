@@ -3,12 +3,10 @@ import {Button, Form} from 'react-bootstrap'
 import { useHistory } from 'react-router-dom'
 
 // function Join({onJoinJoinClick, onGameIDChange, gameID}) {
-function Join({onJoinJoinClick, potentialGameID}) {
+function Join({defaultID, onJoinJoinClick}) {
 
 	const [name, setName] = React.useState("");
 	const [gameID, setGameID] = React.useState("");
-
-	const history = useHistory()
 
 	function onNameChange(event) {
 		setName(event.target.value);
@@ -18,9 +16,11 @@ function Join({onJoinJoinClick, potentialGameID}) {
 		setGameID(event.target.value)
 	}
 
+	const history = useHistory()
+
 	React.useEffect(() => {
-		if (potentialGameID != undefined) {
-			setGameID(potentialGameID)
+		if (defaultID != undefined) {
+			setGameID(defaultID)
 		}
 	}, [])
 
@@ -32,7 +32,7 @@ function Join({onJoinJoinClick, potentialGameID}) {
 			</div>
 			<div id="join-gameid">
 				<Form.Label>Game ID</Form.Label>
-				<Form.Control type="text" onChange={onGameIDChange} defaultValue={potentialGameID} />
+				<Form.Control type="text" onChange={onGameIDChange} defaultValue={gameID} />
 			</div>
 			<div id="lobby-join" className="center">
 				<Form.Label>Join Game</Form.Label>

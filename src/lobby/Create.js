@@ -2,7 +2,7 @@ import React from 'react'
 import {Button, Form, ToggleButtonGroup, ToggleButton} from 'react-bootstrap'
 import { useHistory } from 'react-router-dom'
 
-function Create({onCreateCreateClick}) {
+function Create({onNameChange, onCreateCreateClick}) {
 
 	const [name, setName] = React.useState("");
 	const [numPlayers, setnumPlayers] = React.useState(4);
