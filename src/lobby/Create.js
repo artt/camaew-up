@@ -17,6 +17,10 @@ function Create({data, onCreateCreateClick}) {
 	return(
 		<div className="lobby">
 			<div>
+				<Form.Label>Name</Form.Label>
+				<Form.Control type="text" value={data.name} onChange={data.onNameChange} />
+			</div>
+			<div>
 				<Form.Label>Number of players</Form.Label>
 				<ToggleButtonGroup type="radio" name="numPlayers" value={numPlayers} onChange={onNumPlayersChange}>
 					<ToggleButton value={2}>2</ToggleButton>
@@ -42,7 +46,7 @@ function Create({data, onCreateCreateClick}) {
 				<Form.Check type="checkbox" label="Random seat" />
 			</div>
 			<div>
-				<Button variant="primary" onClick={() => onCreateCreateClick({numPlayers: numPlayers, numCats: numCats})}>Create</Button>
+				<Button variant="primary" onClick={() => onCreateCreateClick({numPlayers: numPlayers, numCats: numCats})} disabled={!data.name}>Create</Button>
 			</div>
 		</div>
 	)
