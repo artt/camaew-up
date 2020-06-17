@@ -1,7 +1,7 @@
 import React from 'react'
 import {Button, Modal} from 'react-bootstrap'
 
-function Wait({data, serverPath, gameID, autoSit, startGame}) {
+function Wait({name, serverPath, gameID, backToEntry, startGame}) {
 
 	const [firstRun, setFirstRun] = React.useState(true)
 	const [gameInfo, setGameInfo] = React.useState(null)
@@ -36,7 +36,7 @@ function Wait({data, serverPath, gameID, autoSit, startGame}) {
 		console.log("Found empty seat", seatID)
 		const opts = {
 			playerID: seatID,
-			playerName: data.name
+			playerName: name
 		}
 		fetch(serverPath + "/" + gameInfo.roomID + "/join", {
 			method: "post",
@@ -49,7 +49,7 @@ function Wait({data, serverPath, gameID, autoSit, startGame}) {
 				setPlayerID(seatID)
 				updateGameInfo()
 			})
-	}, [data.name, findSeat, gameInfo, serverPath, updateGameInfo])
+	}, [findSeat, gameInfo, serverPath, updateGameInfo])
 
 	React.useEffect(() => {
 		const interval = setInterval(() => {
@@ -61,12 +61,12 @@ function Wait({data, serverPath, gameID, autoSit, startGame}) {
 	});
 
 	React.useEffect(() => {
-		if (gameInfo != null && firstRun && autoSit) {
-			sit()
-			setPlayerID("0")
-			setFirstRun(false)
-		}
-		else if (gameInfo != null) {
+		// if (gameInfo != null && firstRun && autoSit) {
+		// 	sit()
+		// 	setPlayerID("0")
+		// 	setFirstRun(false)
+		// }
+		if (gameInfo != null) {
 			// console.log(gameInfo)
 			// console.log(playerID)
 			// console.log(playerCredentials)
@@ -82,7 +82,7 @@ function Wait({data, serverPath, gameID, autoSit, startGame}) {
 				return count
 			})
 		}
-	}, [gameInfo, autoSit, firstRun, playerCredentials, playerID, sit])
+	}, [gameInfo, firstRun, playerCredentials, playerID, sit])
 
 	function stand() {
 		const opts = {
@@ -105,7 +105,7 @@ function Wait({data, serverPath, gameID, autoSit, startGame}) {
 
 	function leave() {
 		stand()
-		data.backToEntry()
+		backToEntry()
 	}
 
 	function onConfirmLeaveClose() {

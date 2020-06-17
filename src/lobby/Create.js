@@ -1,10 +1,18 @@
 import React from 'react'
 import {Button, Form, ToggleButtonGroup, ToggleButton} from 'react-bootstrap'
+import { useHistory } from 'react-router-dom'
 
-function Create({data, onCreateCreateClick}) {
+function Create({onCreateCreateClick}) {
 
+	const [name, setName] = React.useState("");
 	const [numPlayers, setnumPlayers] = React.useState(4);
 	const [numCats, setNumCats] = React.useState(5);
+
+	const history = useHistory()
+
+	function onNameChange(event) {
+		setName(event.target.value);
+	}
 
 	function onNumPlayersChange(val) {
 		setnumPlayers(val)
@@ -18,7 +26,7 @@ function Create({data, onCreateCreateClick}) {
 		<div className="lobby">
 			<div>
 				<Form.Label>Name</Form.Label>
-				<Form.Control type="text" value={data.name} onChange={data.onNameChange} />
+				<Form.Control type="text" value={name} onChange={onNameChange} />
 			</div>
 			<div>
 				<Form.Label>Number of players</Form.Label>
@@ -46,7 +54,8 @@ function Create({data, onCreateCreateClick}) {
 				<Form.Check type="checkbox" label="Random seat" />
 			</div>
 			<div>
-				<Button variant="primary" onClick={() => onCreateCreateClick({numPlayers: numPlayers, numCats: numCats})} disabled={!data.name}>Create</Button>
+				<Button variant="primary" onClick={() => onCreateCreateClick(name, {numPlayers: numPlayers, numCats: numCats})} disabled={!name}>Create</Button>
+				<Button variant="secondary" onClick={history.goBack}>Back</Button>
 			</div>
 		</div>
 	)

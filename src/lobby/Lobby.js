@@ -3,6 +3,15 @@ import Entry from './Entry'
 import Join from './Join'
 import Create from './Create'
 import Wait from './Wait'
+import { useHistory } from 'react-router-dom'
+import {
+	BrowserRouter as Router,
+	Switch,
+	Route,
+	Link,
+	useRouteMatch,
+	useParams
+} from "react-router-dom";
 
 function Lobby({serverPath, startGame}) {
 
@@ -10,28 +19,32 @@ function Lobby({serverPath, startGame}) {
 	const [lobbyState, setLobbyState] = React.useState("entry");
 	const [gameID, setGameID] = React.useState("");
 
-	function onNameChange(event) {
-		setName(event.target.value);
-	}
+	let history = useHistory()
 
 	function onJoinClick() {
 		setLobbyState("join")
+		history.push("/join")
 	}
 
 	function onCreateClick() {
 		setLobbyState("create")
+		history.push("/create")
 	}
 
-	function onJoinJoinClick(gameID) {
+	function onJoinJoinClick(name, gameID) {
 		console.log("Joining a game...", gameID)
+		setName(name)
 		joinGame(gameID, "wait-join")
+		history.push("/game/" + gameID)
 	}
 
-	function onCreateCreateClick(opts) {
+	function onCreateCreateClick(name, opts) {
 		console.log("Creating game...")
+		setName(name)
 		createGame(opts).then(x => {
 			console.log("Game created", x.gameID)
 			joinGame(x.gameID, "wait-create")
+			history.push("/game/" + x.gameID)
 		})
 	}
 
@@ -41,7 +54,6 @@ function Lobby({serverPath, startGame}) {
 	 * @return     A promise to gameID.
 	 */
 	function createGame(opts) {
-		// const opts = {numPlayers: numPlayers, setupData: {}}
 		console.log("Creating game...")
 		return fetch(serverPath + "/create", {
 			method: "post",
@@ -61,12 +73,6 @@ function Lobby({serverPath, startGame}) {
 	 * @param      {string}  gameID  The game ID.
 	 */
 	function joinGame(gameID, nextState) {
-		// getGameInfo(gameID)
-		// 	.then(gameInfo => {
-		// 		console.log("Received game info", gameInfo)
-		// 		setGameInfo(gameInfo)
-		// 		setLobbyState("wait")
-		// 	})
 		setGameID(gameID)
 		setLobbyState(nextState)
 	}
@@ -76,31 +82,36 @@ function Lobby({serverPath, startGame}) {
 		setLobbyState("entry")
 	}
 
-	const data = {
-		name: name,
-		onNameChange: onNameChange,
-		backToEntry: backToEntry,
+	function WaitComponent() {
+		const {gameID} = useParams()
+		if (lobbyState === "entry") {
+			history.push("/join/" + gameID)
+			// xxxxxxxxxx
+			// return(<Join onJoinJoinClick={onJoinJoinClick} potentialGameID={gameID} />)
+		}
+		else {
+			return(<Wait name={name} serverPath={serverPath} gameID={gameID} backToEntry={backToEntry} startGame={startGame} />)
+		}
 	}
 
-	if (lobbyState === "entry") {
-		return(<Entry data={data} onJoinClick={onJoinClick} onCreateClick={onCreateClick} />)
-	}
-	else if (lobbyState === "join") {
-		return(<Join data={data} onJoinJoinClick={onJoinJoinClick} />)
-	}
-	else if (lobbyState === "create") {
-		return(<Create data={data} onCreateCreateClick={onCreateCreateClick} />)
-	}
-	else if (lobbyState === "wait-create") {
-		// console.log("xxx", gameInfo)
-		console.log("name", name)
-		return(<Wait data={data} serverPath={serverPath} gameID={gameID} autoSit={true} startGame={startGame} />)
-	}
-	else if (lobbyState === "wait-join") {
-		// console.log("xxx", gameInfo)
-		console.log("name", name)
-		return(<Wait data={data} serverPath={serverPath} gameID={gameID} autoSit={false} startGame={startGame} />)
-	}
+	return(
+		<Switch>
+			
+			<Route exact path="/">
+				<Entry onJoinClick={onJoinClick} onCreateClick={onCreateClick} />
+			</Route>
+			<Route exact path="/join">
+				<Join onJoinJoinClick={onJoinJoinClick} />
+			</Route>
+			<Route exact path="/create">
+				<Create onCreateCreateClick={onCreateCreateClick} />
+			</Route>
+			<Route path="/:mode/:gameID">
+				<WaitComponent />
+			</Route>
+
+		</Switch>
+	)
 
 }
 

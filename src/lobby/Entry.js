@@ -1,7 +1,7 @@
 import React from 'react'
 import {Button, Form} from 'react-bootstrap'
 
-function Entry({data, onJoinClick, onCreateClick}) {
+function Entry({onJoinClick, onCreateClick}) {
 
 	return(
 		<div id="entry-container" className="lobby">

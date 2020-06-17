@@ -4,7 +4,13 @@ import {SocketIO} from 'boardgame.io/multiplayer'
 import CamaewUp from './CamaewUp'
 import Lobby from './lobby/Lobby'
 import GameScreen from './game/GameScreen'
-import { createBrowserHistory } from 'history'
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Link,
+  useRouteMatch
+} from "react-router-dom";
 
 import './style.css'
 
@@ -14,7 +20,6 @@ const CamaewUpClient = Client({game: CamaewUp,
 														 })
 
 const serverPath = "http://localhost:8000/games/CamaewUp"
-const history = createBrowserHistory()
 
 function App() {
 
@@ -28,9 +33,12 @@ function App() {
 
 	useEffect(() => {
 		if (state.name === "game") {
-			history.push('?' + state.gameID)
+			// history.push('?' + state.gameID)
 		}
 	}, [state.name, state.gameID])
+
+	let match = useRouteMatch("/:id")
+	console.log(match)
 
 	if (state === "lobby") {
 		return(
