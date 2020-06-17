@@ -83,11 +83,10 @@ function Lobby({serverPath, startGame}) {
 	}
 
 	function WaitComponent() {
-		const {gameID} = useParams()
+		const {mode, gameID} = useParams()
 		if (lobbyState === "entry") {
-			history.push("/join/" + gameID)
-			// xxxxxxxxxx
-			// return(<Join onJoinJoinClick={onJoinJoinClick} potentialGameID={gameID} />)
+			if (mode === "game") history.push("/join/" + gameID)
+			return(<Join onJoinJoinClick={onJoinJoinClick} potentialGameID={gameID} />)
 		}
 		else {
 			return(<Wait name={name} serverPath={serverPath} gameID={gameID} backToEntry={backToEntry} startGame={startGame} />)
