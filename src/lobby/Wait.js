@@ -1,9 +1,8 @@
 import React from 'react'
 import {Button, Modal} from 'react-bootstrap'
 
-function Wait({data, serverPath, gameID, autoSit, startGame}) {
+function Wait({data, serverPath, startGame}) {
 
-	const [firstRun, setFirstRun] = React.useState(true)
 	const [gameInfo, setGameInfo] = React.useState(null)
 	const [numPlayers, setNumPlayers] = React.useState(0)
 	const [playerID, setPlayerID] = React.useState(-1)
@@ -13,13 +12,13 @@ function Wait({data, serverPath, gameID, autoSit, startGame}) {
 	// no idea why we need to use useCallback() :P
 	
 	const updateGameInfo = React.useCallback(() => {
-		console.log("Getting game info...", gameID)
-		fetch(serverPath + "/" + gameID, {
+		console.log("Getting game info...", data.gameID)
+		fetch(serverPath + "/" + data.gameID, {
 			method: "get"
 		})
 			.then(response => response.json())
 			.then(data => setGameInfo(data))
-	}, [gameID, serverPath])
+	}, [data.gameID, serverPath])
 
 	const findSeat = React.useCallback(() => {
 		updateGameInfo()
@@ -61,16 +60,7 @@ function Wait({data, serverPath, gameID, autoSit, startGame}) {
 	});
 
 	React.useEffect(() => {
-		if (gameInfo != null && firstRun && autoSit) {
-			sit()
-			setPlayerID("0")
-			setFirstRun(false)
-		}
-		else if (gameInfo != null) {
-			// console.log(gameInfo)
-			// console.log(playerID)
-			// console.log(playerCredentials)
-			// console.log(firstRun)
+		if (gameInfo != null) {
 			setNumPlayers(() => {
 				let count = 0
 				for (let id=0; id < gameInfo.players.length; id ++) {
@@ -78,13 +68,12 @@ function Wait({data, serverPath, gameID, autoSit, startGame}) {
 						count ++
 					}
 				}
-				console.log("Count", count)
 				return count
 			})
 		}
-	}, [gameInfo, autoSit, firstRun, playerCredentials, playerID, sit])
+	}, [gameInfo, playerCredentials, playerID, sit])
 
-	function stand() {
+	function stand(updateAfter=true) {
 		const opts = {
 				playerID: playerID,
 				credentials: playerCredentials
@@ -94,7 +83,9 @@ function Wait({data, serverPath, gameID, autoSit, startGame}) {
 			headers: {"Content-Type": "application/json"},
 			body: JSON.stringify(opts)
 		})
-			.then(() => updateGameInfo())
+			.then(() => {
+				if (updateAfter) updateGameInfo()
+			})
 		setPlayerID(-1)
 	}
 
@@ -104,16 +95,8 @@ function Wait({data, serverPath, gameID, autoSit, startGame}) {
 	}
 
 	function leave() {
-		stand()
+		stand(false)
 		data.backToEntry()
-	}
-
-	function onConfirmLeaveClose() {
-		setShowConfirmLeave(false)
-	}
-
-	function onConfirmLeaveConfirm() {
-		setShowConfirmLeave(false)
 	}
 
 	function dialog(text, showState, setShowState, onConfirm) {
@@ -167,7 +150,7 @@ function Wait({data, serverPath, gameID, autoSit, startGame}) {
 					<Button variant="secondary" onClick={sit} disabled={playerID >= 0}>Sit</Button>
 					<Button variant="secondary" onClick={stand} disabled={playerID < 0 || numPlayers === 1}>Stand</Button>
 					<Button variant="secondary" onClick={onLeaveClick}>Leave</Button>
-					<Button variant="primary" onClick={() => startGame(gameID, playerID, playerCredentials)} disabled={numPlayers < gameInfo.players.length}>Start</Button>
+					<Button variant="primary" onClick={() => startGame(data.gameID, playerID, playerCredentials)} disabled={numPlayers < gameInfo.players.length}>Start</Button>
 				</div>
 
 				{/* Confirm leave dialog */}

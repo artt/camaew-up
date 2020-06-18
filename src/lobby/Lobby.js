@@ -9,9 +9,23 @@ function Lobby({serverPath, startGame}) {
 	const [name, setName] = React.useState("");
 	const [lobbyState, setLobbyState] = React.useState("entry");
 	const [gameID, setGameID] = React.useState("");
+	const [numPlayers, setnumPlayers] = React.useState(4);
+	const [numCats, setNumCats] = React.useState(5);
 
 	function onNameChange(event) {
 		setName(event.target.value);
+	}
+
+	function onGameIDChange(event) {
+		setGameID(event.target.value)
+	}
+
+	function onNumPlayersChange(val) {
+		setnumPlayers(val)
+	}
+
+	function onNumCatsChange(val) {
+		setNumCats(val)
 	}
 
 	function onJoinClick() {
@@ -22,16 +36,17 @@ function Lobby({serverPath, startGame}) {
 		setLobbyState("create")
 	}
 
-	function onJoinJoinClick(gameID) {
+	function onJoinJoinClick() {
 		console.log("Joining a game...", gameID)
-		joinGame(gameID, "wait-join")
+		joinGame()
 	}
 
-	function onCreateCreateClick(opts) {
+	function onCreateCreateClick() {
 		console.log("Creating game...")
-		createGame(opts).then(x => {
+		createGame().then(x => {
 			console.log("Game created", x.gameID)
-			joinGame(x.gameID, "wait-create")
+			setGameID(x.gameID)
+			joinGame()
 		})
 	}
 
@@ -40,13 +55,13 @@ function Lobby({serverPath, startGame}) {
 	 *
 	 * @return     A promise to gameID.
 	 */
-	function createGame(opts) {
+	function createGame() {
 		// const opts = {numPlayers: numPlayers, setupData: {}}
 		console.log("Creating game...")
 		return fetch(serverPath + "/create", {
 			method: "post",
 			headers: {"Content-Type": "application/json"},
-			body: JSON.stringify({numPlayers: opts.numPlayers, setupData: {numCats: opts.numCats}})
+			body: JSON.stringify({numPlayers: numPlayers, setupData: {numCats: numCats}})
 		})
 			.then(response => response.json())
 	}
@@ -60,25 +75,23 @@ function Lobby({serverPath, startGame}) {
 	 *
 	 * @param      {string}  gameID  The game ID.
 	 */
-	function joinGame(gameID, nextState) {
-		// getGameInfo(gameID)
-		// 	.then(gameInfo => {
-		// 		console.log("Received game info", gameInfo)
-		// 		setGameInfo(gameInfo)
-		// 		setLobbyState("wait")
-		// 	})
-		setGameID(gameID)
-		setLobbyState(nextState)
+	function joinGame() {
+		setLobbyState("wait")
 	}
 
 	function backToEntry() {
-		setGameID("")
 		setLobbyState("entry")
 	}
 
 	const data = {
 		name: name,
+		gameID: gameID,
+		numPlayers: numPlayers,
+		numCats: numCats,
 		onNameChange: onNameChange,
+		onGameIDChange: onGameIDChange,
+		onNumPlayersChange: onNumPlayersChange,
+		onNumCatsChange: onNumCatsChange,
 		backToEntry: backToEntry,
 	}
 
@@ -91,15 +104,9 @@ function Lobby({serverPath, startGame}) {
 	else if (lobbyState === "create") {
 		return(<Create data={data} onCreateCreateClick={onCreateCreateClick} />)
 	}
-	else if (lobbyState === "wait-create") {
-		// console.log("xxx", gameInfo)
+	else if (lobbyState === "wait") {
 		console.log("name", name)
-		return(<Wait data={data} serverPath={serverPath} gameID={gameID} autoSit={true} startGame={startGame} />)
-	}
-	else if (lobbyState === "wait-join") {
-		// console.log("xxx", gameInfo)
-		console.log("name", name)
-		return(<Wait data={data} serverPath={serverPath} gameID={gameID} autoSit={false} startGame={startGame} />)
+		return(<Wait data={data} serverPath={serverPath} startGame={startGame} />)
 	}
 
 }
