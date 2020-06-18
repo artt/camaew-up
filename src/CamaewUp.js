@@ -1,8 +1,6 @@
-const NUM_CATS = 5
-
 function endSmallRound(G, ctx) {
 	console.log("End of small round.")
-	G.dice = Array(NUM_CATS).fill(0)
+	G.dice = Array(G.numCats).fill(0)
 }
 
 function moveCat(G, ctx, catID, roll) {
@@ -32,17 +30,18 @@ function moveCat(G, ctx, catID, roll) {
 }
 
 function rollDice(G, ctx) {
-	
+
 	// random dice first
 	const numDiceLeft = G.dice.filter(x => x === 0).length
 	const dieRolled = ctx.random.Die(numDiceLeft) - 1
 	const roll = ctx.random.Die(3)
 	let i = 0
 	let j = 0
-	for (j = 0; j < NUM_CATS; j ++) {
+	for (j = 0; j < G.numCats; j ++) {
 		if (G.dice[j] === 0) {
 			if (i === dieRolled) {
 				G.dice[j] = roll;
+				G.lastDiceRolled = j;
 				break
 			}
 			i ++
@@ -60,18 +59,25 @@ function rollDice(G, ctx) {
 
 }
 
+function makeSmallBet(G, playerID, bet) {
+
+	G.players[playerID].smallBets[bet].push(G.smallStack[bet].pop())
+
+}
+
 const CamaewUp = {
 	name: "CamaewUp",
-	setup: (ctx) => {
+	setup: (ctx, setupData) => {
 		let G = {
-			dice: Array(NUM_CATS).fill(0),
-			pos: Array(NUM_CATS).fill(-1),
+			numCats: setupData.numCats,
+			dice: Array(setupData.numCats).fill(0),
+			lastDiceRolled: -1,
+			pos: Array(setupData.numCats).fill(-1),
 			board: Array(16).fill({stack: [],
 														 mod: {}}),
-			players: Array(ctx.numPlayers).fill({name: "",
-																					 smallBet: [],
-																					 betCards: Array(NUM_CATS).fill(true)}),
-			smallStack: Array(NUM_CATS).fill([2, 3, 5]),
+			players: Array(ctx.numPlayers).fill({smallBets: Array(setupData.numCats).fill([]),
+																					 betCards: Array(setupData.numCats).fill(true)}),
+			smallStack: Array(setupData.numCats).fill([2, 3, 5]),
 			betWin: [],
 			betLose: []
 		}
@@ -80,6 +86,9 @@ const CamaewUp = {
 	moves: {
 		roll: (G, ctx) => {
 			rollDice(G, ctx)
+		},
+		makeSmallBet: (G, ctx, playerID, bet) => {
+			makeSmallBet(G, playerID, bet)
 		}
 	},
 	turn: {

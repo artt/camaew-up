@@ -20,13 +20,16 @@
 
 $token-colors: blue, green, orange, yellow, white;
 
-@for $i from 1 through length($token-colors) {
-	.token-#{$i} {
+.token {
 		width: 80px;
 		height: 30px;
 		border-radius: 5px;
 		margin: 5px;
 		text-align: center;
-		background-color: nth($token-colors, $i);
+}
+
+@for $i from 1 through length($token-colors) {
+	.tokencolor-#{$i} {
+		background: nth($token-colors, $i);
 	}
 }

@@ -9928,49 +9928,32 @@ h3 {
   bottom: 0;
 }
 
-.token-1 {
+.token {
   width: 80px;
   height: 30px;
   border-radius: 5px;
   margin: 5px;
   text-align: center;
-  background-color: blue;
 }
 
-.token-2 {
-  width: 80px;
-  height: 30px;
-  border-radius: 5px;
-  margin: 5px;
-  text-align: center;
-  background-color: green;
+.tokencolor-1 {
+  background: blue;
 }
 
-.token-3 {
-  width: 80px;
-  height: 30px;
-  border-radius: 5px;
-  margin: 5px;
-  text-align: center;
-  background-color: orange;
+.tokencolor-2 {
+  background: green;
 }
 
-.token-4 {
-  width: 80px;
-  height: 30px;
-  border-radius: 5px;
-  margin: 5px;
-  text-align: center;
-  background-color: yellow;
+.tokencolor-3 {
+  background: orange;
 }
 
-.token-5 {
-  width: 80px;
-  height: 30px;
-  border-radius: 5px;
-  margin: 5px;
-  text-align: center;
-  background-color: white;
+.tokencolor-4 {
+  background: yellow;
+}
+
+.tokencolor-5 {
+  background: white;
 }
 
 body {
