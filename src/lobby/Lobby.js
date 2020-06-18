@@ -19,19 +19,9 @@ function Lobby({serverPath, startGame}) {
 
 	let history = useHistory()
 	
-	const [name, setName] = React.useState("");
+	const [lobbyName, setLobbyName] = React.useState("");
+	const [lobbyGameID, setLobbyGameID] = React.useState("");
 	const [lobbyState, setLobbyState] = React.useState("entry");
-	const [gameID, setGameID] = React.useState("");
-
-
-	function onNameChange(event) {
-		setName(event.target.value);
-	}
-
-	function onGameIDChange(event) {
-		setGameID(event.target.value)
-	}
-
 
 	function onJoinClick() {
 		setLobbyState("join")
@@ -81,20 +71,20 @@ function Lobby({serverPath, startGame}) {
 	 * @param      {string}  gameID  The game ID.
 	 */
 	function joinGame(name, gameID) {
-		setName(name)
-		setGameID(gameID)
+		setLobbyName(name)
+		setLobbyGameID(gameID)
 		setLobbyState("wait")
 		history.push("/game/" + gameID)
 	}
 
 	function backToEntry() {
-		setGameID("")
+		// setGameID("")
 		setLobbyState("entry")
 	}
 
 	function JoinComponent() {
 		const {id} = useParams()
-		return(<Join defaultID={id} onJoinJoinClick={onJoinJoinClick} />)
+		return(<Join defaultID={id} onJoinJoinClick={onJoinJoinClick} setLobbyName={setLobbyName} setLobbyGameID={setLobbyGameID} />)
 	}
 
 	function JoinComponent2() {
@@ -102,13 +92,15 @@ function Lobby({serverPath, startGame}) {
 		if (id) {
 			return (<Redirect to={'/join/' + id} /> )
 		}
-		return(<Join onJoinJoinClick={onJoinJoinClick} />)
+		return(<Join onJoinJoinClick={onJoinJoinClick} setLobbyName={setLobbyName} setLobbyGameID={setLobbyGameID} />)
 	}
 
 	function WaitComponent() {
 		const {id} = useParams()
-		return(<Wait name={name} serverPath={serverPath} gameID={id} backToEntry={backToEntry} startGame={startGame} />)
+		return(<Wait name={lobbyName} serverPath={serverPath} gameID={id} backToEntry={backToEntry} startGame={startGame} />)
 	}
+
+	console.log("------", lobbyName, lobbyGameID)
 
 	if (lobbyState != "wait") {
 

@@ -3,7 +3,9 @@ import {Button, Form} from 'react-bootstrap'
 import { useHistory } from 'react-router-dom'
 
 // function Join({onJoinJoinClick, onGameIDChange, gameID}) {
-function Join({defaultID, onJoinJoinClick}) {
+function Join({defaultID, onJoinJoinClick, setLobbyName, setLobbyGameID}) {
+
+	const history = useHistory()
 
 	const [name, setName] = React.useState("");
 	const [gameID, setGameID] = React.useState("");
@@ -16,7 +18,6 @@ function Join({defaultID, onJoinJoinClick}) {
 		setGameID(event.target.value)
 	}
 
-	const history = useHistory()
 
 	React.useEffect(() => {
 		if (defaultID != undefined) {
