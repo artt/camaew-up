@@ -2,6 +2,7 @@ import React from 'react'
 import {ListGroup} from 'react-bootstrap'
 
 function Players({ctx, G, gameMetadata}) {
+	console.log(G)
 	return(
 		<div>
 			<ListGroup>
@@ -11,9 +12,9 @@ function Players({ctx, G, gameMetadata}) {
 						<ListGroup.Item active={x.id == ctx.currentPlayer}>
 							{x.name}
 							{
-								G.players[i].smallBets.map(
+								// G.players[i].smallBets.map(
 
-								)
+								// )
 							}
 						</ListGroup.Item>
 					);

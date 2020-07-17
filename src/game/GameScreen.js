@@ -21,7 +21,7 @@ function GameScreen({G, ctx, moves, playerID, gameMetadata}) {
 		<Fragment>
 			<div>Camaew Up!</div>
 			<div>
-				<Players ctx={ctx} gameMetadata={gameMetadata} />
+				<Players ctx={ctx} G={G} gameMetadata={gameMetadata} />
 			</div>
 			<div>
 				<Button variant="primary" onClick={roll}>Roll</Button>
