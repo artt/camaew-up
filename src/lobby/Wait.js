@@ -99,7 +99,7 @@ function Wait({data, serverPath, startGame}) {
 		data.backToEntry()
 	}
 
-	function dialog(text, showState, setShowState, onConfirm) {
+	function dialog(text, showState, setShowState) {
 		// defaults
 		if (text.confirm === undefined) text.confirm = "Confirm"
 		return(
@@ -137,9 +137,9 @@ function Wait({data, serverPath, startGame}) {
 				</div>
 				<div>
 				{
-					gameInfo.players.map(x => {
+					gameInfo.players.map((x, i) => {
 						return(
-							<div>
+							<div key={i}>
 								{x.id} - {x.name}
 							</div>
 						);
@@ -160,7 +160,7 @@ function Wait({data, serverPath, startGame}) {
 						body: "Are you sure you'd like to leave?",
 						confirm: "Leave"
 					},
-					showConfirmLeave, setShowConfirmLeave, setShowConfirmLeave)}
+					showConfirmLeave, setShowConfirmLeave)}
 
 			</div>
 

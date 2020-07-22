@@ -9,7 +9,7 @@ function SmallStack({stack, makeSmallBet}) {
 			{
 				stack.map((x, i) => {
 					return(
-						<ListGroup.Item className={`tokencolor-${i+1}`} onClick={() => makeSmallBet(i)}>
+						<ListGroup.Item className={`tokencolor-${i+1}`} onClick={() => makeSmallBet(i)} key={i}>
 							{x[x.length - 1]}
 						</ListGroup.Item>
 					);

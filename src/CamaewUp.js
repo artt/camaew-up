@@ -70,6 +70,25 @@ function makeBigBet(G, playerID, bet, side) {
 	G.players[playerID].betCards[bet] = false
 }
 
+function placeMod(G, playerID, key, type) {
+	console.log("=------------------")
+	console.log(G)
+	console.log(playerID, key, type)
+	if (G.board[key-1].mod !== null || G.board[key+1].mod !== null)
+		console.error("Cannot place mod adjacent to older mods.")
+	if (!G.players[playerID].hasMod)
+		console.error("Player has already placed his/her mod.")
+	G.board[key].mod = {playerID: playerID, type: type}
+	G.players[playerID].hasMod = false
+}
+
+function removeMod(G, playerID, key) {
+	if (G.board[key].mod.playerID !== playerID)
+		console.error("Invalid removal request.")
+	G.board[key].mod = null
+	G.players[playerID].hasMod = true
+}
+
 const CamaewUp = {
 	name: "CamaewUp",
 	setup: (ctx, setupData) => {
@@ -79,7 +98,7 @@ const CamaewUp = {
 			lastDiceRolled: -1,
 			pos: Array(setupData.numCats).fill(-1),
 			board: Array(16).fill({stack: [],
-														 mod: {}}),
+														 mod: null}),
 			players: Array(ctx.numPlayers).fill({smallBets: Array(setupData.numCats).fill([]),
 																					 betCards: Array(setupData.numCats).fill(true),
 																					 hasMod: true}),
@@ -97,6 +116,12 @@ const CamaewUp = {
 		},
 		makeBigBet: (G, ctx, playerID, bet, side) => {
 			makeBigBet(G, playerID, bet, side)
+		},
+		placeMod: (G, ctx, playerID, key, type) => {
+			placeMod(G, playerID, key, type)
+		},
+		removeMod: (G, ctx, playerID, key) => {
+			removeMod(G, playerID, key)
 		}
 	},
 	turn: {

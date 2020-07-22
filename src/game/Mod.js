@@ -1,10 +1,9 @@
 import React from 'react'
 
-export default function Mod() {
+export default function Mod({hasMod, playerID}) {
 
 	function drag(e) {
-		console.log("cxx")
-		// e.dataTransfer.setData("betID", e.target.getAttribute("betID"))
+		e.dataTransfer.setData("playerID", e.target.getAttribute("player_id"))
 	}
 
 	return(
@@ -14,8 +13,9 @@ export default function Mod() {
 					<div
 							className="card"
 							draggable="true"
+							player_id={playerID}
 							onDragStart={drag}>
-						X
+						{hasMod ? "X" : "–"}
 					</div>
 			</div>
 		</div>

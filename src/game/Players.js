@@ -8,12 +8,12 @@ function Players({currentPlayer, players, gameMetadata}) {
 			{
 				gameMetadata.map((x, i) => {
 					return(
-						<ListGroup.Item active={x.id === Number(currentPlayer)} className="flex">
+						<ListGroup.Item active={x.id === Number(currentPlayer)} className="flex" key={"player" + i}>
 							{x.name}
 							{
 								players[i].smallBets.map((color, j) => {
 									return(
-										<React.Fragment>
+										<React.Fragment key={"smallBets" + j}>
 											{
 												color.map(card => {
 													return <div className={`tokencolor-${j+1} card`}>{card}</div>

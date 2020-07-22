@@ -6,7 +6,7 @@ export default function BetCards({cards}) {
 
 	function drag(e) {
 		// console.log(e.target.getAttribute("betID"))
-		e.dataTransfer.setData("betID", e.target.getAttribute("betID"))
+		e.dataTransfer.setData("betID", e.target.getAttribute("bet_id"))
 	}
 
 	return(
@@ -19,9 +19,10 @@ export default function BetCards({cards}) {
 							return(
 								<div
 										className={`tokencolor-${i+1} card`}
-										betID={i}
+										bet_id={i}
 										draggable="true"
-										onDragStart={drag}>
+										onDragStart={drag}
+										key={"betCards" + i}>
 									X
 								</div>
 							)
