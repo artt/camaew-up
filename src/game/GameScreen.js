@@ -1,8 +1,10 @@
-import React, {Fragment} from 'react'
+import React from 'react'
 import RaceTrack from './RaceTrack'
 import Players from './Players'
 import RolledDice from './RolledDice'
 import SmallStack from './SmallStack'
+import BetCards from './BetCards'
+import BetZone from './BetZone'
 import {Button} from 'react-bootstrap'
 
 function GameScreen({G, ctx, moves, playerID, gameMetadata}) {
@@ -15,11 +17,16 @@ function GameScreen({G, ctx, moves, playerID, gameMetadata}) {
 		moves.makeSmallBet(playerID, bet)
 	}
 
+	function makeBigBet(playerID, bet, side) {
+		console.log("bigbet...", playerID, bet, side)
+		moves.makeBigBet(playerID, bet, side)
+	}
+
 	// console.log(gameMetadata)
 
 	return(
-		<Fragment>
-			<div>Camaew Up!</div>
+		<React.Fragment>
+			<div className="section">Camaew Up!</div>
 			<div>
 				<Players ctx={ctx} G={G} gameMetadata={gameMetadata} />
 			</div>
@@ -29,7 +36,12 @@ function GameScreen({G, ctx, moves, playerID, gameMetadata}) {
 				<SmallStack G={G} makeSmallBet={makeSmallBet} />
 			</div>
 			<RaceTrack G={G} />
-		</Fragment>
+			<div>
+				<BetCards G={G} playerID={playerID} makeBigBet={makeBigBet} />
+				<BetZone G={G} playerID={playerID} makeBigBet={makeBigBet} side="win" />
+				<BetZone G={G} playerID={playerID} makeBigBet={makeBigBet} side="lose" />
+			</div>
+		</React.Fragment>
 	);
 
 }

@@ -9938,26 +9938,53 @@ h3 {
 
 .tokencolor-1 {
   background: blue;
+  color: white;
 }
 
 .tokencolor-2 {
   background: green;
+  color: white;
 }
 
 .tokencolor-3 {
   background: orange;
+  color: black;
 }
 
 .tokencolor-4 {
   background: yellow;
+  color: black;
 }
 
 .tokencolor-5 {
   background: white;
+  color: black;
+}
+
+.players {
+  width: 300px;
+}
+
+.flex {
+  display: flex;
+}
+
+.card {
+  padding: 0 0.5rem;
+  border-radius: 0.25rem;
+  margin: 0 0.1rem;
+}
+
+.betzone {
+  height: 200px;
+  width: 200px;
+  background: rgba(255, 255, 255, 0.3);
+  margin: 1rem;
 }
 
 body {
   background: #384a5d;
+  padding: 1rem;
 }
 
 .lobby {
@@ -9993,6 +10020,10 @@ body {
 
 .btn {
   box-shadow: none !important;
+}
+
+.section {
+  color: white;
 }
 
 /*# sourceMappingURL=style.css.map */

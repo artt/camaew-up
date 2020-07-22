@@ -1,10 +1,10 @@
 import React from 'react'
-import {Button, ListGroup} from 'react-bootstrap'
+import {ListGroup} from 'react-bootstrap'
 
 function SmallStack({G, makeSmallBet}) {
 	return(
 		<div>
-			SmallStack
+			<div className="section">SmallStack</div>
 			<ListGroup horizontal>
 			{
 				G.smallStack.map((x, i) => {

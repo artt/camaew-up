@@ -31,5 +31,33 @@ $token-colors: blue, green, orange, yellow, white;
 @for $i from 1 through length($token-colors) {
 	.tokencolor-#{$i} {
 		background: nth($token-colors, $i);
+		$x: nth($token-colors, $i);
+		@if 0.2126*red($x) + 0.7152*green($x) + 0.0722*blue($x) > 96% {
+			color: black;
+		}
+		@else {
+			color: white;
+		}
 	}
+}
+
+.players {
+	width: 300px;
+}
+
+.flex {
+	display: flex;
+}
+
+.card {
+	padding: 0 0.5rem;
+	border-radius: 0.25rem;
+	margin: 0 0.1rem;
+}
+
+.betzone {
+	height: 200px;
+	width: 200px;
+	background: rgba(255, 255, 255, 0.3);
+	margin: 1rem;
 }

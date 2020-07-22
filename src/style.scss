@@ -9,6 +9,7 @@ $color-4: #C0886C;
 
 body {
 	background: darken($color-1, 10%);
+	padding: 1rem;
 }
 
 $lobby-width: 500px;
@@ -50,4 +51,8 @@ $lobby-height: 300px;
 
 .btn{
 	box-shadow: none !important;
+}
+
+.section {
+	color: white;
 }

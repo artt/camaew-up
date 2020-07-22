@@ -60,9 +60,14 @@ function rollDice(G, ctx) {
 }
 
 function makeSmallBet(G, playerID, bet) {
-
 	G.players[playerID].smallBets[bet].push(G.smallStack[bet].pop())
+}
 
+function makeBigBet(G, playerID, bet, side) {
+	if (!G.players[playerID].betCards[bet])
+		console.error("Card has already been played.")
+	G.bigStack[side].push({player: playerID, bet: bet})
+	G.players[playerID].betCards[bet] = false
 }
 
 const CamaewUp = {
@@ -78,8 +83,7 @@ const CamaewUp = {
 			players: Array(ctx.numPlayers).fill({smallBets: Array(setupData.numCats).fill([]),
 																					 betCards: Array(setupData.numCats).fill(true)}),
 			smallStack: Array(setupData.numCats).fill([2, 3, 5]),
-			betWin: [],
-			betLose: []
+			bigStack: {"win": [], "lose": []}
 		}
 		return G
 	},
@@ -89,6 +93,9 @@ const CamaewUp = {
 		},
 		makeSmallBet: (G, ctx, playerID, bet) => {
 			makeSmallBet(G, playerID, bet)
+		},
+		makeBigBet: (G, ctx, playerID, bet, side) => {
+			makeBigBet(G, playerID, bet, side)
 		}
 	},
 	turn: {
