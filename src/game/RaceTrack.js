@@ -1,15 +1,14 @@
 import React from 'react'
 import Cell from './Cell'
 
-function RaceTrack({G}) {
+export default function RaceTrack({board}) {
 	return(
 		<div className="board">
 			{
-				G.board.map((cell, i) => <Cell cellData={cell} key={i} />)
+				board.map((cell, i) => <Cell cellData={cell} key={i} />)
 			}
 		</div>
 	)
 }
 
-export default RaceTrack;
-
+RaceTrack;

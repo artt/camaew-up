@@ -2,7 +2,7 @@ import React from 'react'
 
 
 
-export default function BetCards({G, playerID, makeBigBet}) {
+export default function BetCards({cards}) {
 
 	function drag(e) {
 		// console.log(e.target.getAttribute("betID"))
@@ -14,7 +14,7 @@ export default function BetCards({G, playerID, makeBigBet}) {
 			<div className="section">Bet Cards</div>
 				<div className="flex">
 				{
-					G.players[playerID].betCards.map((x, i) => {
+					cards.map((x, i) => {
 						if (x) {
 							return(
 								<div

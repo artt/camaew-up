@@ -81,7 +81,8 @@ const CamaewUp = {
 			board: Array(16).fill({stack: [],
 														 mod: {}}),
 			players: Array(ctx.numPlayers).fill({smallBets: Array(setupData.numCats).fill([]),
-																					 betCards: Array(setupData.numCats).fill(true)}),
+																					 betCards: Array(setupData.numCats).fill(true),
+																					 hasMod: true}),
 			smallStack: Array(setupData.numCats).fill([2, 3, 5]),
 			bigStack: {"win": [], "lose": []}
 		}

@@ -5,6 +5,7 @@ import RolledDice from './RolledDice'
 import SmallStack from './SmallStack'
 import BetCards from './BetCards'
 import BetZone from './BetZone'
+import Mod from './Mod'
 import {Button} from 'react-bootstrap'
 
 function GameScreen({G, ctx, moves, playerID, gameMetadata}) {
@@ -22,24 +23,23 @@ function GameScreen({G, ctx, moves, playerID, gameMetadata}) {
 		moves.makeBigBet(playerID, bet, side)
 	}
 
-	// console.log(gameMetadata)
-
 	return(
 		<React.Fragment>
 			<div className="section">Camaew Up!</div>
 			<div>
-				<Players ctx={ctx} G={G} gameMetadata={gameMetadata} />
+				<Players currentPlayer={ctx.currentPlayer} players={G.players} gameMetadata={gameMetadata} />
 			</div>
 			<div>
 				<Button variant="primary" onClick={roll}>Roll</Button>
-				<RolledDice G={G} />
-				<SmallStack G={G} makeSmallBet={makeSmallBet} />
+				<RolledDice dice={G.dice} />
+				<SmallStack stack={G.smallStack} makeSmallBet={makeSmallBet} />
+				<Mod />
 			</div>
-			<RaceTrack G={G} />
-			<div>
-				<BetCards G={G} playerID={playerID} makeBigBet={makeBigBet} />
-				<BetZone G={G} playerID={playerID} makeBigBet={makeBigBet} side="win" />
-				<BetZone G={G} playerID={playerID} makeBigBet={makeBigBet} side="lose" />
+			<RaceTrack board={G.board} />
+			<div className="flex">
+				<BetCards cards={G.players[playerID].betCards} />
+				<BetZone stack={G.bigStack} playerID={playerID} makeBigBet={makeBigBet} side="win" />
+				<BetZone stack={G.bigStack} playerID={playerID} makeBigBet={makeBigBet} side="lose" />
 			</div>
 		</React.Fragment>
 	);

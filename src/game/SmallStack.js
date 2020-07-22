@@ -1,15 +1,17 @@
 import React from 'react'
 import {ListGroup} from 'react-bootstrap'
 
-function SmallStack({G, makeSmallBet}) {
+function SmallStack({stack, makeSmallBet}) {
 	return(
 		<div>
 			<div className="section">SmallStack</div>
 			<ListGroup horizontal>
 			{
-				G.smallStack.map((x, i) => {
+				stack.map((x, i) => {
 					return(
-						<ListGroup.Item className={`tokencolor-${i+1}`} onClick={() => makeSmallBet(i)}>{x[x.length - 1]}</ListGroup.Item>
+						<ListGroup.Item className={`tokencolor-${i+1}`} onClick={() => makeSmallBet(i)}>
+							{x[x.length - 1]}
+						</ListGroup.Item>
 					);
 				})
 			}

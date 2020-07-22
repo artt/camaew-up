@@ -1,6 +1,6 @@
 import React from 'react'
 
-export default function BetZone({G, playerID, makeBigBet, side}) {
+export default function BetZone({stack, playerID, makeBigBet, side}) {
 
 	function allowDrop(e) {
 	  e.preventDefault();
@@ -14,7 +14,7 @@ export default function BetZone({G, playerID, makeBigBet, side}) {
 
 	return(
 		<div className="betzone" onDragOver={allowDrop} onDrop={drop}>
-			{`${side}: ${G.bigStack[side].length}`}
+			{`${side}: ${stack[side].length}`}
 		</div>
 	)
 
