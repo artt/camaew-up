@@ -5,7 +5,6 @@ import React from 'react'
 export default function BetCards({cards}) {
 
 	function drag(e) {
-		// console.log(e.target.getAttribute("betID"))
 		e.dataTransfer.setData("betID", e.target.getAttribute("bet_id"))
 	}
 

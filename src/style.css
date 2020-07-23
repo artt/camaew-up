@@ -9982,6 +9982,14 @@ h3 {
   margin: 1rem;
 }
 
+.tape {
+  background: red;
+}
+
+.cucumber {
+  background: green;
+}
+
 body {
   background: #384a5d;
   padding: 1rem;

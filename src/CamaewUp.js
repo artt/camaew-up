@@ -3,7 +3,7 @@ function endSmallRound(G, ctx) {
 	G.dice = Array(G.numCats).fill(0)
 }
 
-function moveCat(G, ctx, catID, roll) {
+async function moveCat(G, ctx, catID, roll) {
 	
 	const curCellNum = G.pos[catID]
 	let curStack = []
@@ -26,6 +26,58 @@ function moveCat(G, ctx, catID, roll) {
 	for (let i = 0; i < curStack.length; i ++) {
 		G.pos[curStack[i]] += roll	
 	}
+
+	G.cleanUp = curCellNum + roll
+
+	// await new Promise(r => setTimeout(r, 1000));
+	// // setTimeout(() => resolveBoard(G, ctx, curCellNum + roll), 1000)
+	// resolveBoard(G, ctx, curCellNum + roll)
+
+}
+
+function resolveBoard(G, ctx) {
+
+	const mod = G.board[G.cleanUp].mod
+	console.log("Resolving board...")
+
+	if (mod === null) {
+		console.log("Nothing to resolve.")
+		return
+	}
+	else {
+		// console.log("Before", G.board)
+		const curStack = G.board[G.cleanUp].stack
+		G.board[G.cleanUp].stack = []
+		if (mod.type === "tape") {
+			G.board[G.cleanUp - 1].stack = curStack.concat(G.board[G.cleanUp - 1].stack)
+			// console.log("xxx", curStack, curStack.length)
+			for (let i = 0; i < curStack.length; i ++) {
+				// console.log("updating", i)
+				// console.log(G.cleanUp + 1)
+				// console.log(curStack[i])
+				// console.log(G.pos)
+				G.pos[curStack[i]] = G.cleanUp - 1
+				// console.log(G.pos)
+			}
+			console.log("Got tape", G)
+		}
+		else if (mod.type === "cucumber") {
+			G.board[G.cleanUp + 1].stack = G.board[G.cleanUp + 1].stack.concat(curStack)
+			// console.log("xxx", curStack, curStack.length)
+			for (let i = 0; i < curStack.length; i ++) {
+				// console.log("updating", i)
+				// console.log(G.cleanUp + 1)
+				// console.log(curStack[i])
+				// console.log(G.pos)
+				G.pos[curStack[i]] = G.cleanUp + 1
+				// console.log(G.pos)
+			}
+			console.log("Got cucumber", G)
+		}
+		// console.log("After", G.board)
+	}
+
+	return G
 
 }
 
@@ -64,29 +116,22 @@ function makeSmallBet(G, playerID, bet) {
 }
 
 function makeBigBet(G, playerID, bet, side) {
-	if (!G.players[playerID].betCards[bet])
-		console.error("Card has already been played.")
 	G.bigStack[side].push({player: playerID, bet: bet})
 	G.players[playerID].betCards[bet] = false
 }
 
-function placeMod(G, playerID, key, type) {
-	console.log("=------------------")
-	console.log(G)
-	console.log(playerID, key, type)
-	if (G.board[key-1].mod !== null || G.board[key+1].mod !== null)
-		console.error("Cannot place mod adjacent to older mods.")
-	if (!G.players[playerID].hasMod)
-		console.error("Player has already placed his/her mod.")
-	G.board[key].mod = {playerID: playerID, type: type}
+function placeMod(G, playerID, cellID, type) {
+	G.board[cellID].mod = {playerID: playerID, type: type}
 	G.players[playerID].hasMod = false
 }
 
-function removeMod(G, playerID, key) {
-	if (G.board[key].mod.playerID !== playerID)
-		console.error("Invalid removal request.")
-	G.board[key].mod = null
+function removeMod(G, playerID, cellID) {
+	G.board[cellID].mod = null
 	G.players[playerID].hasMod = true
+}
+
+function reverseMod(G, cellID) {
+	G.board[cellID].mod.type = G.board[cellID].mod.type === "tape" ? "cucumber" : "tape"
 }
 
 const CamaewUp = {
@@ -96,6 +141,7 @@ const CamaewUp = {
 			numCats: setupData.numCats,
 			dice: Array(setupData.numCats).fill(0),
 			lastDiceRolled: -1,
+			cleanUp: -1,
 			pos: Array(setupData.numCats).fill(-1),
 			board: Array(16).fill({stack: [],
 														 mod: null}),
@@ -110,6 +156,7 @@ const CamaewUp = {
 	moves: {
 		roll: (G, ctx) => {
 			rollDice(G, ctx)
+			resolveBoard(G, ctx)
 		},
 		makeSmallBet: (G, ctx, playerID, bet) => {
 			makeSmallBet(G, playerID, bet)
@@ -117,11 +164,20 @@ const CamaewUp = {
 		makeBigBet: (G, ctx, playerID, bet, side) => {
 			makeBigBet(G, playerID, bet, side)
 		},
-		placeMod: (G, ctx, playerID, key, type) => {
-			placeMod(G, playerID, key, type)
+		placeMod: (G, ctx, playerID, cellID, type) => {
+			placeMod(G, playerID, cellID, type)
 		},
-		removeMod: (G, ctx, playerID, key) => {
-			removeMod(G, playerID, key)
+		removeMod: (G, ctx, playerID, cellID) => {
+			removeMod(G, playerID, cellID)
+		},
+		flipMod: (G, ctx, playerID, cellID) => {
+			const newType = G.board[cellID].mod.type === "tape" ? "cucumber" : "tape"
+			removeMod(G, playerID, cellID)
+			placeMod(G, playerID, cellID, newType)
+		},
+		moveMod: (G, ctx, playerID, oldCellID, newCellID, type) => {
+			removeMod(G, playerID, oldCellID)
+			placeMod(G, playerID, newCellID, type)
 		}
 	},
 	turn: {

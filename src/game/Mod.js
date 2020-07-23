@@ -4,6 +4,7 @@ export default function Mod({hasMod, playerID}) {
 
 	function drag(e) {
 		e.dataTransfer.setData("playerID", e.target.getAttribute("player_id"))
+		e.dataTransfer.setData("type", "place")
 	}
 
 	return(
@@ -12,7 +13,7 @@ export default function Mod({hasMod, playerID}) {
 				<div className="flex">
 					<div
 							className="card"
-							draggable="true"
+							draggable={hasMod}
 							player_id={playerID}
 							onDragStart={drag}>
 						{hasMod ? "X" : "–"}

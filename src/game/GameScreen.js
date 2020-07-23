@@ -23,28 +23,27 @@ function GameScreen({G, ctx, moves, playerID, gameMetadata}) {
 		moves.makeBigBet(playerID, bet, side)
 	}
 
-	function placeMod(playerID, key, type) {
-		console.log("Trying to place mod:", playerID, key, type)
-		if (G.board[key-1].mod !== null || G.board[key+1].mod !== null) {
-			console.error("Cannot place mod adjacent to older mods.")
-			return
-		}
-		if (!G.players[playerID].hasMod) {
-			console.error("Player has already placed his/her mod.")
-			return
-		}
-		if (G.board[key].stack.length > 0) {
-			console.error("Cannot place mod where cats are.")
-			return
-		}
-		moves.placeMod(playerID, key, type)
+	function placeMod(playerID, cellID, type) {
+		console.log("Trying to place mod:", playerID, cellID, type)
+		moves.placeMod(playerID, cellID, type)
 	}
 
-	function removeMod(playerID, key) {
-		moves.removeMod(playerID, key)
+	function removeMod(playerID, cellID) {
+		console.log("Remove mod")
+		moves.removeMod(playerID, cellID)
 	}
 
-	return(
+	function flipMod(playerID, cellID) {
+		console.log("Flip mod")
+		moves.flipMod(playerID, cellID)
+	}
+
+	function moveMod(playerID, oldCellID, newCellID, type) {
+		console.log("Move mod")
+		moves.moveMod(playerID, oldCellID, newCellID, type)
+	}
+
+	return (
 		<React.Fragment>
 			<div className="section">Camaew Up!</div>
 			<div>
@@ -56,7 +55,14 @@ function GameScreen({G, ctx, moves, playerID, gameMetadata}) {
 				<SmallStack stack={G.smallStack} makeSmallBet={makeSmallBet} />
 				<Mod hasMod={G.players[playerID].hasMod} playerID={playerID} />
 			</div>
-			<RaceTrack board={G.board} placeMod={placeMod} removeMod={removeMod} />
+			<RaceTrack
+					G={G}
+					playerID={playerID}
+					gameMetadata={gameMetadata}
+					placeMod={placeMod}
+					moveMod={moveMod}
+					removeMod={removeMod}
+					flipMod={flipMod} />
 			<div className="flex">
 				<BetCards cards={G.players[playerID].betCards} />
 				<BetZone stack={G.bigStack} playerID={playerID} makeBigBet={makeBigBet} side="win" />
