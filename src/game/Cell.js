@@ -1,6 +1,6 @@
 import React from 'react';
 
-export default function Cell({cellData, cell_id, gameMetadata, prePlaceMod, preMoveMod, preFlipMod}) {
+export default function Cell({cellData, cell_id, playerID, gameMetadata, prePlaceMod, preMoveMod, preFlipMod}) {
 
 	function allowDrop(e) {
 		e.preventDefault();
@@ -36,7 +36,7 @@ export default function Cell({cellData, cell_id, gameMetadata, prePlaceMod, preM
 			{cellData.mod &&
 				<div className={`cell-mod card ${cellData.mod.type}`}
 						onClick={handleModClick}
-						draggable="true"
+						draggable={playerID == cellData.mod.playerID}
 						onDragStart={drag}>
 					{gameMetadata[cellData.mod.playerID].name}
 				</div>

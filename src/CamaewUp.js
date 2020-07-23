@@ -1,6 +1,27 @@
+function rankCats(G) {
+	let indices = Array.from(new Array(G.numCats), (x, i) => i)
+	indices.sort((a, b) => {
+		if (G.pos[a] !== G.pos[b])
+			return G.pos[b] - G.pos[a]
+		else {
+			// break tie with stack order
+			const stack = G.board[G.pos[a]].stack
+			return stack.indexOf(b) - stack.indexOf(a)
+		}
+	});
+	return indices;
+}
+
 function endSmallRound(G, ctx) {
 	console.log("End of small round.")
 	G.dice = Array(G.numCats).fill(0)
+	const rank = rankCats(G)
+	console.log("Ranking:", rank)
+	for (let i = 0; i < ctx.numPlayers; i ++) {
+		for (let j = 0; j < G.numCats; j ++) {
+			// reward for small rounds
+		}
+	}
 }
 
 async function moveCat(G, ctx, catID, roll) {
@@ -38,46 +59,29 @@ async function moveCat(G, ctx, catID, roll) {
 function resolveBoard(G, ctx) {
 
 	const mod = G.board[G.cleanUp].mod
-	console.log("Resolving board...")
 
 	if (mod === null) {
-		console.log("Nothing to resolve.")
 		return
 	}
 	else {
-		// console.log("Before", G.board)
+		G.players[mod.playerID].coins += 1
 		const curStack = G.board[G.cleanUp].stack
 		G.board[G.cleanUp].stack = []
 		if (mod.type === "tape") {
 			G.board[G.cleanUp - 1].stack = curStack.concat(G.board[G.cleanUp - 1].stack)
-			// console.log("xxx", curStack, curStack.length)
 			for (let i = 0; i < curStack.length; i ++) {
-				// console.log("updating", i)
-				// console.log(G.cleanUp + 1)
-				// console.log(curStack[i])
-				// console.log(G.pos)
 				G.pos[curStack[i]] = G.cleanUp - 1
-				// console.log(G.pos)
 			}
-			console.log("Got tape", G)
+			console.log("Got taped")
 		}
 		else if (mod.type === "cucumber") {
 			G.board[G.cleanUp + 1].stack = G.board[G.cleanUp + 1].stack.concat(curStack)
-			// console.log("xxx", curStack, curStack.length)
 			for (let i = 0; i < curStack.length; i ++) {
-				// console.log("updating", i)
-				// console.log(G.cleanUp + 1)
-				// console.log(curStack[i])
-				// console.log(G.pos)
 				G.pos[curStack[i]] = G.cleanUp + 1
-				// console.log(G.pos)
 			}
-			console.log("Got cucumber", G)
+			console.log("Got cucumbered")
 		}
-		// console.log("After", G.board)
 	}
-
-	return G
 
 }
 
@@ -145,9 +149,10 @@ const CamaewUp = {
 			pos: Array(setupData.numCats).fill(-1),
 			board: Array(16).fill({stack: [],
 														 mod: null}),
-			players: Array(ctx.numPlayers).fill({smallBets: Array(setupData.numCats).fill([]),
-																					 betCards: Array(setupData.numCats).fill(true),
-																					 hasMod: true}),
+			players: Array(ctx.numPlayers).fill({coins: 0,
+																						smallBets: Array(setupData.numCats).fill([]),
+																						betCards: Array(setupData.numCats).fill(true),
+																						hasMod: true}),
 			smallStack: Array(setupData.numCats).fill([2, 3, 5]),
 			bigStack: {"win": [], "lose": []}
 		}

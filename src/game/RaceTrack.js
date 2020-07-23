@@ -19,11 +19,14 @@ export default function RaceTrack({G, playerID, gameMetadata, placeMod, moveMod,
 			console.error("Cannot place mod where cats are.")
 			return
 		}
-		if (cellID > 0 && G.board[cellID-1].mod !== null || cellID < G.board.length - 1 && G.board[cellID+1].mod !== null) {
+		if ((cellID > 0 && G.board[cellID-1].mod !== null && G.board[cellID-1].mod.playerID !== playerID)
+				|| (cellID < G.board.length - 1 && G.board[cellID+1].mod !== null && G.board[cellID+1].mod !== playerID)) {
 			console.error("Cannot place mod adjacent to an existing mod.")
 			return
 		}
 		if (G.board[cellID].mod !== null) {
+			if (G.board[cellID].mod.playerID === playerID)
+				return
 			console.error("Cannot place mod on top of an existing mod.")
 			return
 		}
@@ -113,6 +116,7 @@ export default function RaceTrack({G, playerID, gameMetadata, placeMod, moveMod,
 																			cellData={cell}
 																			key={i}
 																			cell_id={i}
+																			playerID={playerID}
 																			gameMetadata={gameMetadata}
 																			prePlaceMod={prePlaceMod}
 																			preFlipMod={preFlipMod}

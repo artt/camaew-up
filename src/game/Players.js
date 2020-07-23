@@ -9,7 +9,7 @@ function Players({currentPlayer, players, gameMetadata}) {
 				gameMetadata.map((x, i) => {
 					return(
 						<ListGroup.Item active={x.id === Number(currentPlayer)} className="flex" key={"player" + i}>
-							{x.name}
+							{`${x.name} (${players[i].coins})`}
 							{
 								players[i].smallBets.map((color, j) => {
 									return(

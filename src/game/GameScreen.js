@@ -43,6 +43,9 @@ function GameScreen({G, ctx, moves, playerID, gameMetadata}) {
 		moves.moveMod(playerID, oldCellID, newCellID, type)
 	}
 
+	// convert string back to number for easier processing
+	playerID = Number(playerID)
+
 	return (
 		<React.Fragment>
 			<div className="section">Camaew Up!</div>
