@@ -11,11 +11,12 @@ import {Button} from 'react-bootstrap'
 function GameScreen({G, ctx, moves, playerID, gameMetadata}) {
 
 	function roll() {
-		moves.roll()
+		moves.roll(playerID)
 	}
 
 	function makeSmallBet(bet) {
-		moves.makeSmallBet(playerID, bet)
+		if (G.smallStack[bet].length > 0)
+			moves.makeSmallBet(playerID, bet)
 	}
 
 	function makeBigBet(playerID, bet, side) {
@@ -28,9 +29,9 @@ function GameScreen({G, ctx, moves, playerID, gameMetadata}) {
 		moves.placeMod(playerID, cellID, type)
 	}
 
-	function removeMod(playerID, cellID) {
+	function removeMod(playerID) {
 		console.log("Remove mod")
-		moves.removeMod(playerID, cellID)
+		moves.removeMod(playerID)
 	}
 
 	function flipMod(playerID, cellID) {
@@ -38,9 +39,9 @@ function GameScreen({G, ctx, moves, playerID, gameMetadata}) {
 		moves.flipMod(playerID, cellID)
 	}
 
-	function moveMod(playerID, oldCellID, newCellID, type) {
+	function moveMod(playerID, newCellID, type) {
 		console.log("Move mod")
-		moves.moveMod(playerID, oldCellID, newCellID, type)
+		moves.moveMod(playerID, newCellID, type)
 	}
 
 	// convert string back to number for easier processing
@@ -56,7 +57,7 @@ function GameScreen({G, ctx, moves, playerID, gameMetadata}) {
 				<Button variant="primary" onClick={roll}>Roll</Button>
 				<RolledDice dice={G.dice} />
 				<SmallStack stack={G.smallStack} makeSmallBet={makeSmallBet} />
-				<Mod hasMod={G.players[playerID].hasMod} playerID={playerID} />
+				<Mod hasMod={G.players[playerID].modPos === -1} playerID={playerID} />
 			</div>
 			<RaceTrack
 					G={G}

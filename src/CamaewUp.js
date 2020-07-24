@@ -1,4 +1,12 @@
-import {sum} from 'lodash'
+import {sum, cloneDeep} from 'lodash'
+
+function genArray(size, data) {
+	let a = new Array(size );
+	for (let i = 0; i < size; i ++) {
+		a[i] = cloneDeep(data);
+	}
+	return a
+}
 
 function rankCats(G) {
 	let indices = Array.from(new Array(G.numCats), (x, i) => i)
@@ -27,8 +35,10 @@ function endSmallRound(G, ctx) {
 
 	// get ranks
 	const rank = rankCats(G)
-	console.log("Ranking:", rank)
+	
 	for (let i = 0; i < ctx.numPlayers; i ++) {
+		
+		// small bets
 		let smallBetWins = 0
 		smallBetWins += sum(G.players[i].smallBets[rank[0]])
 		smallBetWins += G.players[i].smallBets[rank[1]].length
@@ -38,11 +48,54 @@ function endSmallRound(G, ctx) {
 		console.log("Small bet wins for", i, smallBetWins)
 		G.players[i].coins += smallBetWins
 		G.players[i].smallBets = Array(G.numCats).fill([])
+	
+		// remove mods
+		removeMod(G, i)
+
 	}
+
+	G.smallStack = Array(G.numCats).fill([2, 3, 5])
+
 }
 
-async function moveCat(G, ctx, catID, roll) {
-	
+function endRace(G, ctx) {
+	console.log("End of race.")
+	const rank = rankCats(G)
+
+	// winning pile
+	let winnings = [1, 2, 3, 5, 8]
+	for (let i = 0; i < G.bigStack.win.length; i ++) {
+		const curBet = G.bigStack.win[i]
+		if (curBet.bet === rank[0]) {
+			// winning bet
+			G.players[curBet.playerID].coins += winnings.pop()
+		}
+		else {
+			G.players[curBet.playerID].coins -= 1
+		}
+		if (winnings.length === 0)
+			winnings = [1]
+	}
+
+	// losing pile
+	let losings = [1, 2, 3, 5, 8]
+	for (let i = 0; i < G.bigStack.lose.length; i ++) {
+		const curBet = G.bigStack.lose[i]
+		if (curBet.bet === rank[G.numCats - 1]) {
+			// winning bet
+			G.players[curBet.playerID].coins += losings.pop()
+		}
+		else {
+			G.players[curBet.playerID].coins -= 1
+		}
+		if (losings.length === 0)
+			losings = [1]
+	}
+
+}
+
+function moveCat(G, ctx, catID, roll) {
+
 	const curCellNum = G.pos[catID]
 	let curStack = []
 
@@ -57,7 +110,6 @@ async function moveCat(G, ctx, catID, roll) {
 	else {
 		curStack = [catID]
 	}
-
 	// update new cell
 	G.board[curCellNum + roll].stack = G.board[curCellNum + roll].stack.concat(curStack)
 
@@ -102,7 +154,7 @@ function resolveBoard(G, ctx) {
 
 }
 
-function rollDice(G, ctx) {
+function rollDice(G, ctx, playerID) {
 
 	// random dice first
 	const numDiceLeft = G.dice.filter(x => x === 0).length
@@ -120,10 +172,14 @@ function rollDice(G, ctx) {
 			i ++
 		}
 	}
+	if (j === G.numCats) {
+		console.error("Something's wrong. The dice probably didn't get reset.")
+	}
 	console.log("Roll dice", j, "->", roll)
 
 	// move cat `j`` by `roll` accordingly
 	moveCat(G, ctx, j, roll)
+	G.players[playerID].coins += 1
 
 }
 
@@ -132,18 +188,20 @@ function makeSmallBet(G, playerID, bet) {
 }
 
 function makeBigBet(G, playerID, bet, side) {
-	G.bigStack[side].push({player: playerID, bet: bet})
+	G.bigStack[side].push({playerID: playerID, bet: bet})
 	G.players[playerID].betCards[bet] = false
 }
 
 function placeMod(G, playerID, cellID, type) {
 	G.board[cellID].mod = {playerID: playerID, type: type}
-	G.players[playerID].hasMod = false
+	G.players[playerID].modPos = cellID
 }
 
-function removeMod(G, playerID, cellID) {
-	G.board[cellID].mod = null
-	G.players[playerID].hasMod = true
+function removeMod(G, playerID) {
+	if (G.players[playerID].modPos > -1) {
+		G.board[G.players[playerID].modPos].mod = null
+		G.players[playerID].modPos = -1	
+	}
 }
 
 const CamaewUp = {
@@ -151,24 +209,27 @@ const CamaewUp = {
 	setup: (ctx, setupData) => {
 		let G = {
 			numCats: setupData.numCats,
+			numTiles: setupData.numTiles,
 			dice: Array(setupData.numCats).fill(0),
 			lastDiceRolled: -1,
 			cleanUp: -1,
 			pos: Array(setupData.numCats).fill(-1),
-			board: Array(16).fill({stack: [],
-														 mod: null}),
-			players: Array(ctx.numPlayers).fill({coins: 0,
-																						smallBets: Array(setupData.numCats).fill([]),
-																						betCards: Array(setupData.numCats).fill(true),
-																						hasMod: true}),
+			board: genArray(setupData.numTiles + 3, {stack: [], mod: null}),
+			players: genArray(ctx.numPlayers, {coins: 0,
+																					smallBets: Array(setupData.numCats).fill([]),
+																					betCards: Array(setupData.numCats).fill(true),
+																					modPos: -1}),
 			smallStack: Array(setupData.numCats).fill([2, 3, 5]),
 			bigStack: {"win": [], "lose": []}
 		}
+		for (let i = 0; i < G.numCats; i ++)
+			rollDice(G, ctx)
+		endSmallRound(G, ctx)
 		return G
 	},
 	moves: {
-		roll: (G, ctx) => {
-			rollDice(G, ctx)
+		roll: (G, ctx, playerID) => {
+			rollDice(G, ctx, playerID)
 			resolveBoard(G, ctx)
 			if (G.dice.filter(x => x === 0).length === 0) {
 				endSmallRound(G, ctx)
@@ -183,21 +244,26 @@ const CamaewUp = {
 		placeMod: (G, ctx, playerID, cellID, type) => {
 			placeMod(G, playerID, cellID, type)
 		},
-		removeMod: (G, ctx, playerID, cellID) => {
-			removeMod(G, playerID, cellID)
+		removeMod: (G, ctx, playerID) => {
+			removeMod(G, playerID)
 		},
-		flipMod: (G, ctx, playerID, cellID) => {
-			const newType = G.board[cellID].mod.type === "tape" ? "cucumber" : "tape"
-			removeMod(G, playerID, cellID)
+		flipMod: (G, ctx, playerID) => {
+			const newType = G.board[G.players[playerID].modPos].mod.type === "tape" ? "cucumber" : "tape"
+			const cellID = G.players[playerID].modPos
+			removeMod(G, playerID)
 			placeMod(G, playerID, cellID, newType)
 		},
-		moveMod: (G, ctx, playerID, oldCellID, newCellID, type) => {
-			removeMod(G, playerID, oldCellID)
+		moveMod: (G, ctx, playerID, newCellID, type) => {
+			removeMod(G, playerID)
 			placeMod(G, playerID, newCellID, type)
 		}
 	},
 	turn: {
-		moveLimit: 1
+		moveLimit: 1,
+		onEnd: (G, ctx) => {
+		},
+		onMove: (G, ctx) => {
+		}
 	},
 	minPlayers: 2,
 	maxPlayers: 8

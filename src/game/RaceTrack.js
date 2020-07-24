@@ -7,11 +7,10 @@ export default function RaceTrack({G, playerID, gameMetadata, placeMod, moveMod,
 	const [showPlaceDialog, setShowPlaceDialog] = React.useState(false)
 	const [showFlipDialog, setShowFlipDialog] = React.useState(false)
 	const [cellID, setCellID] = React.useState(null)
-	const [oldCellID, setOldCellID] = React.useState(null)
 	const [type, setType] = React.useState(null)
 	
-	function prePlaceMod(cellID, type, oldCellID) {
-		if (oldCellID === null && !G.players[playerID].hasMod) {
+	function prePlaceMod(cellID, type) {
+		if (type === "place" && G.players[playerID].modPos > -1) {
 			console.error("Player has already placed his/her mod.")
 			return
 		}
@@ -32,7 +31,6 @@ export default function RaceTrack({G, playerID, gameMetadata, placeMod, moveMod,
 		}
 		setCellID(cellID)
 		setType(type)
-		setOldCellID(oldCellID)
 		setShowPlaceDialog(true)
 	}
 
@@ -57,7 +55,7 @@ export default function RaceTrack({G, playerID, gameMetadata, placeMod, moveMod,
 							if (type === "place")
 								placeMod(playerID, cellID, "tape")
 							else if (type === "move")
-								moveMod(playerID, oldCellID, cellID, "tape")
+								moveMod(playerID, cellID, "tape")
 							setShowPlaceDialog(false)
 						}}>
 						Tape
@@ -67,7 +65,7 @@ export default function RaceTrack({G, playerID, gameMetadata, placeMod, moveMod,
 							if (type === "place")
 								placeMod(playerID, cellID, "cucumber")
 							else if (type === "move")
-								moveMod(playerID, oldCellID, cellID, "cucumber")
+								moveMod(playerID, cellID, "cucumber")
 							setShowPlaceDialog(false)
 						}}>
 						Cucumber
@@ -90,14 +88,14 @@ export default function RaceTrack({G, playerID, gameMetadata, placeMod, moveMod,
 					</Button>
 					<Button variant="outline-primary" onClick={() => {
 							console.log("Remove mod")
-							removeMod(playerID, cellID)
+							removeMod(playerID)
 							setShowFlipDialog(false)
 						}}>
 						Remove
 					</Button>
 					<Button variant="primary" onClick={() => {
 							console.log("Flip mod")
-							flipMod(playerID, cellID)
+							flipMod(playerID)
 							setShowFlipDialog(false)
 						}}>
 						Flip
@@ -112,7 +110,7 @@ export default function RaceTrack({G, playerID, gameMetadata, placeMod, moveMod,
 
 			<div className="board">
 				{
-					G.board.map((cell, i) => <Cell
+					G.board.slice(0, G.numTiles).map((cell, i) => <Cell
 																			cellData={cell}
 																			key={i}
 																			cell_id={i}

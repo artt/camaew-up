@@ -61,7 +61,7 @@ function Lobby({serverPath, startGame}) {
 		return fetch(serverPath + "/create", {
 			method: "post",
 			headers: {"Content-Type": "application/json"},
-			body: JSON.stringify({numPlayers: numPlayers, setupData: {numCats: numCats}})
+			body: JSON.stringify({numPlayers: numPlayers, setupData: {numCats: numCats, numTiles: 16}})
 		})
 			.then(response => response.json())
 	}

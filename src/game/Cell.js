@@ -8,7 +8,7 @@ export default function Cell({cellData, cell_id, playerID, gameMetadata, prePlac
 
 	function drop(e) {
 		e.preventDefault();
-		prePlaceMod(Number(cell_id), e.dataTransfer.getData("type"), e.dataTransfer.getData("oldCellID"))
+		prePlaceMod(Number(cell_id), e.dataTransfer.getData("type"))
 	}
 
 	function handleModClick() {
@@ -17,7 +17,6 @@ export default function Cell({cellData, cell_id, playerID, gameMetadata, prePlac
 
 	function drag(e) {
 		e.dataTransfer.setData("type", "move")
-		e.dataTransfer.setData("oldCellID", cell_id)
 	}
 
 	return (
