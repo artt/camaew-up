@@ -1,3 +1,5 @@
+import {sum} from 'lodash'
+
 function rankCats(G) {
 	let indices = Array.from(new Array(G.numCats), (x, i) => i)
 	indices.sort((a, b) => {
@@ -9,18 +11,33 @@ function rankCats(G) {
 			return stack.indexOf(b) - stack.indexOf(a)
 		}
 	});
-	return indices;
+	return indices
+	// let ret = Array(G.numCats)
+	// for (let i = 0; i < G.numCats; i ++) {
+	// 	ret[indices[i]] = i
+	// }
+	// return ret;
 }
 
 function endSmallRound(G, ctx) {
 	console.log("End of small round.")
+
+	// reset dice
 	G.dice = Array(G.numCats).fill(0)
+
+	// get ranks
 	const rank = rankCats(G)
 	console.log("Ranking:", rank)
 	for (let i = 0; i < ctx.numPlayers; i ++) {
-		for (let j = 0; j < G.numCats; j ++) {
-			// reward for small rounds
+		let smallBetWins = 0
+		smallBetWins += sum(G.players[i].smallBets[rank[0]])
+		smallBetWins += G.players[i].smallBets[rank[1]].length
+		for (let j = 2; j < G.numCats; j ++) {
+			smallBetWins -= G.players[i].smallBets[rank[j]].length	
 		}
+		console.log("Small bet wins for", i, smallBetWins)
+		G.players[i].coins += smallBetWins
+		G.players[i].smallBets = Array(G.numCats).fill([])
 	}
 }
 
@@ -108,11 +125,6 @@ function rollDice(G, ctx) {
 	// move cat `j`` by `roll` accordingly
 	moveCat(G, ctx, j, roll)
 
-	// if out of moves => end of small round
-	if (numDiceLeft === 1) {
-		endSmallRound(G, ctx)
-	}
-
 }
 
 function makeSmallBet(G, playerID, bet) {
@@ -132,10 +144,6 @@ function placeMod(G, playerID, cellID, type) {
 function removeMod(G, playerID, cellID) {
 	G.board[cellID].mod = null
 	G.players[playerID].hasMod = true
-}
-
-function reverseMod(G, cellID) {
-	G.board[cellID].mod.type = G.board[cellID].mod.type === "tape" ? "cucumber" : "tape"
 }
 
 const CamaewUp = {
@@ -162,6 +170,9 @@ const CamaewUp = {
 		roll: (G, ctx) => {
 			rollDice(G, ctx)
 			resolveBoard(G, ctx)
+			if (G.dice.filter(x => x === 0).length === 0) {
+				endSmallRound(G, ctx)
+			}
 		},
 		makeSmallBet: (G, ctx, playerID, bet) => {
 			makeSmallBet(G, playerID, bet)

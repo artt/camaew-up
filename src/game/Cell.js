@@ -36,7 +36,7 @@ export default function Cell({cellData, cell_id, playerID, gameMetadata, prePlac
 			{cellData.mod &&
 				<div className={`cell-mod card ${cellData.mod.type}`}
 						onClick={handleModClick}
-						draggable={playerID == cellData.mod.playerID}
+						draggable={playerID === cellData.mod.playerID}
 						onDragStart={drag}>
 					{gameMetadata[cellData.mod.playerID].name}
 				</div>
