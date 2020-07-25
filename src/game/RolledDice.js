@@ -9,7 +9,7 @@ export default function RolledDice({dice}) {
 			{
 				dice.map((x, i) => {
 					return(
-						<ListGroup.Item className={`tokencolor-${i+1}`} key={i}>
+						<ListGroup.Item className={`tokencolor-${i}`} key={i}>
 							{x}
 						</ListGroup.Item>
 					);

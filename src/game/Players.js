@@ -16,7 +16,7 @@ function Players({currentPlayer, players, gameMetadata}) {
 										<React.Fragment key={"smallBets" + j}>
 											{
 												color.map(card => {
-													return <div className={`tokencolor-${j+1} card`} key={"smallBet" + i}>{card}</div>
+													return <div className={`tokencolor-${j} card`} key={"smallBet" + i}>{card}</div>
 												})
 											}
 										</React.Fragment>

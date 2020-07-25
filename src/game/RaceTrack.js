@@ -51,7 +51,7 @@ export default function RaceTrack({G, playerID, gameMetadata, placeMod, moveMod,
 						Cancel
 					</Button>
 					<Button variant="danger" onClick={() => {
-							console.log("Place tape mod")
+							// console.log("Place tape mod")
 							if (type === "place")
 								placeMod(playerID, cellID, "tape")
 							else if (type === "move")
@@ -61,7 +61,7 @@ export default function RaceTrack({G, playerID, gameMetadata, placeMod, moveMod,
 						Tape
 					</Button>
 					<Button variant="success" onClick={() => {
-							console.log("Place cucumber mod")
+							// console.log("Place cucumber mod")
 							if (type === "place")
 								placeMod(playerID, cellID, "cucumber")
 							else if (type === "move")
@@ -87,14 +87,14 @@ export default function RaceTrack({G, playerID, gameMetadata, placeMod, moveMod,
 						Cancel
 					</Button>
 					<Button variant="outline-primary" onClick={() => {
-							console.log("Remove mod")
+							// console.log("Remove mod")
 							removeMod(playerID)
 							setShowFlipDialog(false)
 						}}>
 						Remove
 					</Button>
 					<Button variant="primary" onClick={() => {
-							console.log("Flip mod")
+							// console.log("Flip mod")
 							flipMod(playerID)
 							setShowFlipDialog(false)
 						}}>

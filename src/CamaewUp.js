@@ -41,7 +41,7 @@ function resetSmallRound(G, ctx) {
 }
 
 function scoreSmallRound(G, ctx) {
-	console.log("End of small round.")
+	// console.log("End of small round.")
 
 	// reset dice
 	G.dice = Array(G.numCats).fill(0)
@@ -58,7 +58,7 @@ function scoreSmallRound(G, ctx) {
 		for (let j = 2; j < G.numCats; j ++) {
 			smallBetWins -= G.players[i].smallBets[rank[j]].length	
 		}
-		console.log("Small bet wins for", i, smallBetWins)
+		// console.log("Small bet wins for", i, smallBetWins)
 		G.players[i].coins += smallBetWins
 		// G.players[i].smallBets = Array(G.numCats).fill([])
 	
@@ -72,7 +72,7 @@ function scoreSmallRound(G, ctx) {
 }
 
 function scoreRace(G, ctx) {
-	console.log("End of race.")
+	// console.log("End of race.")
 	const rank = rankCats(G)
 
 	// winning pile
@@ -117,7 +117,7 @@ function moveCat(G, ctx, catID, roll) {
 		const curLayer = curCell.indexOf(catID)
 		curStack = curCell.slice(curLayer)
 		// update old cell
-		console.log("curStack", curStack)
+		// console.log("curStack", curStack)
 		G.board[curCellNum].stack = G.board[curCellNum].stack.slice(0, curLayer)
 	}
 	else {
@@ -154,14 +154,14 @@ function resolveBoard(G, ctx) {
 			for (let i = 0; i < curStack.length; i ++) {
 				G.pos[curStack[i]] = G.cleanUp - 1
 			}
-			console.log("Got taped")
+			// console.log("Got taped")
 		}
 		else if (mod.type === "cucumber") {
 			G.board[G.cleanUp + 1].stack = G.board[G.cleanUp + 1].stack.concat(curStack)
 			for (let i = 0; i < curStack.length; i ++) {
 				G.pos[curStack[i]] = G.cleanUp + 1
 			}
-			console.log("Got cucumbered")
+			// console.log("Got cucumbered")
 		}
 	}
 
@@ -188,7 +188,8 @@ function rollDice(G, ctx, playerID) {
 	if (j === G.numCats) {
 		console.error("Something's wrong. The dice probably didn't get reset.")
 	}
-	console.log("Roll dice", j, "->", roll)
+	// console.log("Roll dice", j, "->", roll)
+	log(G, {playerID: playerID, type: "roll", catID: j, roll: roll})
 
 	// move cat `j`` by `roll` accordingly
 	moveCat(G, ctx, j, roll)
@@ -218,6 +219,10 @@ function removeMod(G, playerID) {
 	}
 }
 
+function log(G, message) {
+	G.logArray.push(message)
+}
+
 const CamaewUp = {
 	name: "CamaewUp",
 	setup: (ctx, setupData) => {
@@ -229,13 +234,16 @@ const CamaewUp = {
 			cleanUp: -1,
 			pos: Array(setupData.numCats).fill(-1),
 			board: genArray(setupData.numTiles + 3, {stack: [], mod: null}),
-			players: genArray(ctx.numPlayers, {coins: 0,
+			players: genArray(ctx.numPlayers, {coins: 3,
 																					smallBets: Array(setupData.numCats).fill([]),
 																					betCards: Array(setupData.numCats).fill(true),
 																					modPos: -1}),
 			smallStack: Array(setupData.numCats).fill([2, 3, 5]),
-			bigStack: {"win": [], "lose": []}
+			bigStack: {"win": [], "lose": []},
+			logArray: ['abc'],
 		}
+		log(G, {type: "text", text: "Welcome!"})
+
 		for (let i = 0; i < G.numCats; i ++)
 			rollDice(G, ctx)
 		resetSmallRound(G, ctx)

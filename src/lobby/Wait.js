@@ -12,7 +12,7 @@ function Wait({data, startGame}) {
 	// no idea why we need to use useCallback() :P
 	
 	const updateGameInfo = React.useCallback(() => {
-		console.log("Getting game info...", data.gameID)
+		// console.log("Getting game info...", data.gameID)
 		fetch(data.serverPathFull + "/" + data.gameID, {
 			method: "get"
 		})
@@ -30,9 +30,9 @@ function Wait({data, startGame}) {
 	}, [gameInfo, updateGameInfo])
 
 	const sit = React.useCallback(() => {
-		console.log("Sitting...", gameInfo)
+		// console.log("Sitting...", gameInfo)
 		const seatID = findSeat()
-		console.log("Found empty seat", seatID)
+		// console.log("Found empty seat", seatID)
 		const opts = {
 			playerID: seatID,
 			playerName: data.name
@@ -90,7 +90,7 @@ function Wait({data, startGame}) {
 	}
 
 	function onLeaveClick() {
-		console.log("Leaving...")
+		// console.log("Leaving...")
 		setShowConfirmLeave(true)		
 	}
 

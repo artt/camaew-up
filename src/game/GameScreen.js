@@ -6,6 +6,7 @@ import SmallStack from './SmallStack'
 import BetCards from './BetCards'
 import BetZone from './BetZone'
 import Mod from './Mod'
+import LogArea from './LogArea'
 import {Button} from 'react-bootstrap'
 
 function GameScreen({G, ctx, moves, playerID, gameMetadata}) {
@@ -20,27 +21,27 @@ function GameScreen({G, ctx, moves, playerID, gameMetadata}) {
 	}
 
 	function makeBigBet(playerID, bet, side) {
-		console.log("bigbet...", playerID, bet, side)
+		// console.log("bigbet...", playerID, bet, side)
 		moves.makeBigBet(playerID, bet, side)
 	}
 
 	function placeMod(playerID, cellID, type) {
-		console.log("Trying to place mod:", playerID, cellID, type)
+		// console.log("Trying to place mod:", playerID, cellID, type)
 		moves.placeMod(playerID, cellID, type)
 	}
 
 	function removeMod(playerID) {
-		console.log("Remove mod")
+		// console.log("Remove mod")
 		moves.removeMod(playerID)
 	}
 
 	function flipMod(playerID, cellID) {
-		console.log("Flip mod")
+		// console.log("Flip mod")
 		moves.flipMod(playerID, cellID)
 	}
 
 	function moveMod(playerID, newCellID, type) {
-		console.log("Move mod")
+		// console.log("Move mod")
 		moves.moveMod(playerID, newCellID, type)
 	}
 
@@ -68,6 +69,9 @@ function GameScreen({G, ctx, moves, playerID, gameMetadata}) {
 						<BetZone stack={G.bigStack} playerID={playerID} makeBigBet={makeBigBet} side="win" />
 						<BetZone stack={G.bigStack} playerID={playerID} makeBigBet={makeBigBet} side="lose" />
 					</div>
+				</div>
+				<div className="control">
+					<LogArea logArray={G.logArray} gameMetadata={gameMetadata} />
 				</div>
 			</div>
 			<RaceTrack

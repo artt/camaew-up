@@ -42,14 +42,14 @@ function Lobby({startGame}) {
 	}
 
 	function onJoinJoinClick() {
-		console.log("Joining a game...", gameID)
+		// console.log("Joining a game...", gameID)
 		joinGame()
 	}
 
 	function onCreateCreateClick() {
-		console.log("Creating game...")
+		// console.log("Creating game...")
 		createGame().then(x => {
-			console.log("Game created", x.gameID)
+			// console.log("Game created", x.gameID)
 			setGameID(x.gameID)
 			joinGame()
 		})
@@ -62,9 +62,8 @@ function Lobby({startGame}) {
 	 */
 	function createGame() {
 		// const opts = {numPlayers: numPlayers, setupData: {}}
-		console.log("Creating game...")
-		console.log(serverPath + "/games/CamaewUp" + "/create")
-		return fetch(serverPath + "/games/CamaewUp" + "/create", {
+		// console.log("Creating game...")
+		return fetch(serverPath + "/games/CamaewUp/create", {
 			method: "post",
 			headers: {"Content-Type": "application/json"},
 			body: JSON.stringify({numPlayers: numPlayers, setupData: {numCats: numCats, numTiles: 16}})
@@ -114,7 +113,7 @@ function Lobby({startGame}) {
 		return(<Create data={data} onCreateCreateClick={onCreateCreateClick} />)
 	}
 	else if (lobbyState === "wait") {
-		console.log("name", name)
+		// console.log("name", name)
 		return(<Wait data={data} startGame={startGame} />)
 	}
 

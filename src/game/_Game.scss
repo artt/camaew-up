@@ -32,10 +32,10 @@ $token-colors: blue, green, orange, yellow, white;
 		text-align: center;
 }
 
-@for $i from 1 through length($token-colors) {
+@for $i from 0 through length($token-colors) - 1 {
 	.tokencolor-#{$i} {
-		background: nth($token-colors, $i);
-		$x: nth($token-colors, $i);
+		background: nth($token-colors, $i+1);
+		$x: nth($token-colors, $i+1);
 		@if 0.2126*red($x) + 0.7152*green($x) + 0.0722*blue($x) > 96% {
 			color: black;
 		}
@@ -79,4 +79,11 @@ $token-colors: blue, green, orange, yellow, white;
 
 .control {
 	margin: 20px;
+}
+
+.log-area {
+	width: 500px;
+	height: 300px;
+	overflow-y: scroll;
+	color: white;
 }
