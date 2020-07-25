@@ -1,14 +1,14 @@
 {
   "files": {
     "main.css": "/camaew-up/static/css/main.a530a790.chunk.css",
-    "main.js": "/camaew-up/static/js/main.cc14ac4b.chunk.js",
-    "main.js.map": "/camaew-up/static/js/main.cc14ac4b.chunk.js.map",
+    "main.js": "/camaew-up/static/js/main.91cb2510.chunk.js",
+    "main.js.map": "/camaew-up/static/js/main.91cb2510.chunk.js.map",
     "runtime-main.js": "/camaew-up/static/js/runtime-main.4820c58b.js",
     "runtime-main.js.map": "/camaew-up/static/js/runtime-main.4820c58b.js.map",
     "static/js/2.ce327fff.chunk.js": "/camaew-up/static/js/2.ce327fff.chunk.js",
     "static/js/2.ce327fff.chunk.js.map": "/camaew-up/static/js/2.ce327fff.chunk.js.map",
     "index.html": "/camaew-up/index.html",
-    "precache-manifest.94aa8c47ddf213013d59d2eae39b50c1.js": "/camaew-up/precache-manifest.94aa8c47ddf213013d59d2eae39b50c1.js",
+    "precache-manifest.cb080986e96ec7199de402c690e7d583.js": "/camaew-up/precache-manifest.cb080986e96ec7199de402c690e7d583.js",
     "service-worker.js": "/camaew-up/service-worker.js",
     "static/css/main.a530a790.chunk.css.map": "/camaew-up/static/css/main.a530a790.chunk.css.map",
     "static/js/2.ce327fff.chunk.js.LICENSE.txt": "/camaew-up/static/js/2.ce327fff.chunk.js.LICENSE.txt"
@@ -17,6 +17,6 @@
     "static/js/runtime-main.4820c58b.js",
     "static/js/2.ce327fff.chunk.js",
     "static/css/main.a530a790.chunk.css",
-    "static/js/main.cc14ac4b.chunk.js"
+    "static/js/main.91cb2510.chunk.js"
   ]
 }
