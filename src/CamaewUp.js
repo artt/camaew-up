@@ -27,7 +27,20 @@ function rankCats(G) {
 	// return ret;
 }
 
-function endSmallRound(G, ctx) {
+function resetSmallRound(G, ctx) {
+	// reset dice
+	G.dice = Array(G.numCats).fill(0)
+
+	for (let i = 0; i < ctx.numPlayers; i ++) {
+		G.players[i].smallBets = Array(G.numCats).fill([])
+		removeMod(G, i)
+	}
+
+	G.smallStack = Array(G.numCats).fill([2, 3, 5])
+
+}
+
+function scoreSmallRound(G, ctx) {
 	console.log("End of small round.")
 
 	// reset dice
@@ -47,18 +60,18 @@ function endSmallRound(G, ctx) {
 		}
 		console.log("Small bet wins for", i, smallBetWins)
 		G.players[i].coins += smallBetWins
-		G.players[i].smallBets = Array(G.numCats).fill([])
+		// G.players[i].smallBets = Array(G.numCats).fill([])
 	
 		// remove mods
-		removeMod(G, i)
+		// removeMod(G, i)
 
 	}
 
-	G.smallStack = Array(G.numCats).fill([2, 3, 5])
+	// G.smallStack = Array(G.numCats).fill([2, 3, 5])
 
 }
 
-function endRace(G, ctx) {
+function scoreRace(G, ctx) {
 	console.log("End of race.")
 	const rank = rankCats(G)
 
@@ -179,7 +192,8 @@ function rollDice(G, ctx, playerID) {
 
 	// move cat `j`` by `roll` accordingly
 	moveCat(G, ctx, j, roll)
-	G.players[playerID].coins += 1
+	if (playerID != null)
+		G.players[playerID].coins += 1
 
 }
 
@@ -224,15 +238,21 @@ const CamaewUp = {
 		}
 		for (let i = 0; i < G.numCats; i ++)
 			rollDice(G, ctx)
-		endSmallRound(G, ctx)
+		resetSmallRound(G, ctx)
 		return G
 	},
 	moves: {
 		roll: (G, ctx, playerID) => {
 			rollDice(G, ctx, playerID)
 			resolveBoard(G, ctx)
+			if (G.cleanUp >= G.numTiles) {
+				// end game
+				scoreSmallRound(G, ctx)
+				scoreRace(G, ctx)
+			}
 			if (G.dice.filter(x => x === 0).length === 0) {
-				endSmallRound(G, ctx)
+				scoreSmallRound(G, ctx)
+				resetSmallRound(G, ctx)
 			}
 		},
 		makeSmallBet: (G, ctx, playerID, bet) => {

@@ -8,12 +8,15 @@ import { createBrowserHistory } from 'history'
 
 import './style.css'
 
+const socket = "https://c91fdc5aa037.ngrok.io"
+
 const CamaewUpClient = Client({game: CamaewUp,
 															 board: GameScreen,
-															 multiplayer: SocketIO({server: "localhost:8000"})
+															 multiplayer: SocketIO({server: socket}),
+															 debug: false
 														 })
 
-const serverPath = "http://localhost:8000/games/CamaewUp"
+const serverPath = socket + "/games/CamaewUp"
 const history = createBrowserHistory()
 
 function App() {

@@ -127,7 +127,7 @@ function Wait({data, serverPath, startGame}) {
 
 	if (gameInfo == null) {
 		updateGameInfo()
-		return(<div>Connecting...</div>)
+		return(<div>Connecting... {serverPath}</div>)
 	}
 	else {
 		return(

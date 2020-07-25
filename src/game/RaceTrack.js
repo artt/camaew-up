@@ -120,6 +120,18 @@ export default function RaceTrack({G, playerID, gameMetadata, placeMod, moveMod,
 																			preFlipMod={preFlipMod}
 																		/>)
 				}
+				{
+					G.board.slice(G.numTiles).map((cell, i) => <Cell
+																			className="cell-extra"
+																			cellData={cell}
+																			key={i}
+																			cell_id={i}
+																			playerID={playerID}
+																			gameMetadata={gameMetadata}
+																			prePlaceMod={prePlaceMod}
+																			preFlipMod={preFlipMod}
+																		/>)
+				}
 			</div>
 
 			<PlaceDialog />

@@ -1,7 +1,7 @@
 .board {
 	display: grid;
 	grid-template-columns: repeat(auto-fit, 120px);
-	margin: 100px;
+	margin: 20px 0;
 }
 
 .cell {
@@ -11,6 +11,10 @@
 	border-radius: 3px;
 	margin: 3px;
 	position: relative;
+}
+
+.cell-extra {
+	background-color: rgba(255, 255, 255, 0.2);
 }
 
 .cell-content {
@@ -68,4 +72,8 @@ $token-colors: blue, green, orange, yellow, white;
 
 .cucumber {
 	background: green;
+}
+
+.control {
+	margin: 20px;
 }
