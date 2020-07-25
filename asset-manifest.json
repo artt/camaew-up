@@ -1,0 +1,22 @@
+{
+  "files": {
+    "main.css": "/camaew-up/static/css/main.e2c8c498.chunk.css",
+    "main.js": "/camaew-up/static/js/main.7ca211dd.chunk.js",
+    "main.js.map": "/camaew-up/static/js/main.7ca211dd.chunk.js.map",
+    "runtime-main.js": "/camaew-up/static/js/runtime-main.4820c58b.js",
+    "runtime-main.js.map": "/camaew-up/static/js/runtime-main.4820c58b.js.map",
+    "static/js/2.1ba85bae.chunk.js": "/camaew-up/static/js/2.1ba85bae.chunk.js",
+    "static/js/2.1ba85bae.chunk.js.map": "/camaew-up/static/js/2.1ba85bae.chunk.js.map",
+    "index.html": "/camaew-up/index.html",
+    "precache-manifest.b1d4484b7a18dc848a82755b79cd4823.js": "/camaew-up/precache-manifest.b1d4484b7a18dc848a82755b79cd4823.js",
+    "service-worker.js": "/camaew-up/service-worker.js",
+    "static/css/main.e2c8c498.chunk.css.map": "/camaew-up/static/css/main.e2c8c498.chunk.css.map",
+    "static/js/2.1ba85bae.chunk.js.LICENSE.txt": "/camaew-up/static/js/2.1ba85bae.chunk.js.LICENSE.txt"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.4820c58b.js",
+    "static/js/2.1ba85bae.chunk.js",
+    "static/css/main.e2c8c498.chunk.css",
+    "static/js/main.7ca211dd.chunk.js"
+  ]
+}
