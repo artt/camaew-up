@@ -107,6 +107,21 @@ function scoreRace(G, ctx) {
 
 }
 
+function getWinners(G) {
+	let maxCoins = [G.players[0].coins]
+	let winners = [0]
+	for (let i = 1; i < G.numPlayers; i ++) {
+		if (G.players[i].coins > maxCoins) {
+			maxCoins = G.players[i].coins
+			winners = [i]
+		}
+		else if (G.players[i].coins === maxCoins) {
+			winners.push(i)
+		}
+	}
+	return winners
+}
+
 function moveCat(G, ctx, catID, roll) {
 
 	const curCellNum = G.pos[catID]
@@ -143,7 +158,7 @@ function resolveBoard(G, ctx) {
 	const mod = G.board[G.cleanUp].mod
 
 	if (mod === null) {
-		return
+		return null
 	}
 	else {
 		G.players[mod.playerID].coins += 1
@@ -154,14 +169,14 @@ function resolveBoard(G, ctx) {
 			for (let i = 0; i < curStack.length; i ++) {
 				G.pos[curStack[i]] = G.cleanUp - 1
 			}
-			// console.log("Got taped")
+			return "tape"
 		}
 		else if (mod.type === "cucumber") {
 			G.board[G.cleanUp + 1].stack = G.board[G.cleanUp + 1].stack.concat(curStack)
 			for (let i = 0; i < curStack.length; i ++) {
 				G.pos[curStack[i]] = G.cleanUp + 1
 			}
-			// console.log("Got cucumbered")
+			return "cucumber"
 		}
 	}
 
@@ -188,18 +203,20 @@ function rollDice(G, ctx, playerID) {
 	if (j === G.numCats) {
 		console.error("Something's wrong. The dice probably didn't get reset.")
 	}
-	// console.log("Roll dice", j, "->", roll)
-	log(G, {playerID: playerID, type: "roll", catID: j, roll: roll})
 
 	// move cat `j`` by `roll` accordingly
 	moveCat(G, ctx, j, roll)
 	if (playerID != null)
 		G.players[playerID].coins += 1
 
+	return [j, roll]
+
 }
 
 function makeSmallBet(G, playerID, bet) {
-	G.players[playerID].smallBets[bet].push(G.smallStack[bet].pop())
+	const card = G.smallStack[bet].pop()
+	G.players[playerID].smallBets[bet].push(card)
+	return card
 }
 
 function makeBigBet(G, playerID, bet, side) {
@@ -229,6 +246,7 @@ const CamaewUp = {
 		let G = {
 			numCats: setupData.numCats,
 			numTiles: setupData.numTiles,
+			numPlayers: ctx.numPlayers,
 			dice: Array(setupData.numCats).fill(0),
 			lastDiceRolled: -1,
 			cleanUp: -1,
@@ -242,7 +260,7 @@ const CamaewUp = {
 			bigStack: {"win": [], "lose": []},
 			logArray: ['abc'],
 		}
-		log(G, {type: "text", text: "Welcome!"})
+		log(G, {move: "text", text: "Welcome!"})
 
 		for (let i = 0; i < G.numCats; i ++)
 			rollDice(G, ctx)
@@ -251,39 +269,52 @@ const CamaewUp = {
 	},
 	moves: {
 		roll: (G, ctx, playerID) => {
-			rollDice(G, ctx, playerID)
-			resolveBoard(G, ctx)
+			const [catID, roll] = rollDice(G, ctx, playerID)
+			log(G, {playerID: playerID, move: "roll", catID: catID, roll: roll})
+			const mod = resolveBoard(G, ctx)
+			if (mod !== null)
+				log(G, {move: "mod", mod: mod})
 			if (G.cleanUp >= G.numTiles) {
 				// end game
 				scoreSmallRound(G, ctx)
 				scoreRace(G, ctx)
+				const winners = getWinners(G)
+				log(G, {move: "text", text: "Winners: " + winners})
+				log(G, {move: "text", text: "--- End of game ---"})
 			}
 			if (G.dice.filter(x => x === 0).length === 0) {
+				log(G, {move: "text", text: "--- End of small round ---"})
 				scoreSmallRound(G, ctx)
 				resetSmallRound(G, ctx)
 			}
 		},
 		makeSmallBet: (G, ctx, playerID, bet) => {
-			makeSmallBet(G, playerID, bet)
+			const card = makeSmallBet(G, playerID, bet)
+			log(G, {playerID: playerID, move: "smallBet", catID: bet, card: card})
 		},
 		makeBigBet: (G, ctx, playerID, bet, side) => {
 			makeBigBet(G, playerID, bet, side)
+			log(G, {playerID: playerID, move: "bigBet", side: side})
 		},
 		placeMod: (G, ctx, playerID, cellID, type) => {
 			placeMod(G, playerID, cellID, type)
+			log(G, {playerID: playerID, move: "placeMod", cellID: cellID, type: type})
 		},
 		removeMod: (G, ctx, playerID) => {
 			removeMod(G, playerID)
+			log(G, {playerID: playerID, move: "removeMod", cellID: G.players[playerID].modPos})
 		},
 		flipMod: (G, ctx, playerID) => {
 			const newType = G.board[G.players[playerID].modPos].mod.type === "tape" ? "cucumber" : "tape"
 			const cellID = G.players[playerID].modPos
 			removeMod(G, playerID)
 			placeMod(G, playerID, cellID, newType)
+			log(G, {playerID: playerID, move: "flipMod", cellID: G.players[playerID].modPos})
 		},
-		moveMod: (G, ctx, playerID, newCellID, type) => {
+		moveMod: (G, ctx, playerID, cellID, type) => {
 			removeMod(G, playerID)
-			placeMod(G, playerID, newCellID, type)
+			placeMod(G, playerID, cellID, type)
+			log(G, {playerID: playerID, move: "placeMod", cellID: cellID, type: type})
 		}
 	},
 	turn: {

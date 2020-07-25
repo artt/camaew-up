@@ -66,7 +66,7 @@ function Lobby({startGame}) {
 		return fetch(serverPath + "/games/CamaewUp/create", {
 			method: "post",
 			headers: {"Content-Type": "application/json"},
-			body: JSON.stringify({numPlayers: numPlayers, setupData: {numCats: numCats, numTiles: 16}})
+			body: JSON.stringify({numPlayers: numPlayers, setupData: {numCats: numCats, numTiles: 6}})
 		})
 			.then(response => response.json())
 	}

@@ -22,7 +22,7 @@ function App() {
 		CamaewUpClient = Client({game: CamaewUp,
 															 board: GameScreen,
 															 multiplayer: SocketIO({server: serverPath}),
-															 debug: false
+															 debug: true
 														 })
 		setState("game")
 	}
