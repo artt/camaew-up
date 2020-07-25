@@ -7861,7 +7861,10 @@ a.text-dark:hover, a.text-dark:focus {
   height: 100px;
   width: 100px;
   background: rgba(255, 255, 255, 0.3);
-  margin: 1rem; }
+  margin: 1rem;
+  padding: 1rem;
+  border-radius: 0.5rem;
+  color: white; }
 
 .tape {
   background: red; }
@@ -7885,7 +7888,9 @@ body {
   margin-left: -250px;
   margin-top: -150px;
   color: white;
-  background-color: rgba(255, 255, 255, 0.1); }
+  background-color: rgba(255, 255, 255, 0.1);
+  padding: 1rem;
+  border-radius: 0.5rem; }
 
 #entry-container {
   display: grid;

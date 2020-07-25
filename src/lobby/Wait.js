@@ -1,7 +1,7 @@
 import React from 'react'
 import {Button, Modal} from 'react-bootstrap'
 
-function Wait({data, serverPath, startGame}) {
+function Wait({data, startGame}) {
 
 	const [gameInfo, setGameInfo] = React.useState(null)
 	const [numPlayers, setNumPlayers] = React.useState(0)
@@ -13,12 +13,12 @@ function Wait({data, serverPath, startGame}) {
 	
 	const updateGameInfo = React.useCallback(() => {
 		console.log("Getting game info...", data.gameID)
-		fetch(serverPath + "/" + data.gameID, {
+		fetch(data.serverPathFull + "/" + data.gameID, {
 			method: "get"
 		})
 			.then(response => response.json())
 			.then(data => setGameInfo(data))
-	}, [data.gameID, serverPath])
+	}, [data.gameID, data.serverPathFull])
 
 	const findSeat = React.useCallback(() => {
 		updateGameInfo()
@@ -37,7 +37,7 @@ function Wait({data, serverPath, startGame}) {
 			playerID: seatID,
 			playerName: data.name
 		}
-		fetch(serverPath + "/" + gameInfo.roomID + "/join", {
+		fetch(data.serverPathFull + "/" + gameInfo.roomID + "/join", {
 			method: "post",
 			headers: {"Content-Type": "application/json"},
 			body: JSON.stringify(opts)
@@ -48,7 +48,7 @@ function Wait({data, serverPath, startGame}) {
 				setPlayerID(seatID)
 				updateGameInfo()
 			})
-	}, [data.name, findSeat, gameInfo, serverPath, updateGameInfo])
+	}, [data.name, findSeat, gameInfo, data.serverPathFull, updateGameInfo])
 
 	React.useEffect(() => {
 		const interval = setInterval(() => {
@@ -78,7 +78,7 @@ function Wait({data, serverPath, startGame}) {
 				playerID: playerID,
 				credentials: playerCredentials
 			} 
-		fetch(serverPath + "/" + gameInfo.roomID + "/leave", {
+		fetch(data.serverPathFull + "/" + gameInfo.roomID + "/leave", {
 			method: "post",
 			headers: {"Content-Type": "application/json"},
 			body: JSON.stringify(opts)
@@ -127,7 +127,7 @@ function Wait({data, serverPath, startGame}) {
 
 	if (gameInfo == null) {
 		updateGameInfo()
-		return(<div>Connecting... {serverPath}</div>)
+		return(<div>Connecting... {data.serverPath}</div>)
 	}
 	else {
 		return(
@@ -150,7 +150,7 @@ function Wait({data, serverPath, startGame}) {
 					<Button variant="secondary" onClick={sit} disabled={playerID >= 0}>Sit</Button>
 					<Button variant="secondary" onClick={stand} disabled={playerID < 0 || numPlayers === 1}>Stand</Button>
 					<Button variant="secondary" onClick={onLeaveClick}>Leave</Button>
-					<Button variant="primary" onClick={() => startGame(serverPath, data.gameID, playerID, playerCredentials)} disabled={numPlayers < gameInfo.players.length}>Start</Button>
+					<Button variant="primary" onClick={() => startGame(data.serverPath, data.gameID, playerID, playerCredentials)} disabled={numPlayers < gameInfo.players.length}>Start</Button>
 				</div>
 
 				{/* Confirm leave dialog */}

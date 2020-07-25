@@ -8,13 +8,13 @@ function Lobby({startGame}) {
 
 	const [name, setName] = React.useState("");
 	const [lobbyState, setLobbyState] = React.useState("entry");
-	const [server, setServer] = React.useState("localhost:8000")
+	const [serverPath, setServerPath] = React.useState("http://localhost:8000")
 	const [gameID, setGameID] = React.useState("");
 	const [numPlayers, setnumPlayers] = React.useState(4);
 	const [numCats, setNumCats] = React.useState(5);
 
-	function onServerChange(event) {
-		setServer(event.target.value);
+	function onServerPathChange(event) {
+		setServerPath(event.target.value);
 	}
 
 	function onNameChange(event) {
@@ -63,7 +63,8 @@ function Lobby({startGame}) {
 	function createGame() {
 		// const opts = {numPlayers: numPlayers, setupData: {}}
 		console.log("Creating game...")
-		return fetch(server + "/games/CamaewUp" + "/create", {
+		console.log(serverPath + "/games/CamaewUp" + "/create")
+		return fetch(serverPath + "/games/CamaewUp" + "/create", {
 			method: "post",
 			headers: {"Content-Type": "application/json"},
 			body: JSON.stringify({numPlayers: numPlayers, setupData: {numCats: numCats, numTiles: 16}})
@@ -93,8 +94,9 @@ function Lobby({startGame}) {
 		gameID: gameID,
 		numPlayers: numPlayers,
 		numCats: numCats,
-		server: server,
-		onServerChange: onServerChange,
+		serverPath: serverPath,
+		serverPathFull: serverPath + "/games/CamaewUp",
+		onServerPathChange: onServerPathChange,
 		onNameChange: onNameChange,
 		onGameIDChange: onGameIDChange,
 		onNumPlayersChange: onNumPlayersChange,
@@ -113,7 +115,7 @@ function Lobby({startGame}) {
 	}
 	else if (lobbyState === "wait") {
 		console.log("name", name)
-		return(<Wait data={data} serverPath={server + "/games/CamaewUp"} startGame={startGame} />)
+		return(<Wait data={data} startGame={startGame} />)
 	}
 
 }

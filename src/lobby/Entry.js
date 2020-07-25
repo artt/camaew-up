@@ -7,7 +7,7 @@ function Entry({data, onJoinClick, onCreateClick}) {
 		<div id="entry-container" className="lobby">
 			<div id="entry-server">
 				<Form.Label>Server</Form.Label>
-				<Form.Control type="text" placeholder="localhost:8000" value={data.server} onChange={data.onServerChange} />
+				<Form.Control type="text" value={data.serverPath} onChange={data.onServerPathChange} />
 			</div>
 			<div>
 				<Button variant="primary" onClick={onJoinClick} size="lg">Join Game</Button>

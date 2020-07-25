@@ -17,11 +17,11 @@ function App() {
 	const [state, setState] = useState("lobby");
 	const [data, setData] = useState({})
 
-	function startGame(server, gameID, playerID, credentials) {
+	function startGame(serverPath, gameID, playerID, credentials) {
 		setData({gameID: gameID, playerID: playerID, credentials: credentials})
 		CamaewUpClient = Client({game: CamaewUp,
 															 board: GameScreen,
-															 multiplayer: SocketIO({server: server}),
+															 multiplayer: SocketIO({server: serverPath}),
 															 debug: false
 														 })
 		setState("game")
