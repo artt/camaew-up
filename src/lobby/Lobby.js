@@ -4,13 +4,18 @@ import Join from './Join'
 import Create from './Create'
 import Wait from './Wait'
 
-function Lobby({serverPath, startGame}) {
+function Lobby({startGame}) {
 
 	const [name, setName] = React.useState("");
 	const [lobbyState, setLobbyState] = React.useState("entry");
+	const [server, setServer] = React.useState("localhost:8000")
 	const [gameID, setGameID] = React.useState("");
 	const [numPlayers, setnumPlayers] = React.useState(4);
 	const [numCats, setNumCats] = React.useState(5);
+
+	function onServerChange(event) {
+		setServer(event.target.value);
+	}
 
 	function onNameChange(event) {
 		setName(event.target.value);
@@ -58,7 +63,7 @@ function Lobby({serverPath, startGame}) {
 	function createGame() {
 		// const opts = {numPlayers: numPlayers, setupData: {}}
 		console.log("Creating game...")
-		return fetch(serverPath + "/create", {
+		return fetch(server + "/games/CamaewUp" + "/create", {
 			method: "post",
 			headers: {"Content-Type": "application/json"},
 			body: JSON.stringify({numPlayers: numPlayers, setupData: {numCats: numCats, numTiles: 16}})
@@ -88,6 +93,8 @@ function Lobby({serverPath, startGame}) {
 		gameID: gameID,
 		numPlayers: numPlayers,
 		numCats: numCats,
+		server: server,
+		onServerChange: onServerChange,
 		onNameChange: onNameChange,
 		onGameIDChange: onGameIDChange,
 		onNumPlayersChange: onNumPlayersChange,
@@ -106,7 +113,7 @@ function Lobby({serverPath, startGame}) {
 	}
 	else if (lobbyState === "wait") {
 		console.log("name", name)
-		return(<Wait data={data} serverPath={serverPath} startGame={startGame} />)
+		return(<Wait data={data} serverPath={server + "/games/CamaewUp"} startGame={startGame} />)
 	}
 
 }

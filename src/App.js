@@ -8,15 +8,8 @@ import { createBrowserHistory } from 'history'
 
 import './style.css'
 
-const socket = "https://c91fdc5aa037.ngrok.io"
+let CamaewUpClient = null
 
-const CamaewUpClient = Client({game: CamaewUp,
-															 board: GameScreen,
-															 multiplayer: SocketIO({server: socket}),
-															 debug: false
-														 })
-
-const serverPath = socket + "/games/CamaewUp"
 const history = createBrowserHistory()
 
 function App() {
@@ -24,8 +17,13 @@ function App() {
 	const [state, setState] = useState("lobby");
 	const [data, setData] = useState({})
 
-	function startGame(gameID, playerID, credentials) {
+	function startGame(server, gameID, playerID, credentials) {
 		setData({gameID: gameID, playerID: playerID, credentials: credentials})
+		CamaewUpClient = Client({game: CamaewUp,
+															 board: GameScreen,
+															 multiplayer: SocketIO({server: server}),
+															 debug: false
+														 })
 		setState("game")
 	}
 
@@ -38,7 +36,7 @@ function App() {
 	if (state === "lobby") {
 		return(
 			<div>
-				<Lobby serverPath={serverPath} startGame={startGame}/>
+				<Lobby startGame={startGame}/>
 			</div>
 		)
 	}
