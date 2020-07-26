@@ -8,7 +8,7 @@ function Lobby({startGame}) {
 
 	const [name, setName] = React.useState("");
 	const [lobbyState, setLobbyState] = React.useState("entry");
-	const [serverPath, setServerPath] = React.useState("http://localhost:8000")
+	const [serverPath, setServerPath] = React.useState("https://camaew-up.herokuapp.com")
 	const [gameID, setGameID] = React.useState("");
 	const [numPlayers, setnumPlayers] = React.useState(4);
 	const [numCats, setNumCats] = React.useState(5);
