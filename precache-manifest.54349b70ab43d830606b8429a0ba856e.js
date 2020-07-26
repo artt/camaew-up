@@ -1,10 +1,10 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "012abbacfb58ae372b5cd862c418bd74",
+    "revision": "8183e24f1748007b92fc77d8a841cb91",
     "url": "/camaew-up/index.html"
   },
   {
-    "revision": "8a72321b41d80e311969",
+    "revision": "e8fc87eefb225d9e59fb",
     "url": "/camaew-up/static/css/main.a530a790.chunk.css"
   },
   {
@@ -16,8 +16,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/camaew-up/static/js/2.ce327fff.chunk.js.LICENSE.txt"
   },
   {
-    "revision": "8a72321b41d80e311969",
-    "url": "/camaew-up/static/js/main.91cb2510.chunk.js"
+    "revision": "e8fc87eefb225d9e59fb",
+    "url": "/camaew-up/static/js/main.47454db7.chunk.js"
   },
   {
     "revision": "9d96e7a8564989304617",
