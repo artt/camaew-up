@@ -8,10 +8,13 @@ function LogArea({logArray, gameMetadata}) {
 		logArea.current.scrollTop = logArea.current.scrollHeight
 	}, [logArray])
 
+
+
 	return(
 		<div className="log-area" ref={logArea}>
 			{
 				logArray.map(x => {
+					console.log("xxx", JSON.stringify(x))
 					switch (x.move) {
 						case "text":
 							return <div>{x.text}</div>
@@ -19,7 +22,10 @@ function LogArea({logArray, gameMetadata}) {
 						case "roll":
 							return <div className="flex">{`${gameMetadata[x.playerID].name} rolled a `}<span className={`tokencolor-${x.catID} card`}>{x.roll}</span></div>
 							break
-						case "smallBet":
+						case "mod":
+							return <div className="flex">{`... found a ${x.mod}`}</div>
+							break
+						case "smallBet": 
 							return <div className="flex">{`${gameMetadata[x.playerID].name} took a small bet `}<span className={`tokencolor-${x.catID} card`}>{x.card}</span></div>
 							break
 						case "bigBet":
