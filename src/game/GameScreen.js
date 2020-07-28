@@ -66,8 +66,8 @@ function GameScreen({G, ctx, moves, playerID, gameMetadata}) {
 					<SmallStack stack={G.smallStack} makeSmallBet={makeSmallBet} />
 					<BetCards cards={G.players[playerID].betCards} />
 					<div className="flex">
-						<BetZone stack={G.bigStack} playerID={playerID} makeBigBet={makeBigBet} side="win" />
 						<BetZone stack={G.bigStack} playerID={playerID} makeBigBet={makeBigBet} side="lose" />
+						<BetZone stack={G.bigStack} playerID={playerID} makeBigBet={makeBigBet} side="win" />
 					</div>
 				</div>
 				<div className="control">

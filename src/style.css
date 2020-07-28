@@ -7846,6 +7846,10 @@ a.text-dark:hover, a.text-dark:focus {
   background: white;
   color: black; }
 
+.tokencolor-5 {
+  background: purple;
+  color: white; }
+
 .players {
   width: 300px; }
 
