@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
 
 importScripts(
-  "/camaew-up/precache-manifest.4cd58db457c32d429b6e0451844f70ef.js"
+  "/camaew-up/precache-manifest.534751eedb5ba429590dca64cebbdcf1.js"
 );
 
 self.addEventListener('message', (event) => {
