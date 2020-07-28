@@ -1,4 +1,6 @@
 ## Todo's
-* Check if it's the player's turn first
-* Disable moving other people's traps
-* Add reward calculation
+* Disable (?) controls if it's not the player's turn
+* Disable log for previous rounds
+* Add reward calculation graphics (plus the end of the game)
+* Add score change in the log window
+* Lose on the left
