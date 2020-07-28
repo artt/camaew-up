@@ -14,7 +14,7 @@ function LogArea({logArray, gameMetadata}) {
 		<div className="log-area" ref={logArea}>
 			{
 				logArray.map(x => {
-					console.log("xxx", JSON.stringify(x))
+					// console.log("xxx", JSON.stringify(x))
 					switch (x.move) {
 						case "text":
 							return <div>{x.text}</div>
