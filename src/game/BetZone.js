@@ -8,7 +8,6 @@ export default function BetZone({stack, playerID, makeBigBet, side}) {
 
 	function drop(e) {
 		e.preventDefault();
-		// console.log("dropped", e.dataTransfer.getData("betID"))
 		makeBigBet(playerID, Number(e.dataTransfer.getData("betID")), side)
 	}
 

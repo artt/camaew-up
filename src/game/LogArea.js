@@ -8,13 +8,10 @@ export default function LogArea({logArray, gameMetadata}) {
 		logArea.current.scrollTop = logArea.current.scrollHeight
 	}, [logArray])
 
-
-
 	return(
 		<div className="log-area" ref={logArea}>
 			{
 				logArray.map((x, i) => {
-					// console.log("xxx", JSON.stringify(x))
 					switch (x.move) {
 						case "text":
 							return <div key={"log" + i}>{x.text}</div>
