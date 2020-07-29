@@ -4,11 +4,12 @@ import Join from './Join'
 import Create from './Create'
 import Wait from './Wait'
 
-function Lobby({startGame}) {
+export default function Lobby({startGame}) {
 
 	const [name, setName] = React.useState("");
 	const [lobbyState, setLobbyState] = React.useState("entry");
-	const [serverPath, setServerPath] = React.useState("https://camaew-up.herokuapp.com")
+	const [serverPath, setServerPath] = React.useState("http://localhost:8000")
+	// const [serverPath, setServerPath] = React.useState("https://camaew-up.herokuapp.com")
 	const [gameID, setGameID] = React.useState("");
 	const [numPlayers, setnumPlayers] = React.useState(4);
 	const [numCats, setNumCats] = React.useState(5);
@@ -118,5 +119,3 @@ function Lobby({startGame}) {
 	}
 
 }
-
-export default Lobby;

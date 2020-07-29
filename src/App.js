@@ -20,10 +20,10 @@ function App() {
 	function startGame(serverPath, gameID, playerID, credentials) {
 		setData({gameID: gameID, playerID: playerID, credentials: credentials})
 		CamaewUpClient = Client({game: CamaewUp,
-															 board: GameScreen,
-															 multiplayer: SocketIO({server: serverPath}),
-															 debug: true
-														 })
+																board: GameScreen,
+																multiplayer: SocketIO({server: serverPath}),
+																debug: true
+															})
 		setState("game")
 	}
 

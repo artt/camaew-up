@@ -2,7 +2,7 @@ import React from 'react'
 import {Button, Form} from 'react-bootstrap'
 
 // function Join({onJoinJoinClick, onGameIDChange, gameID}) {
-function Join({data, onJoinJoinClick}) {
+export default function Join({data, onJoinJoinClick}) {
 
 	return(
 		<div className="lobby">
@@ -23,5 +23,3 @@ function Join({data, onJoinJoinClick}) {
 	);
 
 }
-
-export default Join;

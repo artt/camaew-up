@@ -1,7 +1,7 @@
 import React from 'react'
 import {Button, Modal} from 'react-bootstrap'
 
-function Wait({data, startGame}) {
+export default function Wait({data, startGame}) {
 
 	const [gameInfo, setGameInfo] = React.useState(null)
 	const [numPlayers, setNumPlayers] = React.useState(0)
@@ -168,5 +168,3 @@ function Wait({data, startGame}) {
 	}
 
 }
-
-export default Wait;

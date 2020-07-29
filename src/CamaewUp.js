@@ -258,7 +258,7 @@ const CamaewUp = {
 																					modPos: -1}),
 			smallStack: Array(setupData.numCats).fill([2, 3, 5]),
 			bigStack: {"win": [], "lose": []},
-			logArray: ['abc'],
+			logArray: [],
 		}
 		log(G, {move: "text", text: "Welcome!"})
 

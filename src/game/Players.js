@@ -1,7 +1,7 @@
 import React from 'react'
 import {ListGroup} from 'react-bootstrap'
 
-function Players({currentPlayer, players, gameMetadata}) {
+export default function Players({currentPlayer, players, gameMetadata}) {
 	return(
 		<div className="players">
 			<ListGroup>
@@ -31,5 +31,3 @@ function Players({currentPlayer, players, gameMetadata}) {
 		</div>
 	)
 }
-
-export default Players;

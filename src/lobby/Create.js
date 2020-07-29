@@ -1,18 +1,7 @@
 import React from 'react'
 import {Button, Form, ToggleButtonGroup, ToggleButton} from 'react-bootstrap'
 
-function Create({data, onCreateCreateClick}) {
-
-	// const [numPlayers, setnumPlayers] = React.useState(4);
-	// const [numCats, setNumCats] = React.useState(5);
-
-	// function onNumPlayersChange(val) {
-	// 	setnumPlayers(val)
-	// }
-
-	// function onNumCatsChange(val) {
-	// 	setNumCats(val)
-	// }
+export default function Create({data, onCreateCreateClick}) {
 
 	return(
 		<div className="lobby">
@@ -53,5 +42,3 @@ function Create({data, onCreateCreateClick}) {
 	)
 
 }
-
-export default Create;

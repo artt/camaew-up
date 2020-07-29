@@ -26,7 +26,7 @@ export default function Cell({className, cellData, cell_id, playerID, gameMetada
 				cellData.stack.slice(0).reverse().map((x, i) => {
 					return(
 						<div className={`token tokencolor-${x}`} key={"cat_stack" + i}>
-							{x}<br />
+							X<br />
 						</div>
 					)
 				})

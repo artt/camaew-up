@@ -1,7 +1,7 @@
 import React from 'react'
 import {Button, Form} from 'react-bootstrap'
 
-function Entry({data, onJoinClick, onCreateClick}) {
+export default function Entry({data, onJoinClick, onCreateClick}) {
 
 	return(
 		<div id="entry-container" className="lobby">
@@ -18,5 +18,3 @@ function Entry({data, onJoinClick, onCreateClick}) {
 		</div>
 	)
 }
-
-export default Entry;
