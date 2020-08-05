@@ -5,12 +5,16 @@ import CamaewUp from './CamaewUp'
 import Lobby from './lobby/Lobby'
 import GameScreen from './game/GameScreen'
 import { createBrowserHistory } from 'history'
+import ReactGA from 'react-ga'
 
 import './style.css'
 
 let CamaewUpClient = null
 
 const history = createBrowserHistory()
+
+ReactGA.initialize('UA-2995735-5')
+ReactGA.pageview(window.location.pathname + window.location.search)
 
 function App() {
 
