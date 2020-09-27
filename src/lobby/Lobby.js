@@ -8,11 +8,14 @@ export default function Lobby({startGame}) {
 
 	const [name, setName] = React.useState("");
 	const [lobbyState, setLobbyState] = React.useState("entry");
-	// const [serverPath, setServerPath] = React.useState("http://localhost:8000")
-	const [serverPath, setServerPath] = React.useState("https://camaew-up.herokuapp.com")
 	const [gameID, setGameID] = React.useState("");
 	const [numPlayers, setnumPlayers] = React.useState(4);
 	const [numCats, setNumCats] = React.useState(5);
+
+	let server = "https://camaew-up.herokuapp.com"
+	if (process.env.NODE_ENV === "development")
+		server = "http://localhost:8000"
+	const [serverPath, setServerPath] = React.useState(server)
 
 	function onServerPathChange(event) {
 		setServerPath(event.target.value);

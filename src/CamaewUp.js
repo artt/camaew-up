@@ -259,6 +259,7 @@ const CamaewUp = {
 			smallStack: Array(setupData.numCats).fill([2, 3, 5]),
 			bigStack: {"win": [], "lose": []},
 			logArray: [],
+			// latestMove: [],
 		}
 		log(G, {move: "text", text: "Welcome!"})
 
@@ -271,9 +272,12 @@ const CamaewUp = {
 		roll: (G, ctx, playerID) => {
 			const [catID, roll] = rollDice(G, ctx, playerID)
 			log(G, {playerID: playerID, move: "roll", catID: catID, roll: roll})
+			// G.latestMove = [["roll", catID, roll]]
 			const mod = resolveBoard(G, ctx)
-			if (mod !== null)
+			if (mod !== null) {
 				log(G, {move: "mod", mod: mod})
+				// G.latestMove.push(["mod", mod])
+			}
 			if (G.cleanUp >= G.numTiles) {
 				// end game
 				scoreSmallRound(G, ctx)
