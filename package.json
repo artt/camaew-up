@@ -19,6 +19,9 @@
     "react-scripts": "3.4.1"
   },
   "scripts": {
+    "host": "REACT_APP_AGENT=host react-scripts start",
+    "client": "REACT_APP_AGENT=client PORT=3001 react-scripts start",
+    "dev": "( sleep 10 && npm run client ) & npm run host",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
