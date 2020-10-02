@@ -20,7 +20,7 @@ export default function Cell({className, cellData, cell_id, playerID, gameMetada
 	}
 
 	return (
-		<div className={"cell " + className} onDragOver={allowDrop} onDrop={drop}>
+		<div className={"cell " + (className || '')} onDragOver={allowDrop} onDrop={drop}>
 			<div className="cell-content">
 			{
 				cellData.stack.slice(0).reverse().map((x, i) => {

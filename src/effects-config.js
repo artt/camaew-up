@@ -6,14 +6,11 @@ export const config = {
 		endTurn: {},
 
 		roll: {
-			// Effects can declare a `create` function.
-			// If defined, the return value of create will be
-			// available as the payload for an effect.
-			create: (value) => ({ value }),
-
-			// Effects can declare a default duration in seconds
-			// (see “Sequencing effects” below).
+			create: (data) => (data),
 			duration: 2,
+		},
+		rollDone: {
+			create: (data) => (data),
 		},
 		something: {}
 	},

@@ -273,7 +273,10 @@ const CamaewUp = {
 	},
 	moves: {
 		roll: (G, ctx, playerID) => {
+			const preDice = G.dice.slice()
 			const [catID, roll] = rollDice(G, ctx, playerID)
+			ctx.effects.roll({catID: catID, preDice: preDice})
+			ctx.effects.rollDone(G.dice.slice())
 			log(G, {playerID: playerID, move: "roll", catID: catID, roll: roll})
 			// G.latestMove = [["roll", catID, roll]]
 			const mod = resolveBoard(G, ctx)

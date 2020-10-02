@@ -24,7 +24,11 @@ function App() {
 
 	function startGame(serverPath, gameID, playerID, credentials) {
 		setData({gameID: gameID, playerID: playerID, credentials: credentials})
-		const board = EffectsBoardWrapper(GameScreen);
+		const board = EffectsBoardWrapper(GameScreen, {
+		  // Delay passing the updated boardgame.io state to your board
+		  // until after the last effect has been triggered.
+		  // Default: false
+		  updateStateAfterEffects: true});
 		CamaewUpClient = Client({game: CamaewUp,
 																board: board,
 																multiplayer: SocketIO({server: serverPath}),
