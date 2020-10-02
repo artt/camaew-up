@@ -1,4 +1,6 @@
 import {sum, cloneDeep} from 'lodash'
+import { EffectsPlugin } from 'bgio-effects/plugin';
+import { config } from './effects-config';
 
 function genArray(size, data) {
 	let a = new Array(size );
@@ -242,6 +244,7 @@ function log(G, message) {
 
 const CamaewUp = {
 	name: "CamaewUp",
+	plugins: [EffectsPlugin(config)],
 	setup: (ctx, setupData) => {
 		let G = {
 			numCats: setupData.numCats,

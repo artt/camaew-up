@@ -9,7 +9,7 @@ import Mod from './Mod'
 import LogArea from './LogArea'
 import {Button} from 'react-bootstrap'
 
-export default function GameScreen({G, ctx, moves, playerID, gameMetadata}) {
+export default function GameScreen({G, ctx, moves, playerID, gameMetadata, gameID, ...rest}) {
 
 	// convert string back to number for easier processing
 	playerID = Number(playerID)

@@ -6,6 +6,7 @@ import Lobby from './lobby/Lobby'
 import GameScreen from './game/GameScreen'
 import { createBrowserHistory } from 'history'
 import ReactGA from 'react-ga'
+import { EffectsBoardWrapper } from 'bgio-effects/react';
 
 import './style.css'
 
@@ -23,8 +24,9 @@ function App() {
 
 	function startGame(serverPath, gameID, playerID, credentials) {
 		setData({gameID: gameID, playerID: playerID, credentials: credentials})
+		const board = EffectsBoardWrapper(GameScreen);
 		CamaewUpClient = Client({game: CamaewUp,
-																board: GameScreen,
+																board: board,
 																multiplayer: SocketIO({server: serverPath}),
 																debug: true
 															})
