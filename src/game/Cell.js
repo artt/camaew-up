@@ -37,7 +37,7 @@ export default function Cell({className, cellData, cell_id, playerID, gameMetada
 						onClick={handleModClick}
 						draggable={playerID === cellData.mod.playerID}
 						onDragStart={drag}>
-					{gameMetadata[cellData.mod.playerID].name}
+					{gameMetadata[cellData.mod.playerID].name || '–'}
 				</div>
 			}
 		</div>
