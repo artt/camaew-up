@@ -40,14 +40,16 @@ export default function GameScreen({G, ctx, moves, playerID, gameMetadata, gameI
 					<LogArea logArray={G.logArray} gameMetadata={gameMetadata} />
 				</div>
 			</div>
-			<RaceTrack
-					G={G}
-					playerID={playerID}
-					gameMetadata={gameMetadata}
-					placeMod={moves.placeMod}
-					moveMod={moves.moveMod}
-					removeMod={moves.removeMod}
-					flipMod={moves.flipMod} />
+			<div id="racetrack-wrapper">
+				<RaceTrack
+						G={G}
+						playerID={playerID}
+						gameMetadata={gameMetadata}
+						placeMod={moves.placeMod}
+						moveMod={moves.moveMod}
+						removeMod={moves.removeMod}
+						flipMod={moves.flipMod} />
+			</div>
 		</React.Fragment>
 	);
 
