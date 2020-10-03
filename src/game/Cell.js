@@ -19,6 +19,8 @@ export default function Cell({cellData, cell_id, isExtra, playerID, gameMetadata
 		e.dataTransfer.setData("type", "move")
 	}
 
+	const catEmoji = ['(ꏿ ᆺ ꏿ)', '(=^ ◡ ^=)', '(=✪ᆽ✪=)', '(=චᆽච=)', '(≗ᆽ≗)', '( ̿–ᆺ ̿–)']
+
 	return (
 		<div className={"cell " + (isExtra && 'cell-extra')} onDragOver={allowDrop} onDrop={drop}>
 			<div className="cell-content">
@@ -26,7 +28,7 @@ export default function Cell({cellData, cell_id, isExtra, playerID, gameMetadata
 				cellData.stack.slice(0).reverse().map((x, i) => {
 					return(
 						<div className={`token tokencolor-${x}`} key={"cat_stack" + i}>
-							X<br />
+							{catEmoji[x]}<br />
 						</div>
 					)
 				})
