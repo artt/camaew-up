@@ -1,6 +1,6 @@
 import React from 'react';
 
-export default function Cell({className, cellData, cell_id, playerID, gameMetadata, prePlaceMod, preMoveMod, preFlipMod}) {
+export default function Cell({cellData, cell_id, isExtra, playerID, gameMetadata, prePlaceMod, preMoveMod, preFlipMod}) {
 
 	function allowDrop(e) {
 		e.preventDefault();
@@ -20,7 +20,7 @@ export default function Cell({className, cellData, cell_id, playerID, gameMetada
 	}
 
 	return (
-		<div className={"cell " + (className || '')} onDragOver={allowDrop} onDrop={drop}>
+		<div className={"cell " + (isExtra && 'cell-extra')} onDragOver={allowDrop} onDrop={drop}>
 			<div className="cell-content">
 			{
 				cellData.stack.slice(0).reverse().map((x, i) => {

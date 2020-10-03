@@ -110,22 +110,11 @@ export default function RaceTrack({G, playerID, gameMetadata, placeMod, moveMod,
 
 			<div className="board">
 				{
-					G.board.slice(0, G.numTiles).map((cell, i) => <Cell
+					G.board.map((cell, i) => <Cell
 																			cellData={cell}
 																			key={i}
 																			cell_id={i}
-																			playerID={playerID}
-																			gameMetadata={gameMetadata}
-																			prePlaceMod={prePlaceMod}
-																			preFlipMod={preFlipMod}
-																		/>)
-				}
-				{
-					G.board.slice(G.numTiles).map((cell, i) => <Cell
-																			className="cell-extra"
-																			cellData={cell}
-																			key={i}
-																			cell_id={i}
+																			isExtra={i >= G.numTiles}
 																			playerID={playerID}
 																			gameMetadata={gameMetadata}
 																			prePlaceMod={prePlaceMod}
