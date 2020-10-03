@@ -11,22 +11,9 @@ function genArray(size, data) {
 }
 
 function rankCats(G) {
-	let indices = Array.from(new Array(G.numCats), (x, i) => i)
-	indices.sort((a, b) => {
-		if (G.pos[a] !== G.pos[b])
-			return G.pos[b] - G.pos[a]
-		else {
-			// break tie with stack order
-			const stack = G.board[G.pos[a]].stack
-			return stack.indexOf(b) - stack.indexOf(a)
-		}
-	});
+	let indices = Array.from(new Array(G.numCats), (x, i) => i)	
+	indices.sort((a, b) => (G.cats[b][0] - G.cats[a][0]) * 100 + (G.cats[b][1] - G.cats[a][1]));	
 	return indices
-	// let ret = Array(G.numCats)
-	// for (let i = 0; i < G.numCats; i ++) {
-	// 	ret[indices[i]] = i
-	// }
-	// return ret;
 }
 
 function resetSmallRound(G, ctx) {
@@ -50,7 +37,7 @@ function scoreSmallRound(G, ctx) {
 
 	// get ranks
 	const rank = rankCats(G)
-	
+
 	for (let i = 0; i < ctx.numPlayers; i ++) {
 		
 		// small bets
@@ -126,32 +113,32 @@ function getWinners(G) {
 
 function moveCat(G, ctx, catID, roll) {
 
-	const curCellNum = G.pos[catID]
+	const curCellNum = G.cats[catID][0]
+
 	let curStack = []
 
+	// check if the cat in question is already on the board
 	if (curCellNum >= 0) {
 		const curCell = G.board[curCellNum].stack
 		const curLayer = curCell.indexOf(catID)
 		curStack = curCell.slice(curLayer)
 		// update old cell
-		// console.log("curStack", curStack)
 		G.board[curCellNum].stack = G.board[curCellNum].stack.slice(0, curLayer)
 	}
+	// if not then there's no need to worry about cats stacked on top
 	else {
 		curStack = [catID]
 	}
-	// update new cell
-	G.board[curCellNum + roll].stack = G.board[curCellNum + roll].stack.concat(curStack)
 
+	// update new cell
+	const destCellHeight = G.board[curCellNum + roll].stack.length
+	G.board[curCellNum + roll].stack = G.board[curCellNum + roll].stack.concat(curStack)
 	for (let i = 0; i < curStack.length; i ++) {
-		G.pos[curStack[i]] += roll	
+		// G.pos[curStack[i]] += roll
+		G.cats[curStack[i]] = [curCellNum + roll, destCellHeight + i]
 	}
 
 	G.cleanUp = curCellNum + roll
-
-	// await new Promise(r => setTimeout(r, 1000));
-	// // setTimeout(() => resolveBoard(G, ctx, curCellNum + roll), 1000)
-	// resolveBoard(G, ctx, curCellNum + roll)
 
 }
 
@@ -159,26 +146,27 @@ function resolveBoard(G, ctx) {
 
 	const mod = G.board[G.cleanUp].mod
 
-	if (mod === null) {
-		return null
-	}
-	else {
+	if (mod !== null) {
+		log(G, {move: "mod", mod: mod.type})
 		G.players[mod.playerID].coins += 1
 		const curStack = G.board[G.cleanUp].stack
 		G.board[G.cleanUp].stack = []
+		let dest = 999
+
 		if (mod.type === "tape") {
-			G.board[G.cleanUp - 1].stack = curStack.concat(G.board[G.cleanUp - 1].stack)
-			for (let i = 0; i < curStack.length; i ++) {
-				G.pos[curStack[i]] = G.cleanUp - 1
-			}
-			return "tape"
+			dest = G.cleanUp - 1
+			G.board[dest].stack = curStack.concat(G.board[dest].stack)
 		}
 		else if (mod.type === "cucumber") {
-			G.board[G.cleanUp + 1].stack = G.board[G.cleanUp + 1].stack.concat(curStack)
-			for (let i = 0; i < curStack.length; i ++) {
-				G.pos[curStack[i]] = G.cleanUp + 1
-			}
-			return "cucumber"
+			dest = G.cleanUp + 1
+			G.board[dest].stack = G.board[dest].stack.concat(curStack)
+		}
+
+		// for (let i = 0; i < curStack.length; i ++) {
+		// 	G.pos[curStack[i]] = dest
+		// }
+		for (let i = 0; i < G.board[dest].stack.length; i ++) {
+			G.cats[G.board[dest].stack[i]] = [dest, i]
 		}
 	}
 
@@ -247,13 +235,9 @@ const CamaewUp = {
 	plugins: [EffectsPlugin(config)],
 	setup: (ctx, setupData) => {
 		let G = {
-			numCats: setupData.numCats,
-			numTiles: setupData.numTiles,
-			numPlayers: ctx.numPlayers,
 			dice: Array(setupData.numCats).fill(0),
-			lastDiceRolled: -1,
-			cleanUp: -1,
-			pos: Array(setupData.numCats).fill(-1),
+			// pos: Array(setupData.numCats).fill(-1),
+			cats: Array(setupData.numCats).fill([-1, -1]),
 			board: genArray(setupData.numTiles + 3, {stack: [], mod: null}),
 			players: genArray(ctx.numPlayers, {coins: 3,
 																					smallBets: Array(setupData.numCats).fill([]),
@@ -262,6 +246,11 @@ const CamaewUp = {
 			smallStack: Array(setupData.numCats).fill([2, 3, 5]),
 			bigStack: {"win": [], "lose": []},
 			logArray: [],
+			numCats: setupData.numCats,
+			numTiles: setupData.numTiles,
+			numPlayers: ctx.numPlayers,
+			lastDiceRolled: -1,
+			cleanUp: -1,
 			// latestMove: [],
 		}
 		log(G, {move: "text", text: "Welcome!"})
@@ -279,11 +268,11 @@ const CamaewUp = {
 			ctx.effects.rollDone(G.dice.slice())
 			log(G, {playerID: playerID, move: "roll", catID: catID, roll: roll})
 			// G.latestMove = [["roll", catID, roll]]
-			const mod = resolveBoard(G, ctx)
-			if (mod !== null) {
-				log(G, {move: "mod", mod: mod})
+			resolveBoard(G, ctx)
+			// if (mod !== null) {
+				// log(G, {move: "mod", mod: mod})
 				// G.latestMove.push(["mod", mod])
-			}
+			// }
 			if (G.cleanUp >= G.numTiles) {
 				// end game
 				scoreSmallRound(G, ctx)
