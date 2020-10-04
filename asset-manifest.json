@@ -1,22 +1,22 @@
 {
   "files": {
-    "main.css": "/camaew-up/static/css/main.98361472.chunk.css",
-    "main.js": "/camaew-up/static/js/main.16087df4.chunk.js",
-    "main.js.map": "/camaew-up/static/js/main.16087df4.chunk.js.map",
+    "main.css": "/camaew-up/static/css/main.9dcda74a.chunk.css",
+    "main.js": "/camaew-up/static/js/main.2d48492e.chunk.js",
+    "main.js.map": "/camaew-up/static/js/main.2d48492e.chunk.js.map",
     "runtime-main.js": "/camaew-up/static/js/runtime-main.02ff0641.js",
     "runtime-main.js.map": "/camaew-up/static/js/runtime-main.02ff0641.js.map",
-    "static/js/2.7c14f259.chunk.js": "/camaew-up/static/js/2.7c14f259.chunk.js",
-    "static/js/2.7c14f259.chunk.js.map": "/camaew-up/static/js/2.7c14f259.chunk.js.map",
+    "static/js/2.212be608.chunk.js": "/camaew-up/static/js/2.212be608.chunk.js",
+    "static/js/2.212be608.chunk.js.map": "/camaew-up/static/js/2.212be608.chunk.js.map",
     "index.html": "/camaew-up/index.html",
-    "precache-manifest.595d71be37ffa0c3d595a03cc887dd8d.js": "/camaew-up/precache-manifest.595d71be37ffa0c3d595a03cc887dd8d.js",
+    "precache-manifest.40cffdbcf0776e52e1db5e4627aec8fc.js": "/camaew-up/precache-manifest.40cffdbcf0776e52e1db5e4627aec8fc.js",
     "service-worker.js": "/camaew-up/service-worker.js",
-    "static/css/main.98361472.chunk.css.map": "/camaew-up/static/css/main.98361472.chunk.css.map",
-    "static/js/2.7c14f259.chunk.js.LICENSE.txt": "/camaew-up/static/js/2.7c14f259.chunk.js.LICENSE.txt"
+    "static/css/main.9dcda74a.chunk.css.map": "/camaew-up/static/css/main.9dcda74a.chunk.css.map",
+    "static/js/2.212be608.chunk.js.LICENSE.txt": "/camaew-up/static/js/2.212be608.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
     "static/js/runtime-main.02ff0641.js",
-    "static/js/2.7c14f259.chunk.js",
-    "static/css/main.98361472.chunk.css",
-    "static/js/main.16087df4.chunk.js"
+    "static/js/2.212be608.chunk.js",
+    "static/css/main.9dcda74a.chunk.css",
+    "static/js/main.2d48492e.chunk.js"
   ]
 }
