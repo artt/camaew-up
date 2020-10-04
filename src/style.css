@@ -9947,6 +9947,10 @@ h3 {
   bottom: 0;
 }
 
+.card.cell-mod {
+  margin: 5px;
+}
+
 .cat {
   position: absolute;
   width: 80px;
