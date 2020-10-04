@@ -9947,14 +9947,6 @@ h3 {
   bottom: 0;
 }
 
-.token {
-  width: 80px;
-  height: 30px;
-  border-radius: 5px;
-  margin: 5px;
-  text-align: center;
-}
-
 .cat {
   position: absolute;
   width: 80px;
@@ -9962,6 +9954,7 @@ h3 {
   border-radius: 5px;
   margin: 0;
   text-align: center;
+  transition-duration: 0.1s;
 }
 
 .tokencolor-0 {

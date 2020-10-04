@@ -45,14 +45,6 @@ $tokenmargin: 5px;
 
 $token-colors: blue, green, orange, yellow, white, purple;
 
-.token {
-	width: 80px;
-	height: 30px;
-	border-radius: 5px;
-	margin: 5px;
-	text-align: center;
-}
-
 .cat {
 	position: absolute;
 	width: $tokenwidth;
@@ -60,6 +52,7 @@ $token-colors: blue, green, orange, yellow, white, purple;
 	border-radius: 5px;
 	margin: 0;
 	text-align: center;
+	transition-duration: 0.1s;
 }
 
 @for $i from 0 through length($token-colors) - 1 {

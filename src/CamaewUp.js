@@ -149,22 +149,21 @@ function resolveBoard(G, ctx) {
 	if (mod !== null) {
 		log(G, {move: "mod", mod: mod.type})
 		G.players[mod.playerID].coins += 1
-		const curStack = G.board[G.cleanUp].stack
+		const curStack = G.board[G.cleanUp].stack.slice()
 		G.board[G.cleanUp].stack = []
 		let dest = 999
 
 		if (mod.type === "tape") {
 			dest = G.cleanUp - 1
+			ctx.effects.modTape({cellNum: G.cleanUp, preCats: cloneDeep(G.cats), prevStack: G.board[G.cleanUp - 1].stack.slice(), stack: curStack})
 			G.board[dest].stack = curStack.concat(G.board[dest].stack)
 		}
 		else if (mod.type === "cucumber") {
 			dest = G.cleanUp + 1
+			ctx.effects.modCucumber({cellNum: G.cleanUp, preCats: cloneDeep(G.cats), destHeight: G.board[dest].stack.length, stack: curStack})
 			G.board[dest].stack = G.board[dest].stack.concat(curStack)
 		}
 
-		// for (let i = 0; i < curStack.length; i ++) {
-		// 	G.pos[curStack[i]] = dest
-		// }
 		for (let i = 0; i < G.board[dest].stack.length; i ++) {
 			G.cats[G.board[dest].stack[i]] = [dest, i]
 		}
@@ -263,16 +262,16 @@ const CamaewUp = {
 	moves: {
 		roll: (G, ctx, playerID) => {
 			const preDice = G.dice.slice()
+			const preCats = cloneDeep(G.cats)
+			const preBoard = cloneDeep(G.board)
 			const [catID, roll] = rollDice(G, ctx, playerID)
 			ctx.effects.roll({catID: catID, preDice: preDice})
 			ctx.effects.rollDone(G.dice.slice())
+			for (let i = 0; i < roll; i ++) {
+				ctx.effects.moveFwd({catID: catID, roll: i, preCats: preCats, preBoard: preBoard})
+			}
 			log(G, {playerID: playerID, move: "roll", catID: catID, roll: roll})
-			// G.latestMove = [["roll", catID, roll]]
 			resolveBoard(G, ctx)
-			// if (mod !== null) {
-				// log(G, {move: "mod", mod: mod})
-				// G.latestMove.push(["mod", mod])
-			// }
 			if (G.cleanUp >= G.numTiles) {
 				// end game
 				scoreSmallRound(G, ctx)

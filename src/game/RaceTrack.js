@@ -2,6 +2,8 @@ import React from 'react'
 import Cell from './Cell'
 import {Button, Modal} from 'react-bootstrap'
 import styles from './_Game.scss'
+import { useEffectListener } from 'bgio-effects/react';
+import {cloneDeep} from 'lodash'
 
 export default function RaceTrack({G, playerID, gameMetadata, placeMod, moveMod, removeMod, flipMod}) {
 
@@ -133,6 +135,70 @@ export default function RaceTrack({G, playerID, gameMetadata, placeMod, moveMod,
 						top: `${sz.cell.height + sz.cell.margin - (pos[1] + 1) * (sz.token.height + sz.token.margin)}px`}
 	}
 
+	useEffectListener('moveFwd', ({catID, roll, preCats, preBoard}) => {
+
+		const curCellNum = preCats[catID][0]
+		let tmpCats = preCats
+		let curStack = []
+
+		const curCell = preBoard[curCellNum].stack
+		const curLayer = curCell.indexOf(catID)
+		curStack = curCell.slice(curLayer)
+
+		// update new cell
+		const destCellHeight = preBoard[curCellNum + 1 + roll].stack.length
+		for (let i = 0; i < curStack.length; i ++) {
+			tmpCats[curStack[i]] = [curCellNum + 1 + roll, destCellHeight + i]
+		}
+
+		setCats(tmpCats)
+
+	}, []);
+
+	useEffectListener('modCucumber', ({cellNum, preCats, destHeight, stack}) => {
+		let tmpCats = preCats
+		for (let i = 0; i < stack.length; i ++) {
+			tmpCats[stack[i]] = [cellNum + 1, destHeight + i]
+		}
+		setCats(tmpCats)
+	}, []);
+
+	useEffectListener('modTape', ({cellNum, preCats, prevStack, stack}) => {
+		let tmpCats = preCats
+		for (let i = 0; i < stack.length; i ++) {
+			tmpCats[stack[i]] = [cellNum - 1, i]
+		}
+		for (let i = 0; i < prevStack.length; i ++) {
+			tmpCats[prevStack[i]][1] = stack.length + i
+		}
+		setCats(tmpCats)
+	}, []);
+
+	// useEffectListener('modTape', ({cellNum, stack}) => {
+
+	// 	const curCellNum = preCats[catID][0]
+	// 	let tmpCats = preCats
+	// 	let curStack = []
+
+	// 	const curCell = preBoard[curCellNum].stack
+	// 	const curLayer = curCell.indexOf(catID)
+	// 	curStack = curCell.slice(curLayer)
+
+	// 	// update new cell
+	// 	const destCellHeight = preBoard[curCellNum + 1 + roll].stack.length
+	// 	for (let i = 0; i < curStack.length; i ++) {
+	// 		tmpCats[curStack[i]] = [curCellNum + 1 + roll, destCellHeight + i]
+	// 	}
+
+	// 	setCats(tmpCats)
+
+	// }, []);
+
+	// useEffectListener('moveBack', (catID) => {
+	// 	clearInterval(diceInterval)
+	// 	setDiceUI(finalDice)
+	// }, []);
+
 	return(
 		<React.Fragment>
 
@@ -150,7 +216,7 @@ export default function RaceTrack({G, playerID, gameMetadata, placeMod, moveMod,
 																		/>)
 				}
 				{
-					G.cats.map((x, i) => {
+					cats.map((x, i) => {
 						return(
 							<div className={`cat tokencolor-${i}`}
 									id={`cattoken-${i}`}
