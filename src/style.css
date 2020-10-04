@@ -9909,14 +9909,23 @@ h3 {
     border-color: #dee2e6;
   }
 }
+:export {
+  cellwidth: 120px;
+  cellheight: 120px;
+  cellmargin: 3px;
+  tokenwidth: 80px;
+  tokenheight: 30px;
+  tokenmargin: 5px;
+}
+
 #racetrack-wrapper {
   width: 100%;
   overflow: scroll;
 }
 
 .board {
+  position: relative;
   display: inline-flex;
-  grid-template-columns: repeat(auto-fit, 120px);
   margin: 20px 0;
 }
 
@@ -9943,6 +9952,15 @@ h3 {
   height: 30px;
   border-radius: 5px;
   margin: 5px;
+  text-align: center;
+}
+
+.cat {
+  position: absolute;
+  width: 80px;
+  height: 30px;
+  border-radius: 5px;
+  margin: 0;
   text-align: center;
 }
 

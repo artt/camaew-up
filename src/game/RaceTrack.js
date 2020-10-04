@@ -1,6 +1,7 @@
 import React from 'react'
 import Cell from './Cell'
 import {Button, Modal} from 'react-bootstrap'
+import styles from './_Game.scss'
 
 export default function RaceTrack({G, playerID, gameMetadata, placeMod, moveMod, removeMod, flipMod}) {
 
@@ -8,6 +9,8 @@ export default function RaceTrack({G, playerID, gameMetadata, placeMod, moveMod,
 	const [showFlipDialog, setShowFlipDialog] = React.useState(false)
 	const [cellID, setCellID] = React.useState(null)
 	const [type, setType] = React.useState(null)
+
+	const [cats, setCats] = React.useState(G.cats)
 	
 	function prePlaceMod(cellID, type) {
 		if (type === "place" && G.players[playerID].modPos > -1) {
@@ -105,6 +108,31 @@ export default function RaceTrack({G, playerID, gameMetadata, placeMod, moveMod,
 		)
 	}
 
+	const catEmoji = ['(ꏿ ᆺ ꏿ)', '(=^ ◡ ^=)', '(=✪ᆽ✪=)', '(=චᆽච=)', '(≗ᆽ≗)', '( ̿–ᆺ ̿–)']
+
+	function getSize(name) {
+		return Number(styles[name].substring(0, styles[name].length - 2))
+	}
+
+	// getCSSSize('cellwidth')
+	const sz = {
+		cell: {
+			width: getSize('cellwidth'),
+			height: getSize('cellheight'),
+			margin: getSize('cellmargin'),
+		},
+		token: {
+			width: getSize('tokenwidth'),
+			height: getSize('tokenheight'),
+			margin: getSize('tokenmargin'),
+		}
+	}
+
+	function getCatPos(pos) {
+		return {left: `${pos[0]*(sz.cell.width + 2*sz.cell.margin) + sz.cell.margin + (sz.cell.width - sz.token.width)/2}px`,
+						top: `${sz.cell.height + sz.cell.margin - (pos[1] + 1) * (sz.token.height + sz.token.margin)}px`}
+	}
+
 	return(
 		<React.Fragment>
 
@@ -120,6 +148,18 @@ export default function RaceTrack({G, playerID, gameMetadata, placeMod, moveMod,
 																			prePlaceMod={prePlaceMod}
 																			preFlipMod={preFlipMod}
 																		/>)
+				}
+				{
+					G.cats.map((x, i) => {
+						return(
+							<div className={`cat tokencolor-${i}`}
+									id={`cattoken-${i}`}
+									key={"cat_stack_tmp" + i}
+									style={getCatPos(x)}>
+								{catEmoji[i]}<br />
+							</div>
+						)
+					})
 				}
 			</div>
 

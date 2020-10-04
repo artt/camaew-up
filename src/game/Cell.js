@@ -24,7 +24,7 @@ export default function Cell({cellData, cell_id, isExtra, playerID, gameMetadata
 	return (
 		<div className={"cell " + (isExtra && 'cell-extra')} onDragOver={allowDrop} onDrop={drop}>
 			<div className="cell-content">
-			{
+			{/*
 				cellData.stack.slice(0).reverse().map((x, i) => {
 					return(
 						<div className={`token tokencolor-${x}`} key={"cat_stack" + i}>
@@ -32,7 +32,7 @@ export default function Cell({cellData, cell_id, isExtra, playerID, gameMetadata
 						</div>
 					)
 				})
-			}
+			*/}
 			</div>
 			{cellData.mod &&
 				<div className={`cell-mod card ${cellData.mod.type}`}

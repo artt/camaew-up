@@ -1,20 +1,36 @@
+$cellwidth: 120px;
+$cellheight: 120px;
+$cellmargin: 3px;
+$tokenwidth: 80px;
+$tokenheight: 30px;
+$tokenmargin: 5px;
+
+:export {
+	cellwidth: $cellwidth;
+	cellheight: $cellheight;
+	cellmargin: $cellmargin;
+	tokenwidth: $tokenwidth;
+	tokenheight: $tokenheight;
+	tokenmargin: $tokenmargin;
+}
+
 #racetrack-wrapper {
 	width: 100%;
 	overflow: scroll;
 }
 
 .board {
+	position: relative;
 	display: inline-flex;
-	grid-template-columns: repeat(auto-fit, 120px);
 	margin: 20px 0;
 }
 
 .cell {
-	width: 120px;
-	height: 120px;
+	width: $cellwidth;
+	height: $cellheight;
 	background-color: rgba(255, 255, 255, 0.8);
 	border-radius: 3px;
-	margin: 3px;
+	margin: $cellmargin;
 	position: relative;
 }
 
@@ -30,11 +46,20 @@
 $token-colors: blue, green, orange, yellow, white, purple;
 
 .token {
-		width: 80px;
-		height: 30px;
-		border-radius: 5px;
-		margin: 5px;
-		text-align: center;
+	width: 80px;
+	height: 30px;
+	border-radius: 5px;
+	margin: 5px;
+	text-align: center;
+}
+
+.cat {
+	position: absolute;
+	width: $tokenwidth;
+	height: $tokenheight;
+	border-radius: 5px;
+	margin: 0;
+	text-align: center;
 }
 
 @for $i from 0 through length($token-colors) - 1 {
