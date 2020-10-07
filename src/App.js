@@ -4,6 +4,7 @@ import {SocketIO} from 'boardgame.io/multiplayer'
 import CamaewUp from './CamaewUp'
 import Lobby from './lobby/Lobby'
 import GameScreen from './game/GameScreen'
+import GameScreen2 from './game2/GameScreen'
 import { createBrowserHistory } from 'history'
 import ReactGA from 'react-ga'
 import { EffectsBoardWrapper } from 'bgio-effects/react';
@@ -24,7 +25,7 @@ function App() {
 
 	function startGame(serverPath, gameID, playerID, credentials) {
 		setData({gameID: gameID, playerID: playerID, credentials: credentials})
-		const board = EffectsBoardWrapper(GameScreen, {
+		const board = EffectsBoardWrapper(GameScreen2, {
 		  // Delay passing the updated boardgame.io state to your board
 		  // until after the last effect has been triggered.
 		  // Default: false
@@ -32,7 +33,7 @@ function App() {
 		CamaewUpClient = Client({game: CamaewUp,
 																board: board,
 																multiplayer: SocketIO({server: serverPath}),
-																debug: true
+																debug: false
 															})
 		setState("game")
 	}
@@ -53,7 +54,9 @@ function App() {
 	else if (state === "game") {
 		return(
 			<div>
-				<CamaewUpClient gameID={data.gameID} playerID={String(data.playerID)} credentials={data.credentials} />
+				<CamaewUpClient gameID={data.gameID}
+												playerID={String(data.playerID)}
+												credentials={data.credentials} />
 			</div>
 		);
 	}
