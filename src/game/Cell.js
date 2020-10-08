@@ -22,7 +22,7 @@ export default function Cell({cellData, cell_id, isExtra, playerID, gameMetadata
 	const catEmoji = ['(ꏿ ᆺ ꏿ)', '(=^ ◡ ^=)', '(=✪ᆽ✪=)', '(=චᆽච=)', '(≗ᆽ≗)', '( ̿–ᆺ ̿–)']
 
 	return (
-		<div className={"cell " + (isExtra && 'cell-extra')} onDragOver={allowDrop} onDrop={drop}>
+		<div className={`cell ${isExtra ? 'cell-extra' : ''}`} onDragOver={allowDrop} onDrop={drop}>
 			<div className="cell-content">
 			{/*
 				cellData.stack.slice(0).reverse().map((x, i) => {

@@ -12,7 +12,7 @@ export default function Mod({hasMod, playerID}) {
 			<div className="section">Mod Tile</div>
 				<div className="flex">
 					<div
-							className="card"
+							className="modcard"
 							draggable={hasMod}
 							player_id={playerID}
 							onDragStart={drag}>

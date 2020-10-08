@@ -1,7 +1,7 @@
 import React from 'react'
 import Cell from './Cell'
+import styles from './game.scss'
 import {Button, Modal} from 'react-bootstrap'
-import styles from './_Game.scss'
 import { useEffectListener } from 'bgio-effects/react';
 import {cloneDeep} from 'lodash'
 
@@ -174,35 +174,10 @@ export default function RaceTrack({G, playerID, gameMetadata, placeMod, moveMod,
 		setCats(tmpCats)
 	}, []);
 
-	// useEffectListener('modTape', ({cellNum, stack}) => {
-
-	// 	const curCellNum = preCats[catID][0]
-	// 	let tmpCats = preCats
-	// 	let curStack = []
-
-	// 	const curCell = preBoard[curCellNum].stack
-	// 	const curLayer = curCell.indexOf(catID)
-	// 	curStack = curCell.slice(curLayer)
-
-	// 	// update new cell
-	// 	const destCellHeight = preBoard[curCellNum + 1 + roll].stack.length
-	// 	for (let i = 0; i < curStack.length; i ++) {
-	// 		tmpCats[curStack[i]] = [curCellNum + 1 + roll, destCellHeight + i]
-	// 	}
-
-	// 	setCats(tmpCats)
-
-	// }, []);
-
-	// useEffectListener('moveBack', (catID) => {
-	// 	clearInterval(diceInterval)
-	// 	setDiceUI(finalDice)
-	// }, []);
-
 	return(
 		<React.Fragment>
 
-			<div className="board">
+			<div className="cell-container">
 				{
 					G.board.map((cell, i) => <Cell
 																			cellData={cell}

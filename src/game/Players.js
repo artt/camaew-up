@@ -1,33 +1,55 @@
 import React from 'react'
-import {ListGroup} from 'react-bootstrap'
+import BetCards from './BetCards'
+import Mod from './Mod'
+import CoinSVG from '../assets/coin.svg';
 
-export default function Players({currentPlayer, players, gameMetadata}) {
+function SmallBetTable({bets}) {
 	return(
-		<div className="players">
-			<ListGroup>
+		<React.Fragment>
 			{
-				gameMetadata.map((x, i) => {
+				bets.map((color, j) => {
 					return(
-						<ListGroup.Item active={x.id === Number(currentPlayer)} className="flex" key={"player" + i}>
-							{`${x.name} (${players[i].coins})`}
+						<React.Fragment key={"smallBets" + j}>
 							{
-								players[i].smallBets.map((color, j) => {
-									return(
-										<React.Fragment key={"smallBets" + j}>
-											{
-												color.map(card => {
-													return <div className={`tokencolor-${j} card`} key={"smallBet" + i}>{card}</div>
-												})
-											}
-										</React.Fragment>
-									)
+								color.map(card => {
+									return <div className={`tokencolor-${j} card`}>{card}</div>
 								})
 							}
-						</ListGroup.Item>
-					);
+						</React.Fragment>
+					)
 				})
 			}
-			</ListGroup>
+		</React.Fragment>
+	)	
+}
+
+function Player({name, data}) {
+	return(
+		<div className="player-card">
+			<div>
+				<img alt='Photo' src={`https://api.adorable.io/avatars/100/${name || "Player"}.png`} />
+			</div>
+			<div className="player-details">
+				<div>
+					{name || "Player"}
+				</div>
+				<div>
+					<img src={CoinSVG} height={16} /> {data.coins}
+				</div>
+				<SmallBetTable bets={data.smallBets}/>
+			</div>
+		</div>
+	)
+}
+
+export default function Players({playerID, currentPlayer, players, gameMetadata}) {
+	return(
+		<div>
+			{players.map((x, i) => {
+				return <Player name={gameMetadata[i].name} data={x} />
+			})}
+			<BetCards cards={players[playerID].betCards} />
+			<Mod hasMod={players[playerID].modPos === -1} playerID={playerID} />
 		</div>
 	)
 }

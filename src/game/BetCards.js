@@ -17,7 +17,7 @@ export default function BetCards({cards}) {
 						if (x) {
 							return(
 								<div
-										className={`tokencolor-${i} card`}
+										className={`tokencolor-${i} betcard`}
 										bet_id={i}
 										draggable="true"
 										onDragStart={drag}

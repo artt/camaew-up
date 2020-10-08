@@ -12,7 +12,7 @@ export default function BetZone({stack, playerID, makeBigBet, side}) {
 	}
 
 	return(
-		<div className="betzone" onDragOver={allowDrop} onDrop={drop}>
+		<div className={`betzone betzone-${side}`} onDragOver={allowDrop} onDrop={drop}>
 			{`${side}: ${stack[side].length}`}
 		</div>
 	)

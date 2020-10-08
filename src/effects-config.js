@@ -11,17 +11,16 @@ export const config = {
 		},
 		rollDone: {
 			create: (data) => (data),
+			duration: 0.2,
+		},
+		rollReset: {
+			create: (data) => (data),
 		},
 
 		moveFwd: {
 			create: (data) => (data),
 			duration: 0.3,
 		},
-		moveBack: {
-			create: (data) => (data),
-			duration: 0.3,
-		},
-
 		modTape: {
 			create: (data) => (data),
 			duration: 0.3,

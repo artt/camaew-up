@@ -1,4 +1,5 @@
 import React from 'react'
+import Dice from './Dice'
 import {ListGroup} from 'react-bootstrap'
 import {random} from 'lodash'
 
@@ -25,9 +26,15 @@ function SmallStack({stack, tokenID, makeSmallBet}) {
 	)
 }
 
-export default function Camp({stack, dice, makeSmallBet}) {
+export default function Camp({stack, dice, makeSmallBet, rollClick}) {
 
 	const space = 15
+
+	const [diceUI, setDiceUI] = React.useState(dice)
+
+	useEffectListener('rollReset', (finalDice) => {
+		setDiceUI(finalDice)
+	}, []);
 
 	return(
 		<div id="camp">
@@ -37,15 +44,17 @@ export default function Camp({stack, dice, makeSmallBet}) {
 						<div className="tent"
 								style={{transform: `translateX(-50%) rotate(${-space * (stack.length - 1) / 2 + space * i}deg)`}} >
 							<SmallStack stack={stack[i]} tokenID={i} makeSmallBet={makeSmallBet} />
-							<div className={`rolled-dice tokencolor-${i}`}>
-								<div className="dice-text-wrapper">
-									{dice[i]}
-								</div>
+							<div className={`rolled-dice ${diceUI[i] && `tokencolor-${i}`}`}>
+								{diceUI[i]
+									? <div className="dice-text-wrapper">{diceUI[i]}</div>
+									: <div className="dice-text-wrapper no-dice"></div>
+								}
 							</div>
 						</div>
 					)
 				})
 			}
+			<Dice rollClick={rollClick} />
 		</div>
 	)
 }

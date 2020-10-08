@@ -235,7 +235,6 @@ const CamaewUp = {
 	setup: (ctx, setupData) => {
 		let G = {
 			dice: Array(setupData.numCats).fill(0),
-			// pos: Array(setupData.numCats).fill(-1),
 			cats: Array(setupData.numCats).fill([-1, -1]),
 			board: genArray(setupData.numTiles + 3, {stack: [], mod: null}),
 			players: genArray(ctx.numPlayers, {coins: 3,
@@ -265,8 +264,9 @@ const CamaewUp = {
 			const preCats = cloneDeep(G.cats)
 			const preBoard = cloneDeep(G.board)
 			const [catID, roll] = rollDice(G, ctx, playerID)
-			ctx.effects.roll({catID: catID, preDice: preDice})
-			ctx.effects.rollDone(G.dice.slice())
+			ctx.effects.roll(catID)
+			ctx.effects.rollDone(roll)
+			ctx.effects.rollReset(G.dice.slice())
 			for (let i = 0; i < roll; i ++) {
 				ctx.effects.moveFwd({catID: catID, roll: i, preCats: preCats, preBoard: preBoard})
 			}
