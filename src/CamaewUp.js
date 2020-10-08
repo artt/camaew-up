@@ -260,7 +260,6 @@ const CamaewUp = {
 	},
 	moves: {
 		roll: (G, ctx, playerID) => {
-			const preDice = G.dice.slice()
 			const preCats = cloneDeep(G.cats)
 			const preBoard = cloneDeep(G.board)
 			const [catID, roll] = rollDice(G, ctx, playerID)

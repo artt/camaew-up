@@ -2,7 +2,6 @@ import React from 'react'
 import Players from './Players'
 import RaceTrack from './RaceTrack'
 import Camp from './Camp'
-import SmallStack from './SmallStack'
 import BetZone from './BetZone'
 
 import './game.css'
@@ -11,7 +10,6 @@ export default function GameScreen2({G, ctx, moves, playerID, gameMetadata, game
 
 	// convert string back to number for easier processing
 	playerID = Number(playerID)
-	console.log(ctx)
 
 	return (
 		<div id="game">

@@ -1,7 +1,5 @@
 import React from 'react'
 import Dice from './Dice'
-import {ListGroup} from 'react-bootstrap'
-import {random} from 'lodash'
 
 import { useEffectListener } from 'bgio-effects/react';
 
@@ -17,7 +15,7 @@ function SmallStack({stack, tokenID, makeSmallBet}) {
 			<div className="small-card card-blank" />
 			{stack.map(x => {
 				return(
-					<div className={`small-card tokencolor-${tokenID}`}>
+					<div className={`small-card tokencolor-${tokenID}`} key={"small-card" + x}>
 						{x}
 					</div>
 				)
@@ -41,7 +39,7 @@ export default function Camp({stack, dice, makeSmallBet, rollClick}) {
 			{
 				[...Array(stack.length)].map((e, i) => {
 					return(
-						<div className="tent"
+						<div className="tent" key={"tent" + i}
 								style={{transform: `translateX(-50%) rotate(${-space * (stack.length - 1) / 2 + space * i}deg)`}} >
 							<SmallStack stack={stack[i]} tokenID={i} makeSmallBet={makeSmallBet} />
 							<div className={`rolled-dice ${diceUI[i] && `tokencolor-${i}`}`}>

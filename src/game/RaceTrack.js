@@ -3,7 +3,6 @@ import Cell from './Cell'
 import styles from './game.scss'
 import {Button, Modal} from 'react-bootstrap'
 import { useEffectListener } from 'bgio-effects/react';
-import {cloneDeep} from 'lodash'
 
 export default function RaceTrack({G, playerID, gameMetadata, placeMod, moveMod, removeMod, flipMod}) {
 
