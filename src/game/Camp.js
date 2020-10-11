@@ -13,8 +13,13 @@ function SmallStack({stack, tokenID, makeSmallBet, myTurn}) {
 
 	return(
 		<div className="small-stack" onClick={() => {
-				if (myTurn)
+				if (myTurn) {
+					console.log('handleClick called')
 					handleClick(tokenID)
+				}
+				else {
+					console.log('xxx')
+				}
 			}}>
 			<div className="card-shape empty-area center" />
 			{stack.map(x => {
@@ -39,6 +44,7 @@ export default function Camp({stack, dice, makeSmallBet, rollClick, myTurn}) {
 	const [diceUI, setDiceUI] = React.useState(dice)
 
 	useEffectListener('rollReset', (finalDice) => {
+		console.log('reset heard by camp')
 		setDiceUI(finalDice)
 	}, []);
 

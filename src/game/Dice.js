@@ -19,28 +19,34 @@ export default function Dice({rollClick, myTurn}) {
 		diceInterval = setInterval(() => {
 			setDice(random(1, 3))
 		}, 100)
-		setTimeout(() => {
-			clearInterval(diceInterval)
-		}, 1000)
 	}, []);
 
-	useEffectListener('rollDone', (finalDice) => {
+	useEffectListener('rollDone', rollDoneHandler, []);
+
+	useEffectListener('rollReset', rollResetHandler, []);
+
+	function rollDoneHandler(finalDice) {
+		console.log('rollDone at ', Date())
 		clearInterval(diceInterval)
 		setRollDone(true)
 		setDice(finalDice)
-	}, []);
+	}
 
-	useEffectListener('rollReset', (finalDice) => {
+	function rollResetHandler() {
 		setDice(null)
 		setCatID(null)
 		setRollDone(false)
 		setRollClicked(false)
-	}, []);
+	}
 
 	React.useEffect(() => {
 		if (myTurn) {
 			setRollClicked(false)
 			setRollDone(false)
+		}
+		else {
+			rollDoneHandler()
+			rollResetHandler()
 		}
 	}, [myTurn])
 
