@@ -9,13 +9,13 @@ function SmallBetTable({bets}) {
 			{
 				bets.map((color, j) => {
 					return(
-						<React.Fragment key={"smallBets" + j}>
+						<div className="flex" key={"smallBets" + j}>
 							{
 								color.map(card => {
-									return <div className={`tokencolor-${j} card`}>{card}</div>
+									return <div className={`tokencolor-${j} card`} key={"smallbetcard" + card}>{card}</div>
 								})
 							}
-						</React.Fragment>
+						</div>
 					)
 				})
 			}
@@ -23,9 +23,9 @@ function SmallBetTable({bets}) {
 	)	
 }
 
-function Player({name, data}) {
+function Player({name, data, isCurrent}) {
 	return(
-		<div className="player-card">
+		<div className={`player-card xx ${isCurrent ? 'current' : ''}`}>
 			<div>
 				<img alt={name || "Player"} src={`https://api.adorable.io/avatars/100/${name || "Player"}.png`} />
 			</div>
@@ -45,9 +45,16 @@ function Player({name, data}) {
 export default function Players({playerID, currentPlayer, players, gameMetadata}) {
 	return(
 		<div>
-			{players.map((x, i) => {
-				return <Player name={gameMetadata[i].name} data={x} key={"player" + i} />
-			})}
+			{
+				[...Array(players.length)].map((e, i) => {
+					const p = (playerID + 1 + i) % players.length
+					return <Player
+										name={gameMetadata[p].name}
+										data={players[p]}
+										isCurrent={currentPlayer === p}
+										key={"player" + p} />
+				})
+			}
 			<BetCards cards={players[playerID].betCards} />
 			<Mod hasMod={players[playerID].modPos === -1} playerID={playerID} />
 		</div>

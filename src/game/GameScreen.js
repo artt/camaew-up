@@ -19,7 +19,8 @@ export default function GameScreen2({G, ctx, moves, playerID, gameMetadata, game
 						stack={G.smallStack}
 						dice={G.dice}
 						makeSmallBet={bet => moves.makeSmallBet(playerID, bet)}
-						rollClick={() => moves.roll(playerID)}/>
+						rollClick={() => moves.roll(playerID)}
+						myTurn={playerID === Number(ctx.currentPlayer)} />
 				<div className="betarea">
 					<BetZone stack={G.bigStack} playerID={playerID} makeBigBet={moves.makeBigBet} side="lose" />
 					<BetZone stack={G.bigStack} playerID={playerID} makeBigBet={moves.makeBigBet} side="win" />
@@ -29,7 +30,7 @@ export default function GameScreen2({G, ctx, moves, playerID, gameMetadata, game
 			<div className="panel" id="players">
 				<Players
 						playerID={playerID}
-						currentPlayer={ctx.currentPlayer}
+						currentPlayer={Number(ctx.currentPlayer)}
 						players={G.players}
 						gameMetadata={gameMetadata} />
 			</div>

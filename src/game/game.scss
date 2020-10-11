@@ -5,6 +5,8 @@ $tokenwidth: 80px;
 $tokenheight: 30px;
 $tokenmargin: 5px;
 
+$fade-white: rgba(white, 0.3);
+
 :export {
 	cellwidth: $cellwidth;
 	cellheight: $cellheight;
@@ -75,6 +77,10 @@ $token-colors: blue, green, orange, yellow, white, purple;
 			// grid
 			display: grid;
 			grid-template-columns: 100px auto;
+
+			&.current {
+				border: solid 1px yellow;
+			}
 
 			.player-details {
 				padding: 5px;
@@ -170,32 +176,60 @@ $token-colors: blue, green, orange, yellow, white, purple;
 			margin-left: auto;
 		}
 
-
-		#main-dice {
-			position: absolute;
+		#dice-wrapper {
 			top: 250px;
-			left: 50%;
-			transform: translateX(-50%);
-			text-align: center;
-			width: 60px;
-			height: 60px;
-			border-radius: 10px;
+			#main-dice {
+				color: $fade-white;
+				cursor: default;
+				&.active {
+					color: white;
+					cursor: pointer;
+					transition-duration: 0.1s;
+					&:hover {
+						transform: scale(1.2);
+					}
+				}
+			}	
+		}
+		
+	}
+
+	.dice-text-wrapper {
+		display: table-cell;
+		vertical-align: middle;
+		&.parent {
 			display: table;
-			.dice-text-wrapper {
-				display: table-cell;
-				vertical-align: middle;
-			}
-		}
+		}	
+	}
 
-		.no-dice {
-			width: 100%;
-			height: 100%;
-			border-radius: 50%;
-			background: none;
-			border: dotted 2px rgba(white, 0.5);
-			cursor: pointer;
-		}
+	.dice-size {
+		border-radius: 10px;
+		width: 60px;
+		height: 60px;
+	}
 
+	.center {
+		position: absolute;
+		left: 50%;
+		transform: translateX(-50%);
+	}
+
+	.card-shape {
+		width: 100px;
+		height: 140px;
+		border-radius: 10px;
+	}
+	.card-standard {
+		@extend .card-shape;
+		border: solid 5px white;
+		box-shadow: 1px 1px 3px rgba(black, 1);
+	}
+
+	.circle-shape {
+		border-radius: 50%;
+	}
+	.empty-area {
+		border: solid 3px $fade-white;
 	}
 
 	#camp {
@@ -212,17 +246,8 @@ $token-colors: blue, green, orange, yellow, white, purple;
 				width: 120px;
 				height: 160px;
 				position: relative;
-				.small-card {
+				.tent-card {
 					position: absolute;
-					left: 50%;
-					transform: translateX(-50%);
-					width: 100px;
-					height: 140px;
-					border: solid 5px white;
-					border-radius: 10px;
-					&.card-blank {
-						border: dashed 2px rgba(white, 0.5);
-					}
 				}
 			}
 			.rolled-dice {

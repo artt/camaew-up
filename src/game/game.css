@@ -66,6 +66,9 @@
   display: grid;
   grid-template-columns: 100px auto;
 }
+#game #players .player-card.current {
+  border: solid 1px yellow;
+}
 #game #players .player-card .player-details {
   padding: 5px;
 }
@@ -146,28 +149,52 @@
 #game #main .betzone-win {
   margin-left: auto;
 }
-#game #main #main-dice {
-  position: absolute;
+#game #main #dice-wrapper {
   top: 250px;
-  left: 50%;
-  transform: translateX(-50%);
-  text-align: center;
-  width: 60px;
-  height: 60px;
-  border-radius: 10px;
-  display: table;
 }
-#game #main #main-dice .dice-text-wrapper {
+#game #main #dice-wrapper #main-dice {
+  color: rgba(255, 255, 255, 0.3);
+  cursor: default;
+}
+#game #main #dice-wrapper #main-dice.active {
+  color: white;
+  cursor: pointer;
+  transition-duration: 0.1s;
+}
+#game #main #dice-wrapper #main-dice.active:hover {
+  transform: scale(1.2);
+}
+#game .dice-text-wrapper {
   display: table-cell;
   vertical-align: middle;
 }
-#game #main .no-dice {
-  width: 100%;
-  height: 100%;
+#game .dice-text-wrapper.parent {
+  display: table;
+}
+#game .dice-size {
+  border-radius: 10px;
+  width: 60px;
+  height: 60px;
+}
+#game .center {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+}
+#game .card-shape, #game .card-standard {
+  width: 100px;
+  height: 140px;
+  border-radius: 10px;
+}
+#game .card-standard {
+  border: solid 5px white;
+  box-shadow: 1px 1px 3px black;
+}
+#game .circle-shape {
   border-radius: 50%;
-  background: none;
-  border: dotted 2px rgba(255, 255, 255, 0.5);
-  cursor: pointer;
+}
+#game .empty-area {
+  border: solid 3px rgba(255, 255, 255, 0.3);
 }
 #game #camp {
   position: relative;
@@ -185,17 +212,8 @@
   height: 160px;
   position: relative;
 }
-#game #camp .tent .small-stack .small-card {
+#game #camp .tent .small-stack .tent-card {
   position: absolute;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 100px;
-  height: 140px;
-  border: solid 5px white;
-  border-radius: 10px;
-}
-#game #camp .tent .small-stack .small-card.card-blank {
-  border: dashed 2px rgba(255, 255, 255, 0.5);
 }
 #game #camp .tent .rolled-dice {
   text-align: center;
