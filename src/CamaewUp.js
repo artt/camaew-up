@@ -236,13 +236,25 @@ function log(G, message) {
 	G.logArray.push(message)
 }
 
+function jitterBigStack(G, side) {
+	for (let i = 0; i < G.bigStackPos[side].length; i ++) {
+		G.bigStackPos[side][i] = [random(-jitter.x, jitter.x, true),
+															random(-jitter.y, jitter.y, true),
+															random(-jitter.angle, jitter.angle, true)]
+	}
+}
+
+function jitterSmallStack(G, i) {
+	for (let j = 0; j < 3; j ++) {
+		G.smallStackPos[i][j] = [random(-jitter.x, jitter.x, true),
+															random(-jitter.y, jitter.y, true),
+															random(-jitter.angle, jitter.angle, true)]
+	}
+}
+
 function placeSmallStacks(G) {
 	for (let i = 0; i < G.numCats; i ++) {
-		for (let j = 0; j < 3; j ++) {
-			G.smallStackPos[i][j] = [random(-jitter.x, jitter.x, true),
-																random(-jitter.y, jitter.y, true),
-																random(-jitter.angle, jitter.angle, true)]
-		}
+		jitterSmallStack(G, i)
 	}
 }
 
@@ -331,6 +343,19 @@ const CamaewUp = {
 			removeMod(G, playerID)
 			placeMod(G, playerID, cellID, type)
 			log(G, {playerID: playerID, move: "placeMod", cellID: cellID, type: type})
+		},
+		jitter: {
+			move: (G, ctx, stack) => {
+				if (stack === 'lose' || stack === 'win') {
+					jitterBigStack(G, stack)
+				}
+				else {
+					jitterSmallStack(G, stack)
+				}
+			},
+			noLimit: true,
+			redact: true,
+      client: true
 		}
 	},
 	turn: {

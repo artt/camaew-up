@@ -36,7 +36,8 @@
   left: 50%;
   transform: translateX(-50%);
 }
-#game .card-shape, #game .card-standard {
+#game .card-shape {
+  font-size: 1.5rem;
   width: 100px;
   height: 140px;
   border-radius: 10px;

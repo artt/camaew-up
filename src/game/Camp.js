@@ -5,7 +5,7 @@ import CardStack from './CardStack'
 
 import { useEffectListener } from 'bgio-effects/react';
 
-export default function Camp({stack, stackPos, dice, makeSmallBet, rollClick, myTurn}) {
+export default function Camp({stack, stackPos, dice, makeSmallBet, jitter, rollClick, myTurn}) {
 
 	const space = 15
 
@@ -31,7 +31,8 @@ export default function Camp({stack, stackPos, dice, makeSmallBet, rollClick, my
 									clickHandler={() => {
 										if (myTurn && stack[i].length > 0)
 											makeSmallBet(i)
-									}} />
+									}}
+									doubleClickHandler={() => jitter(i)} />
 							<div className={`rolled-dice ${diceUI[i] && `tokencolor-${i}`}`}>
 								{diceUI[i]
 									? <div className="center-table">{diceUI[i]}</div>

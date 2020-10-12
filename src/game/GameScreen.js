@@ -20,12 +20,14 @@ export default function GameScreen({G, ctx, moves, playerID, gameMetadata, gameI
 						stackPos={G.smallStackPos}
 						dice={G.dice}
 						makeSmallBet={bet => moves.makeSmallBet(playerID, bet)}
+						jitter={moves.jitter}
 						rollClick={() => moves.roll(playerID)}
 						myTurn={playerID === Number(ctx.currentPlayer)} />
 				<BetArea
 						bigStack={G.bigStack}
 						stackPos={G.bigStackPos}
 						playerID={playerID}
+						jitter={moves.jitter}
 						makeBigBet={moves.makeBigBet} />			
 			</div>
 

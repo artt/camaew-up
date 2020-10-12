@@ -56,12 +56,12 @@ $token-colors: blue, green, orange, yellow, white, purple;
 	}
 
 	.card-shape {
+		font-size: 1.5rem;
 		width: 100px;
 		height: 140px;
 		border-radius: 10px;
 	}
 	.card-standard {
-		@extend .card-shape;
 		border: solid 5px white;
 		background: black;
 		box-shadow: 1px 1px 3px rgba(black, 1);
