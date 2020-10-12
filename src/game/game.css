@@ -15,30 +15,6 @@
   grid-template-rows: 1fr 150px;
   grid-template-columns: 3fr 1fr;
 }
-#game .tokencolor-0 {
-  background: blue;
-  color: white;
-}
-#game .tokencolor-1 {
-  background: green;
-  color: white;
-}
-#game .tokencolor-2 {
-  background: orange;
-  color: black;
-}
-#game .tokencolor-3 {
-  background: yellow;
-  color: black;
-}
-#game .tokencolor-4 {
-  background: white;
-  color: black;
-}
-#game .tokencolor-5 {
-  background: purple;
-  color: white;
-}
 #game #board {
   grid-column: 1/3;
 }
@@ -67,7 +43,32 @@
 }
 #game .card-standard {
   border: solid 5px white;
+  background: black;
   box-shadow: 1px 1px 3px black;
+}
+#game .tokencolor-0 {
+  background: blue;
+  color: white;
+}
+#game .tokencolor-1 {
+  background: green;
+  color: white;
+}
+#game .tokencolor-2 {
+  background: orange;
+  color: black;
+}
+#game .tokencolor-3 {
+  background: yellow;
+  color: black;
+}
+#game .tokencolor-4 {
+  background: white;
+  color: black;
+}
+#game .tokencolor-5 {
+  background: purple;
+  color: white;
 }
 #game .circle-shape {
   border-radius: 50%;
@@ -75,6 +76,11 @@
 #game .empty-area {
   color: rgba(255, 255, 255, 0.3);
   border: solid 3px rgba(255, 255, 255, 0.3);
+}
+#game .small-stack {
+  width: 120px;
+  height: 160px;
+  position: relative;
 }
 #game .log-area {
   width: 500px;
@@ -201,11 +207,6 @@
   position: absolute;
   left: 50%;
   transform-origin: 50% 300%;
-}
-#game #camp .tent .small-stack {
-  width: 120px;
-  height: 160px;
-  position: relative;
 }
 #game #camp .tent .rolled-dice {
   margin-left: auto;

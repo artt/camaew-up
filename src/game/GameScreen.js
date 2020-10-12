@@ -2,11 +2,11 @@ import React from 'react'
 import Players from './Players'
 import RaceTrack from './RaceTrack'
 import Camp from './Camp'
-import BetZone from './BetZone'
+import BetArea from './BetArea'
 
 import './game.css'
 
-export default function GameScreen2({G, ctx, moves, playerID, gameMetadata, gameID, ...rest}) {
+export default function GameScreen({G, ctx, moves, playerID, gameMetadata, gameID, ...rest}) {
 
 	// convert string back to number for easier processing
 	playerID = Number(playerID)
@@ -22,18 +22,11 @@ export default function GameScreen2({G, ctx, moves, playerID, gameMetadata, game
 						makeSmallBet={bet => moves.makeSmallBet(playerID, bet)}
 						rollClick={() => moves.roll(playerID)}
 						myTurn={playerID === Number(ctx.currentPlayer)} />
-				<div className="betarea">
-					<BetZone
-							stack={G.bigStack.lose}
-							playerID={playerID}
-							makeBigBet={moves.makeBigBet}
-							side="lose" />
-					<BetZone
-							stack={G.bigStack.win}
-							playerID={playerID}
-							makeBigBet={moves.makeBigBet}
-							side="win" />
-				</div>
+				<BetArea
+						bigStack={G.bigStack}
+						stackPos={G.bigStackPos}
+						playerID={playerID}
+						makeBigBet={moves.makeBigBet} />			
 			</div>
 
 			<div className="panel" id="players">
