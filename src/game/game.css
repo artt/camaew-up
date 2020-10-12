@@ -207,9 +207,6 @@
   height: 160px;
   position: relative;
 }
-#game #camp .tent .small-stack .tent-card {
-  position: absolute;
-}
 #game #camp .tent .rolled-dice {
   margin-left: auto;
   margin-right: auto;

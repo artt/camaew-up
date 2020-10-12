@@ -1,30 +1,9 @@
 import React from 'react'
 import Dice from './Dice'
 import {random} from 'lodash'
+import CardStack from './CardStack'
 
 import { useEffectListener } from 'bgio-effects/react';
-
-function SmallStack({stack, stackPos, tokenID, makeSmallBet, myTurn}) {
-	return(
-		<div className="small-stack" onClick={() => {
-				if (myTurn && stack.length > 0)
-					makeSmallBet(tokenID)
-			}}>
-			<div className="card-shape empty-area center" />
-			{stack.map((x, i) => {
-				return(
-					<div
-							className={`tent-card card-standard center tokencolor-${tokenID}`}
-							key={"small-card" + x}
-							style={{transform: `rotate(${stackPos[i][2]}deg) translateX(-50%)`,
-									transformOrigin: `0% 50%`}}>
-						{x}
-					</div>
-				)
-			})}
-		</div>
-	)
-}
 
 export default function Camp({stack, stackPos, dice, makeSmallBet, rollClick, myTurn}) {
 
@@ -45,7 +24,14 @@ export default function Camp({stack, stackPos, dice, makeSmallBet, rollClick, my
 					return(
 						<div className="tent" key={"tent" + i}
 								style={{transform: `translateX(-50%) rotate(${-space * (stack.length - 1) / 2 + space * i}deg)`}} >
-							<SmallStack stack={stack[i]} stackPos={stackPos[i]} tokenID={i} makeSmallBet={makeSmallBet} myTurn={myTurn} />
+							<CardStack
+									stack={stack[i]}
+									stackPos={stackPos[i]}
+									cardClass={`tokencolor-${i}`}
+									clickHandler={() => {
+										if (myTurn && stack[i].length > 0)
+											makeSmallBet(i)
+									}} />
 							<div className={`rolled-dice ${diceUI[i] && `tokencolor-${i}`}`}>
 								{diceUI[i]
 									? <div className="center-table">{diceUI[i]}</div>
