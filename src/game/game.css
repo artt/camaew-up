@@ -169,7 +169,7 @@
   left: 50%;
   transform: translateX(-50%);
 }
-#game #main .betzone {
+#game #main .di-table {
   display: table;
 }
 #game #main .betzone-win {

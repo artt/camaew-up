@@ -23,8 +23,8 @@ export default function GameScreen2({G, ctx, moves, playerID, gameMetadata, game
 						rollClick={() => moves.roll(playerID)}
 						myTurn={playerID === Number(ctx.currentPlayer)} />
 				<div className="betarea">
-					<BetZone stack={G.bigStack} playerID={playerID} makeBigBet={moves.makeBigBet} side="lose" />
-					<BetZone stack={G.bigStack} playerID={playerID} makeBigBet={moves.makeBigBet} side="win" />
+					<BetZone stack={G.bigStack.lose} playerID={playerID} makeBigBet={moves.makeBigBet} side="lose" />
+					<BetZone stack={G.bigStack.win} playerID={playerID} makeBigBet={moves.makeBigBet} side="win" />
 				</div>
 			</div>
 

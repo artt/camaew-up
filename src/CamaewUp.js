@@ -3,6 +3,8 @@ import { EffectsPlugin } from 'bgio-effects/plugin';
 import { config } from './effects-config';
 import {random} from 'lodash'
 
+const jitter = {angle: 7.5, x: 5, y: 5}
+
 function genArray(size, data) {
 	let a = new Array(size );
 	for (let i = 0; i < size; i ++) {
@@ -213,6 +215,9 @@ function makeSmallBet(G, playerID, bet) {
 function makeBigBet(G, playerID, bet, side) {
 	G.bigStack[side].push({playerID: playerID, bet: bet})
 	G.players[playerID].betCards[bet] = false
+	G.bigStackPos[side].push([random(-jitter.x, jitter.x, true),
+														random(-jitter.y, jitter.y, true),
+														random(-jitter.angle, jitter.angle, true)])
 }
 
 function placeMod(G, playerID, cellID, type) {
@@ -234,7 +239,9 @@ function log(G, message) {
 function placeSmallStacks(G) {
 	for (let i = 0; i < G.numCats; i ++) {
 		for (let j = 0; j < 3; j ++) {
-			G.smallStackPos[i][j] = [0, 0, random(-5, 5, true)]
+			G.smallStackPos[i][j] = [random(-jitter.x, jitter.x, true),
+																random(-jitter.y, jitter.y, true),
+																random(-jitter.angle, jitter.angle, true)]
 		}
 	}
 }
@@ -254,13 +261,13 @@ const CamaewUp = {
 			smallStack: Array(setupData.numCats).fill([2, 3, 5]),
 			smallStackPos: genArray(setupData.numCats, Array(3).fill([0, 0, 0])),
 			bigStack: {"win": [], "lose": []},
+			bigStackPos: {"win": [], "lose": []},
 			logArray: [],
 			numCats: setupData.numCats,
 			numTiles: setupData.numTiles,
 			numPlayers: ctx.numPlayers,
 			lastDiceRolled: -1,
 			cleanUp: -1,
-			// latestMove: [],
 		}
 		log(G, {move: "text", text: "Welcome!"})
 

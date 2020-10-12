@@ -12,7 +12,6 @@ function SmallStack({stack, stackPos, tokenID, makeSmallBet, myTurn}) {
 			}}>
 			<div className="card-shape empty-area center" />
 			{stack.map((x, i) => {
-				console.log(stackPos[i][2])
 				return(
 					<div
 							className={`tent-card card-standard center tokencolor-${tokenID}`}
