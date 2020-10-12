@@ -17,6 +17,7 @@ export default function GameScreen2({G, ctx, moves, playerID, gameMetadata, game
 			<div className="panel" id="main">
 				<Camp
 						stack={G.smallStack}
+						stackPos={G.smallStackPos}
 						dice={G.dice}
 						makeSmallBet={bet => moves.makeSmallBet(playerID, bet)}
 						rollClick={() => moves.roll(playerID)}

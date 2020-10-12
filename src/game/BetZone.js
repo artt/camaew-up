@@ -12,8 +12,11 @@ export default function BetZone({stack, playerID, makeBigBet, side}) {
 	}
 
 	return(
-		<div className={`betzone betzone-${side}`} onDragOver={allowDrop} onDrop={drop}>
-			{`${side}: ${stack[side].length}`}
+		<div className={`card-shape betzone betzone-${side} empty-area`} onDragOver={allowDrop} onDrop={drop}>
+			<div className="center-table">
+				{side[0].toUpperCase()}
+				{/*`${side}: ${stack[side].length}`*/}
+			</div>
 		</div>
 	)
 

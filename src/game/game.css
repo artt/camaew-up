@@ -45,6 +45,37 @@
 #game .flex {
   display: flex;
 }
+#game .center-table {
+  text-align: center;
+  display: table-cell;
+  vertical-align: middle;
+}
+#game .dice-size {
+  border-radius: 10px;
+  width: 60px;
+  height: 60px;
+}
+#game .center {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+}
+#game .card-shape, #game .card-standard {
+  width: 100px;
+  height: 140px;
+  border-radius: 10px;
+}
+#game .card-standard {
+  border: solid 5px white;
+  box-shadow: 1px 1px 3px black;
+}
+#game .circle-shape {
+  border-radius: 50%;
+}
+#game .empty-area {
+  color: rgba(255, 255, 255, 0.3);
+  border: solid 3px rgba(255, 255, 255, 0.3);
+}
 #game .log-area {
   width: 500px;
   height: 300px;
@@ -59,15 +90,16 @@
   width: 100%;
 }
 #game #players .player-card {
+  overflow: hidden;
   background: rgba(255, 255, 255, 0.3);
-  border-radius: 5px;
+  border-radius: 10px;
   margin: 5px;
   color: black;
   display: grid;
   grid-template-columns: 100px auto;
 }
 #game #players .player-card.current {
-  border: solid 1px yellow;
+  border: solid 3px yellow;
 }
 #game #players .player-card .player-details {
   padding: 5px;
@@ -133,18 +165,12 @@
   width: 400px;
   display: flex;
   position: absolute;
-  top: 350px;
+  top: 320px;
   left: 50%;
   transform: translateX(-50%);
 }
 #game #main .betzone {
-  height: 100px;
-  width: 100px;
-  background: rgba(255, 255, 255, 0.3);
-  margin: 1rem;
-  padding: 1rem;
-  border-radius: 0.5rem;
-  color: white;
+  display: table;
 }
 #game #main .betzone-win {
   margin-left: auto;
@@ -156,45 +182,14 @@
   color: rgba(255, 255, 255, 0.3);
   cursor: default;
 }
-#game #main #dice-wrapper #main-dice.active {
+#game #main #dice-wrapper #main-dice.active .empty-area {
+  border-color: white;
   color: white;
   cursor: pointer;
   transition-duration: 0.1s;
 }
-#game #main #dice-wrapper #main-dice.active:hover {
+#game #main #dice-wrapper #main-dice.active .empty-area:hover {
   transform: scale(1.2);
-}
-#game .dice-text-wrapper {
-  display: table-cell;
-  vertical-align: middle;
-}
-#game .dice-text-wrapper.parent {
-  display: table;
-}
-#game .dice-size {
-  border-radius: 10px;
-  width: 60px;
-  height: 60px;
-}
-#game .center {
-  position: absolute;
-  left: 50%;
-  transform: translateX(-50%);
-}
-#game .card-shape, #game .card-standard {
-  width: 100px;
-  height: 140px;
-  border-radius: 10px;
-}
-#game .card-standard {
-  border: solid 5px white;
-  box-shadow: 1px 1px 3px black;
-}
-#game .circle-shape {
-  border-radius: 50%;
-}
-#game .empty-area {
-  border: solid 3px rgba(255, 255, 255, 0.3);
 }
 #game #camp {
   position: relative;
@@ -216,7 +211,6 @@
   position: absolute;
 }
 #game #camp .tent .rolled-dice {
-  text-align: center;
   margin-left: auto;
   margin-right: auto;
   width: 40px;

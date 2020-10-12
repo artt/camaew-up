@@ -1,6 +1,7 @@
 import {sum, cloneDeep} from 'lodash'
 import { EffectsPlugin } from 'bgio-effects/plugin';
 import { config } from './effects-config';
+import {random} from 'lodash'
 
 function genArray(size, data) {
 	let a = new Array(size );
@@ -26,6 +27,7 @@ function resetSmallRound(G, ctx) {
 	}
 
 	G.smallStack = Array(G.numCats).fill([2, 3, 5])
+	placeSmallStacks(G)
 
 }
 
@@ -229,6 +231,14 @@ function log(G, message) {
 	G.logArray.push(message)
 }
 
+function placeSmallStacks(G) {
+	for (let i = 0; i < G.numCats; i ++) {
+		for (let j = 0; j < 3; j ++) {
+			G.smallStackPos[i][j] = [0, 0, random(-5, 5, true)]
+		}
+	}
+}
+
 const CamaewUp = {
 	name: "CamaewUp",
 	plugins: [EffectsPlugin(config)],
@@ -242,6 +252,7 @@ const CamaewUp = {
 																					betCards: Array(setupData.numCats).fill(true),
 																					modPos: -1}),
 			smallStack: Array(setupData.numCats).fill([2, 3, 5]),
+			smallStackPos: genArray(setupData.numCats, Array(3).fill([0, 0, 0])),
 			bigStack: {"win": [], "lose": []},
 			logArray: [],
 			numCats: setupData.numCats,
@@ -253,8 +264,9 @@ const CamaewUp = {
 		}
 		log(G, {move: "text", text: "Welcome!"})
 
-		for (let i = 0; i < G.numCats; i ++)
+		for (let i = 0; i < G.numCats; i ++) {
 			rollDice(G, ctx)
+		}
 		resetSmallRound(G, ctx)
 		return G
 	},
