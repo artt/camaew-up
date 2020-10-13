@@ -200,13 +200,14 @@ $token-colors: blue, green, orange, yellow, white, purple;
 	#main {
 		position: relative;
 
-		.betarea {
+		#betarea {
 			width: 400px;
 			display: flex;
 			position: absolute;
-			top: 320px;
+			top: 340px;
 			left: 50%;
 			transform: translateX(-50%);
+			z-index: 50;
 		}
 
 		.di-table {
@@ -219,15 +220,19 @@ $token-colors: blue, green, orange, yellow, white, purple;
 		#dice-wrapper {
 			top: 250px;
 			#main-dice {
+				z-index: 100;
 				color: $fade-white;
 				cursor: default;
-				&.active .empty-area {
-					border-color: white;
-					color: white;
-					cursor: pointer;
+				&.active {
 					transition-duration: 0.1s;
 					&:hover {
 						transform: scale(1.2);
+					}
+					.empty-area {
+						height: 60px;
+						border-color: white;
+						color: white;
+						cursor: pointer;
 					}
 				}
 			}	

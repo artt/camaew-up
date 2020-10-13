@@ -13,18 +13,9 @@ export default function BetArea({bigStack, playerID, makeBigBet}) {
 		makeBigBet(playerID, Number(e.dataTransfer.getData("betID")), side)
 	}
 
-	function S({stack, xx, side}) {
-		return <CardStack
-							label={side[0].toUpperCase()}
-							stackClass={`betzone-${side}`}
-							stack={Array(stack.length).fill('Y')}
-							dragOverHandler={allowDrop}
-							dropHandler={(e) => handleBigBetDrop(e, side)} />
-	}
-
 	return(
 
-		<div className="betarea">
+		<div id="betarea">
 			<CardStack
 							label={'L'}
 							stackClass={`betzone-lose`}

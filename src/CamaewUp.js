@@ -263,7 +263,6 @@ const CamaewUp = {
 	},
 	moves: {
 		roll: (G, ctx, playerID) => {
-			console.log('roll ---------------')
 			const preCats = cloneDeep(G.cats)
 			const preBoard = cloneDeep(G.board)
 			const [catID, roll] = rollDice(G, ctx, playerID)
@@ -290,7 +289,6 @@ const CamaewUp = {
 			}
 		},
 		makeSmallBet: (G, ctx, playerID, bet) => {
-			console.log('make small bet ----------')
 			const card = makeSmallBet(G, playerID, bet)
 			log(G, {playerID: playerID, move: "smallBet", catID: bet, card: card})
 		},

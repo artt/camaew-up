@@ -168,13 +168,14 @@
 #game #main {
   position: relative;
 }
-#game #main .betarea {
+#game #main #betarea {
   width: 400px;
   display: flex;
   position: absolute;
-  top: 320px;
+  top: 340px;
   left: 50%;
   transform: translateX(-50%);
+  z-index: 50;
 }
 #game #main .di-table {
   display: table;
@@ -186,17 +187,21 @@
   top: 250px;
 }
 #game #main #dice-wrapper #main-dice {
+  z-index: 100;
   color: rgba(255, 255, 255, 0.3);
   cursor: default;
 }
+#game #main #dice-wrapper #main-dice.active {
+  transition-duration: 0.1s;
+}
+#game #main #dice-wrapper #main-dice.active:hover {
+  transform: scale(1.2);
+}
 #game #main #dice-wrapper #main-dice.active .empty-area {
+  height: 60px;
   border-color: white;
   color: white;
   cursor: pointer;
-  transition-duration: 0.1s;
-}
-#game #main #dice-wrapper #main-dice.active .empty-area:hover {
-  transform: scale(1.2);
 }
 #game #camp {
   position: relative;
