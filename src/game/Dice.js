@@ -20,28 +20,24 @@ export default function Dice({rollClick, myTurn}) {
 		}, 100)
 	});
 
-	useEffectListener('rollDone', () => rollDoneHandler());
-	useEffectListener('rollReset', (x) => rollResetHandler(x));
+	useEffectListener('rollDone', rollDoneHandler);
+	useEffectListener('rollReset', rollResetHandler);
 
 	function rollDoneHandler(finalDice) {
-		console.log('rollDone at ', Date())
 		clearInterval(diceInterval)
 		setDice(finalDice)
 		setZ(false)
 	}
 
 	function rollResetHandler() {
-		console.log('rollReset')
 		setDice(null)
 		setCatID(null)
+		setRollDone(true)
 	}
 
 	React.useEffect(() => {
-		if (myTurn) {
-			setZ(true)
-		}
-		else {
-			setZ(false)
+		setZ(myTurn)
+		if (!myTurn) {
 			rollDoneHandler()
 			rollResetHandler()
 		}
@@ -51,9 +47,9 @@ export default function Dice({rollClick, myTurn}) {
 
 	return(
 		<div id="dice-wrapper" className="center">
-			<div id="main-dice" className={`rolled-dice ${btnActive ? 'active' : ''}`}
+			<div id="main-dice" className={`rolled-dice ${z ? 'active' : ''}`}
 					onClick={() => {
-						if (btnActive) {
+						if (z) {
 							rollClick()
 						}
 					}}>
