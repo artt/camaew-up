@@ -7,7 +7,6 @@ export default function Dice({rollClick, myTurn}) {
 
 	const [dice, setDice] = React.useState(null)
 	const [catID, setCatID] = React.useState(null)
-	const [rollDone, setRollDone] = React.useState(false)
 	const [z, setZ] = React.useState(myTurn)
 
 	let diceInterval = null
@@ -32,7 +31,6 @@ export default function Dice({rollClick, myTurn}) {
 	function rollResetHandler() {
 		setDice(null)
 		setCatID(null)
-		setRollDone(true)
 	}
 
 	React.useEffect(() => {
@@ -42,8 +40,6 @@ export default function Dice({rollClick, myTurn}) {
 			rollResetHandler()
 		}
 	}, [myTurn])
-
-	const btnActive = myTurn && !rollDone
 
 	return(
 		<div id="dice-wrapper" className="center">
