@@ -3,7 +3,6 @@ import { EffectsPlugin } from 'bgio-effects/plugin';
 import { config } from './effects-config';
 import {random} from 'lodash'
 
-const jitter = {angle: 7.5, x: 5, y: 5}
 
 function genArray(size, data) {
 	let a = new Array(size );
@@ -29,7 +28,7 @@ function resetSmallRound(G, ctx) {
 	}
 
 	G.smallStack = Array(G.numCats).fill([2, 3, 5])
-	placeSmallStacks(G)
+	ctx.effects.endSmallRound()
 
 }
 
@@ -215,9 +214,6 @@ function makeSmallBet(G, playerID, bet) {
 function makeBigBet(G, playerID, bet, side) {
 	G.bigStack[side].push({playerID: playerID, bet: bet})
 	G.players[playerID].betCards[bet] = false
-	G.bigStackPos[side].push([random(-jitter.x, jitter.x, true),
-														random(-jitter.y, jitter.y, true),
-														random(-jitter.angle, jitter.angle, true)])
 }
 
 function placeMod(G, playerID, cellID, type) {
@@ -236,28 +232,6 @@ function log(G, message) {
 	G.logArray.push(message)
 }
 
-function jitterBigStack(G, side) {
-	for (let i = 0; i < G.bigStackPos[side].length; i ++) {
-		G.bigStackPos[side][i] = [random(-jitter.x, jitter.x, true),
-															random(-jitter.y, jitter.y, true),
-															random(-jitter.angle, jitter.angle, true)]
-	}
-}
-
-function jitterSmallStack(G, i) {
-	for (let j = 0; j < 3; j ++) {
-		G.smallStackPos[i][j] = [random(-jitter.x, jitter.x, true),
-															random(-jitter.y, jitter.y, true),
-															random(-jitter.angle, jitter.angle, true)]
-	}
-}
-
-function placeSmallStacks(G) {
-	for (let i = 0; i < G.numCats; i ++) {
-		jitterSmallStack(G, i)
-	}
-}
-
 const CamaewUp = {
 	name: "CamaewUp",
 	plugins: [EffectsPlugin(config)],
@@ -271,9 +245,7 @@ const CamaewUp = {
 																					betCards: Array(setupData.numCats).fill(true),
 																					modPos: -1}),
 			smallStack: Array(setupData.numCats).fill([2, 3, 5]),
-			smallStackPos: genArray(setupData.numCats, Array(3).fill([0, 0, 0])),
 			bigStack: {"win": [], "lose": []},
-			bigStackPos: {"win": [], "lose": []},
 			logArray: [],
 			numCats: setupData.numCats,
 			numTiles: setupData.numTiles,
@@ -291,6 +263,7 @@ const CamaewUp = {
 	},
 	moves: {
 		roll: (G, ctx, playerID) => {
+			console.log('roll ---------------')
 			const preCats = cloneDeep(G.cats)
 			const preBoard = cloneDeep(G.board)
 			const [catID, roll] = rollDice(G, ctx, playerID)
@@ -317,6 +290,7 @@ const CamaewUp = {
 			}
 		},
 		makeSmallBet: (G, ctx, playerID, bet) => {
+			console.log('make small bet ----------')
 			const card = makeSmallBet(G, playerID, bet)
 			log(G, {playerID: playerID, move: "smallBet", catID: bet, card: card})
 		},
@@ -344,19 +318,6 @@ const CamaewUp = {
 			placeMod(G, playerID, cellID, type)
 			log(G, {playerID: playerID, move: "placeMod", cellID: cellID, type: type})
 		},
-		jitter: {
-			move: (G, ctx, stack) => {
-				if (stack === 'lose' || stack === 'win') {
-					jitterBigStack(G, stack)
-				}
-				else {
-					jitterSmallStack(G, stack)
-				}
-			},
-			noLimit: true,
-			redact: true,
-      client: true
-		}
 	},
 	turn: {
 		moveLimit: 1,

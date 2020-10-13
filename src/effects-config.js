@@ -7,11 +7,11 @@ export const config = {
 
 		roll: {
 			create: (data) => (data),
-			duration: 3,
+			duration: 1,
 		},
 		rollDone: {
 			create: (data) => (data),
-			duration: 0.2,
+			duration: 2,
 		},
 		rollReset: {
 			create: (data) => (data),
@@ -30,6 +30,6 @@ export const config = {
 			duration: 0.3,
 		},
 
-		something: {}
+		endSmallRound: {}
 	},
 };

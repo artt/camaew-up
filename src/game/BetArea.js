@@ -2,7 +2,7 @@ import React from 'react'
 import CardStack from './CardStack'
 import {random, cloneDeep} from 'lodash'
 
-export default function BetArea({bigStack, stackPos, playerID, makeBigBet}) {
+export default function BetArea({bigStack, playerID, makeBigBet}) {
 
 	function allowDrop(e) {
 		e.preventDefault();
@@ -18,7 +18,6 @@ export default function BetArea({bigStack, stackPos, playerID, makeBigBet}) {
 							label={side[0].toUpperCase()}
 							stackClass={`betzone-${side}`}
 							stack={Array(stack.length).fill('Y')}
-							stackPos={stackPos[side]}
 							dragOverHandler={allowDrop}
 							dropHandler={(e) => handleBigBetDrop(e, side)} />
 	}
@@ -26,8 +25,18 @@ export default function BetArea({bigStack, stackPos, playerID, makeBigBet}) {
 	return(
 
 		<div className="betarea">
-			<S stack={bigStack.lose} side="lose" />
-			<S stack={bigStack.win} side="win" />
+			<CardStack
+							label={'L'}
+							stackClass={`betzone-lose`}
+							stack={Array(bigStack.lose.length).fill('Y')}
+							dragOverHandler={allowDrop}
+							dropHandler={(e) => handleBigBetDrop(e, 'lose')} />
+			<CardStack
+							label={'W'}
+							stackClass={`betzone-win`}
+							stack={Array(bigStack.win.length).fill('Y')}
+							dragOverHandler={allowDrop}
+							dropHandler={(e) => handleBigBetDrop(e, 'win')} />
 		</div>
 
 	)
