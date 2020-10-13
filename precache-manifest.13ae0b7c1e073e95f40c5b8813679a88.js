@@ -1,23 +1,23 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "c56fcc84a3d0fbbf8de4ab28cd014d9b",
+    "revision": "e3024b0c2b39f400ec5c3ce963afd555",
     "url": "/camaew-up/index.html"
   },
   {
-    "revision": "2742b770cb2586644e28",
-    "url": "/camaew-up/static/css/main.54d9e968.chunk.css"
+    "revision": "fa83253428bafd1891c5",
+    "url": "/camaew-up/static/css/main.0567f46c.chunk.css"
   },
   {
-    "revision": "2ce1b8558db62c77280d",
-    "url": "/camaew-up/static/js/2.ed0d9538.chunk.js"
+    "revision": "e11e515921649605ba21",
+    "url": "/camaew-up/static/js/2.bfa65c2a.chunk.js"
   },
   {
     "revision": "b6f4b22afc5b6bdf8334e3ee71c0d9d4",
-    "url": "/camaew-up/static/js/2.ed0d9538.chunk.js.LICENSE.txt"
+    "url": "/camaew-up/static/js/2.bfa65c2a.chunk.js.LICENSE.txt"
   },
   {
-    "revision": "2742b770cb2586644e28",
-    "url": "/camaew-up/static/js/main.7c47fefb.chunk.js"
+    "revision": "fa83253428bafd1891c5",
+    "url": "/camaew-up/static/js/main.01f5d4ee.chunk.js"
   },
   {
     "revision": "25810a124c54b78cd4dc",
