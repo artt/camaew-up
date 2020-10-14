@@ -21,6 +21,10 @@
 #game .flex {
   display: flex;
 }
+#game .fullframe {
+  height: 100%;
+  width: 100%;
+}
 #game .center-table {
   text-align: center;
   display: table-cell;
@@ -207,6 +211,7 @@
   top: 250px;
 }
 #game #main #dice-wrapper #main-dice {
+  position: relative;
   z-index: 100;
   color: rgba(255, 255, 255, 0.3);
   transition-duration: 0.1s;

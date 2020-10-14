@@ -34,21 +34,21 @@ export default function Dice({rollClick, myTurn}) {
 		setDice(roll)
 		setBtnActive(false)
 		setTimeout(() => {
-			if (document.getElementById('xxx')) {
-				const pointA = getCenter(document.getElementById('xxx').getBoundingClientRect())
+			if (document.getElementById('rolled-dice')) {
+				const pointA = getCenter(document.getElementById('rolled-dice').getBoundingClientRect())
 				const pointB = getCenter(document.getElementById(`rolled-dice-${catID}`).getBoundingClientRect())
 				anime({
-				  targets: '#xxx',
+				  targets: '#rolled-dice',
 				  translateX: pointB.x - pointA.x,
 				  translateY: pointB.y - pointA.y,
 				  scale: 0.2,
 				  rotate: '1turn',
 				  opacity: 0,
-				  duration: 500,
+				  duration: 400,
 				  easing: 'easeOutExpo'
 				});
 			}
-		}, 500)
+		}, 400)
 	})
 
 	function rollResetHandler() {
@@ -69,21 +69,23 @@ export default function Dice({rollClick, myTurn}) {
 
 	return(
 		<div id="dice-wrapper" className="center">
-			<div id="main-dice" className={`rolled-dice ${btnActive ? 'active' : ''}`}>
-				{!dice &&
-					<div className="center-table circle-shape empty-area dice-shape-big actionable"
-							onClick={() => {
-								if (btnActive) {
-									rollClick()
-								}
-							}}>
-								Roll
+			<div id="main-dice" className={btnActive ? 'active' : ''}>
+				<div className="center circle-shape empty-area dice-shape-big actionable"
+						onClick={() => {
+							if (!dice && btnActive) {
+								rollClick()
+							}
+						}}>
+					<div className="di-table fullframe">
+						<div className="center-table">
+							Roll
 						</div>
+					</div>
+				</div>
+				{dice &&
+					<div id="rolled-dice" className={`center dice-shape-big tokencolor-${catID}`}>{dice}</div>
 				}
 			</div>
-			{dice &&
-				<div id="xxx" className={`center-table dice-shape-big tokencolor-${catID}`}>{dice}</div>
-			}
 		</div>
 	)
 }

@@ -36,6 +36,11 @@ $token-colors: blue, green, orange, yellow, white, purple;
 		display: flex;
 	}
 
+	.fullframe {
+		height: 100%;
+		width: 100%;
+	}
+
 	// need to set parent's display to table
 	.center-table {
 		text-align: center;
@@ -246,6 +251,7 @@ $token-colors: blue, green, orange, yellow, white, purple;
 		#dice-wrapper {
 			top: 250px;
 			#main-dice {
+				position: relative;
 				z-index: 100;
 				color: $fade-white;
 				transition-duration: 0.1s;
