@@ -7,7 +7,7 @@ export const config = {
 
 		roll: {
 			create: (data) => (data),
-			duration: 10,
+			duration: 1,
 		},
 		rollDone: {
 			create: (data) => (data),

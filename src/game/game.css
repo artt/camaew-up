@@ -25,6 +25,10 @@
   height: 100%;
   width: 100%;
 }
+#game .fill {
+  height: fit-content;
+  width: fit-content;
+}
 #game .center-table {
   text-align: center;
   display: table-cell;
@@ -44,7 +48,7 @@
   cursor: pointer;
 }
 
-#game .dice-shape-big {
+#game .dice-shape-big, #game #main #dice-wrapper #main-dice {
   border-radius: 10px;
   width: 60px;
   height: 60px;

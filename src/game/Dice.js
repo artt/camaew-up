@@ -69,7 +69,7 @@ export default function Dice({rollClick, myTurn}) {
 
 	return(
 		<div id="dice-wrapper" className="center">
-			<div id="main-dice" className={btnActive ? 'active' : ''}>
+			<div id="main-dice" className={"fill " + (btnActive ? 'active' : '')}>
 				<div className="center circle-shape empty-area dice-shape-big actionable"
 						onClick={() => {
 							if (!dice && btnActive) {
@@ -83,7 +83,13 @@ export default function Dice({rollClick, myTurn}) {
 					</div>
 				</div>
 				{dice &&
-					<div id="rolled-dice" className={`center dice-shape-big tokencolor-${catID}`}>{dice}</div>
+					<div id="rolled-dice" className={`center dice-shape-big tokencolor-${catID}`}>
+						<div className="di-table fullframe">
+							<div className="center-table">
+								{dice}
+							</div>
+						</div>
+					</div>
 				}
 			</div>
 		</div>

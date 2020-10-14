@@ -41,6 +41,11 @@ $token-colors: blue, green, orange, yellow, white, purple;
 		width: 100%;
 	}
 
+	.fill {
+		height: fit-content;
+		width: fit-content;
+	}
+
 	// need to set parent's display to table
 	.center-table {
 		text-align: center;
@@ -255,6 +260,7 @@ $token-colors: blue, green, orange, yellow, white, purple;
 				z-index: 100;
 				color: $fade-white;
 				transition-duration: 0.1s;
+				@extend .dice-shape-big;
 				&.active {
 					&:hover {
 						transform: scale(1.2);
