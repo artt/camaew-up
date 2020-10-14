@@ -28,7 +28,7 @@ export default function Camp({stack, dice, makeSmallBet, rollClick, myTurn}) {
 										if (myTurn && stack[i].length > 0)
 											makeSmallBet(i)
 									}}
-									doubleClickHandler={9} />
+								/>
 							<div className={`rolled-dice ${diceUI[i] && `tokencolor-${i}`}`}>
 								{diceUI[i]
 									? <div className="center-table">{diceUI[i]}</div>

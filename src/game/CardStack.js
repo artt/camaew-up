@@ -2,7 +2,7 @@ import React from 'react'
 import { random } from 'lodash'
 import { useEffectListener } from 'bgio-effects/react';
 
-export default function CardStack({label, stack, cardClass, stackClass, clickHandler, doubleClickHandler, dragOverHandler, dropHandler}) {
+export default function CardStack({label, stack, cardClass, stackClass, clickHandler, dragOverHandler, dropHandler}) {
 
 	const [stackPos, setStackPos] = React.useState([])
 	const [oldLength, setOldLength] = React.useState(0)

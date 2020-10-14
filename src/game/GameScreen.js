@@ -12,7 +12,7 @@ export default function GameScreen({G, ctx, moves, playerID, gameMetadata, gameI
 	playerID = Number(playerID)
 
 	return (
-		<div id="game">
+		<div id="game" className={playerID === Number(ctx.currentPlayer) ? 'myturn' : ''}>
 
 			<div className="panel" id="main">
 				<Camp
