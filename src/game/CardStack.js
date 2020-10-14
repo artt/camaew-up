@@ -44,7 +44,7 @@ export default function CardStack({label, stack, cardClass, stackClass, clickHan
 			{stack.map((x, i) => {
 				return(
 					<div
-							className={"card-standard card-shape center di-table " + (cardClass || '')}
+							className={"card-standard card-shape center di-table " + (myTurn ? 'actionable ' : '') + (cardClass || '')}
 							key={"small-card" + i}
 							style={{transform: `rotate(${stackPos ? stackPos[i] : 0}deg) translateX(-50%)`,
 									transformOrigin: `0% 50%`}}>

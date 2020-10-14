@@ -26,12 +26,16 @@
   display: table-cell;
   vertical-align: middle;
 }
-#game .noselect, #game .empty-area, #game .card-standard {
+#game .noselect, #game .panel {
   -moz-user-select: none;
   -webkit-user-select: none;
   -ms-user-select: none;
   user-select: none;
 }
+.myturn#game .actionable {
+  cursor: pointer;
+}
+
 #game .dice-size {
   border-radius: 10px;
   width: 60px;
@@ -196,9 +200,6 @@
 #game #main #dice-wrapper #main-dice {
   z-index: 100;
   color: rgba(255, 255, 255, 0.3);
-  cursor: default;
-}
-#game #main #dice-wrapper #main-dice.active {
   transition-duration: 0.1s;
 }
 #game #main #dice-wrapper #main-dice.active:hover {
@@ -208,7 +209,6 @@
   height: 60px;
   border-color: white;
   color: white;
-  cursor: pointer;
 }
 #game #camp {
   position: relative;

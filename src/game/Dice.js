@@ -49,14 +49,17 @@ export default function Dice({rollClick, myTurn}) {
 	return(
 		<div id="dice-wrapper" className="center">
 			<div id="main-dice" className={`rolled-dice ${btnActive ? 'active' : ''}`}
-					onClick={() => {
-						if (btnActive) {
-							rollClick()
-						}
-					}}>
+					>
 				{dice
 					? <div className={`center-table dice-size tokencolor-${catID}`}>{dice}</div>
-					: <div className="center-table circle-shape empty-area dice-size">Roll</div>
+					: <div className="center-table circle-shape empty-area dice-size actionable"
+							onClick={() => {
+								if (btnActive) {
+									rollClick()
+								}
+							}}>
+								Roll
+						</div>
 				}
 			</div>
 		</div>

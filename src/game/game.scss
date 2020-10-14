@@ -50,6 +50,12 @@ $token-colors: blue, green, orange, yellow, white, purple;
 		user-select: none;
 	}
 
+	.actionable {
+		@at-root .myturn#{&} {
+			cursor: pointer;
+		}
+	}
+
 	.dice-size {
 		border-radius: 10px;
 		width: 60px;
@@ -73,7 +79,6 @@ $token-colors: blue, green, orange, yellow, white, purple;
 		background: black;
 		box-shadow: 1px 1px 3px rgba(black, 1);
 		transition-duration: 0.2s;
-		@extend .noselect;
 	}
 
 	@for $i from 0 through length($token-colors) - 1 {
@@ -95,7 +100,6 @@ $token-colors: blue, green, orange, yellow, white, purple;
 	.empty-area {
 		color: $fade-white;
 		border: solid 3px $fade-white;
-		@extend .noselect;
 	}
 
 	.small-stack {
@@ -113,6 +117,7 @@ $token-colors: blue, green, orange, yellow, white, purple;
 
 	.panel {
 		// border: solid 1px white;
+		@extend .noselect;
 	}
 
 	#players {
@@ -232,9 +237,8 @@ $token-colors: blue, green, orange, yellow, white, purple;
 			#main-dice {
 				z-index: 100;
 				color: $fade-white;
-				cursor: default;
+				transition-duration: 0.1s;
 				&.active {
-					transition-duration: 0.1s;
 					&:hover {
 						transform: scale(1.2);
 					}
@@ -242,7 +246,6 @@ $token-colors: blue, green, orange, yellow, white, purple;
 						height: 60px;
 						border-color: white;
 						color: white;
-						cursor: pointer;
 					}
 				}
 			}	
