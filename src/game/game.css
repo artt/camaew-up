@@ -26,6 +26,10 @@
   display: table-cell;
   vertical-align: middle;
 }
+#game .center-margin {
+  margin-left: auto;
+  margin-right: auto;
+}
 #game .noselect, #game .panel {
   -moz-user-select: none;
   -webkit-user-select: none;
@@ -36,10 +40,15 @@
   cursor: pointer;
 }
 
-#game .dice-size {
+#game .dice-shape-big {
   border-radius: 10px;
   width: 60px;
   height: 60px;
+}
+#game .dice-shape-small {
+  border-radius: 7px;
+  width: 40px;
+  height: 40px;
 }
 #game .center {
   position: absolute;
@@ -220,18 +229,6 @@
   position: absolute;
   left: 50%;
   transform-origin: 50% 300%;
-}
-#game #camp .tent .rolled-dice {
-  margin-left: auto;
-  margin-right: auto;
-  width: 40px;
-  height: 40px;
-  border-radius: 5px;
-  display: table;
-}
-#game #camp .tent .rolled-dice .dice-text-wrapper {
-  display: table-cell;
-  vertical-align: middle;
 }
 
 /*# sourceMappingURL=game.css.map */

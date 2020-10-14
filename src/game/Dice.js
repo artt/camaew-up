@@ -1,5 +1,6 @@
 import React from 'react'
 import {random} from 'lodash'
+import anime from 'animejs/lib/anime.es.js';
 
 import { useEffectListener } from 'bgio-effects/react';
 
@@ -23,11 +24,31 @@ export default function Dice({rollClick, myTurn}) {
 	// 	setDice(finalDice)
 	// 	setZ(false)
 	// }
+	
+	function getCenter(elem) {
+		return {x: elem.x + elem.width / 2, y: elem.y + elem.height / 2}
+	}
 
-	const rollDoneHandler = React.useCallback((finalDice) => {
+	const rollDoneHandler = React.useCallback(({catID, roll}) => {
 		clearInterval(diceInterval)
-		setDice(finalDice)
+		setDice(roll)
 		setBtnActive(false)
+		setTimeout(() => {
+			if (document.getElementById('xxx')) {
+				const pointA = getCenter(document.getElementById('xxx').getBoundingClientRect())
+				const pointB = getCenter(document.getElementById(`rolled-dice-${catID}`).getBoundingClientRect())
+				anime({
+				  targets: '#xxx',
+				  translateX: pointB.x - pointA.x,
+				  translateY: pointB.y - pointA.y,
+				  scale: 0.2,
+				  rotate: '1turn',
+				  opacity: 0,
+				  duration: 500,
+				  easing: 'easeOutExpo'
+				});
+			}
+		}, 500)
 	})
 
 	function rollResetHandler() {
@@ -38,21 +59,19 @@ export default function Dice({rollClick, myTurn}) {
 	React.useEffect(() => {
 		setBtnActive(myTurn)
 		if (!myTurn) {
-			rollDoneHandler()
+			// rollDoneHandler()
 			rollResetHandler()
 		}
 	}, [myTurn])
 
-	useEffectListener('rollDone', rollDoneHandler);
+	useEffectListener('rollDone', (x) => rollDoneHandler(x));
 	useEffectListener('rollReset', rollResetHandler);
 
 	return(
 		<div id="dice-wrapper" className="center">
-			<div id="main-dice" className={`rolled-dice ${btnActive ? 'active' : ''}`}
-					>
-				{dice
-					? <div className={`center-table dice-size tokencolor-${catID}`}>{dice}</div>
-					: <div className="center-table circle-shape empty-area dice-size actionable"
+			<div id="main-dice" className={`rolled-dice ${btnActive ? 'active' : ''}`}>
+				{!dice &&
+					<div className="center-table circle-shape empty-area dice-shape-big actionable"
 							onClick={() => {
 								if (btnActive) {
 									rollClick()
@@ -62,6 +81,9 @@ export default function Dice({rollClick, myTurn}) {
 						</div>
 				}
 			</div>
+			{dice &&
+				<div id="xxx" className={`center-table dice-shape-big tokencolor-${catID}`}>{dice}</div>
+			}
 		</div>
 	)
 }

@@ -30,9 +30,9 @@ export default function Camp({stack, dice, makeSmallBet, rollClick, myTurn}) {
 									}}
 									myTurn={myTurn}
 								/>
-							<div className={`rolled-dice ${diceUI[i] && `tokencolor-${i}`}`}>
+							<div id={`rolled-dice-${i}`} className={"dice-shape-small center-margin di-table"}>
 								{diceUI[i]
-									? <div className="center-table">{diceUI[i]}</div>
+									? <div className={`dice-shape-small center-table tokencolor-${i}`}>{diceUI[i]}</div>
 									: <div className="center-table circle-shape empty-area"></div>
 								}
 							</div>

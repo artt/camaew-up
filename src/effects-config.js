@@ -11,7 +11,7 @@ export const config = {
 		},
 		rollDone: {
 			create: (data) => (data),
-			duration: 0.2,
+			duration: 0.7,
 		},
 		rollReset: {
 			create: (data) => (data),
