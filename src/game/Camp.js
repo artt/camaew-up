@@ -25,9 +25,10 @@ export default function Camp({stack, dice, makeSmallBet, rollClick, myTurn}) {
 									stack={stack[i]}
 									cardClass={`tokencolor-${i}`}
 									clickHandler={() => {
-										if (myTurn && stack[i].length > 0)
+										if (stack[i].length > 0)
 											makeSmallBet(i)
 									}}
+									myTurn={myTurn}
 								/>
 							<div className={`rolled-dice ${diceUI[i] && `tokencolor-${i}`}`}>
 								{diceUI[i]

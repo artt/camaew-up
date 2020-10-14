@@ -2,7 +2,7 @@ import React from 'react'
 import { random } from 'lodash'
 import { useEffectListener } from 'bgio-effects/react';
 
-export default function CardStack({label, stack, cardClass, stackClass, clickHandler, dragOverHandler, dropHandler}) {
+export default function CardStack({label, stack, cardClass, stackClass, clickHandler, dragOverHandler, dropHandler, myTurn}) {
 
 	const [stackPos, setStackPos] = React.useState([])
 	const [oldLength, setOldLength] = React.useState(0)
@@ -33,7 +33,7 @@ export default function CardStack({label, stack, cardClass, stackClass, clickHan
 
 	return(
 		<div className={"small-stack " + (stackClass || '')}
-				onClick={clickHandler}
+				onClick={(clickHandler && myTurn) ? clickHandler : () => setStackPos(genRandomArray(stack.length))}
 				onDragOver={dragOverHandler}
 				onDrop={dropHandler}>
 			<div className="card-shape empty-area center di-table">

@@ -26,6 +26,12 @@
   display: table-cell;
   vertical-align: middle;
 }
+#game .noselect, #game .empty-area, #game .card-standard {
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
 #game .dice-size {
   border-radius: 10px;
   width: 60px;
@@ -46,6 +52,7 @@
   border: solid 5px white;
   background: black;
   box-shadow: 1px 1px 3px black;
+  transition-duration: 0.2s;
 }
 #game .tokencolor-0 {
   background: blue;

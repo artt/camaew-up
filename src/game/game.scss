@@ -43,6 +43,13 @@ $token-colors: blue, green, orange, yellow, white, purple;
 		vertical-align: middle;
 	}
 
+	.noselect {
+		-moz-user-select: none;
+		-webkit-user-select: none;
+		-ms-user-select: none;
+		user-select: none;
+	}
+
 	.dice-size {
 		border-radius: 10px;
 		width: 60px;
@@ -65,6 +72,8 @@ $token-colors: blue, green, orange, yellow, white, purple;
 		border: solid 5px white;
 		background: black;
 		box-shadow: 1px 1px 3px rgba(black, 1);
+		transition-duration: 0.2s;
+		@extend .noselect;
 	}
 
 	@for $i from 0 through length($token-colors) - 1 {
@@ -86,6 +95,7 @@ $token-colors: blue, green, orange, yellow, white, purple;
 	.empty-area {
 		color: $fade-white;
 		border: solid 3px $fade-white;
+		@extend .noselect;
 	}
 
 	.small-stack {
