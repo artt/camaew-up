@@ -9,9 +9,14 @@ export const config = {
 			create: (data) => (data),
 			duration: 1,
 		},
+		// freeze dice
 		rollDone: {
 			create: (data) => (data),
-			duration: 0.8,
+			duration: 0.4,
+		},
+		rollMove: {
+			create: (data) => (data),
+			duration: 0.6,
 		},
 		rollReset: {
 			create: (data) => (data),

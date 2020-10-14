@@ -267,6 +267,7 @@ const CamaewUp = {
 			const [catID, roll] = rollDice(G, ctx, playerID)
 			ctx.effects.roll(catID)
 			ctx.effects.rollDone({catID: catID, roll: roll})
+			ctx.effects.rollMove(catID)
 			ctx.effects.rollReset(G.dice.slice())
 			for (let i = 0; i < roll; i ++) {
 				ctx.effects.moveFwd({catID: catID, roll: i, preCats: preCats, preBoard: preBoard})

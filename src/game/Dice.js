@@ -26,29 +26,14 @@ export default function Dice({rollClick, myTurn}) {
 	// }
 	
 	function getCenter(elem) {
-		return {x: elem.x + elem.width / 2, y: elem.y + elem.height / 2}
+		return {x: (elem.left + elem.right) / 2, y: (elem.top + elem.bottom) / 2}
+		// return {x: elem.x + elem.width / 2, y: elem.y + elem.height / 2}
 	}
 
 	const rollDoneHandler = React.useCallback(({catID, roll}) => {
 		clearInterval(diceInterval)
 		setDice(roll)
 		setBtnActive(false)
-		setTimeout(() => {
-			if (document.getElementById('rolled-dice')) {
-				const pointA = getCenter(document.getElementById('rolled-dice').getBoundingClientRect())
-				const pointB = getCenter(document.getElementById(`rolled-dice-${catID}`).getBoundingClientRect())
-				anime({
-				  targets: '#rolled-dice',
-				  translateX: pointB.x - pointA.x,
-				  translateY: pointB.y - pointA.y,
-				  scale: 0.2,
-				  rotate: '1turn',
-				  opacity: 0,
-				  duration: 400,
-				  easing: 'easeOutExpo'
-				});
-			}
-		}, 400)
 	})
 
 	function rollResetHandler() {
@@ -66,6 +51,25 @@ export default function Dice({rollClick, myTurn}) {
 
 	useEffectListener('rollDone', (x) => rollDoneHandler(x));
 	useEffectListener('rollReset', rollResetHandler);
+	useEffectListener('rollMove', (catID) => {
+		const space = 15
+		const numCats = 5
+		const pointA = getCenter(document.getElementById('rolled-dice').getBoundingClientRect())
+		const pointB = getCenter(document.getElementById(`rolled-dice-${catID}`).getBoundingClientRect())
+		if (document.getElementById('rolled-dice')) {
+			anime({
+				targets: '#rolled-dice',
+				translateX: [-30, pointB.x - pointA.x - 20], //[0, pointB.x - pointA.x], -30
+				translateY: [0, pointB.y - pointA.y + 10], // 0, //[0, pointB.y - pointA.y],  0
+				height: ['60px', '40px'],
+				width: ['60px', '40px'],
+				borderRadius: ['10px', '7px'],
+				rotate: `${-space * (numCats - 1) / 2 + space * catID + 360}deg`,
+				duration: 400,
+				easing: 'easeOutExpo'
+			});
+		}
+	})
 
 	return(
 		<div id="dice-wrapper" className="center">
