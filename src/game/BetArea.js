@@ -1,6 +1,5 @@
 import React from 'react'
 import CardStack from './CardStack'
-import {random, cloneDeep} from 'lodash'
 
 export default function BetArea({bigStack, playerID, makeBigBet}) {
 

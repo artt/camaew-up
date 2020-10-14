@@ -136,8 +136,6 @@ export default function RaceTrack({G, playerID, gameMetadata, placeMod, moveMod,
 
 	useEffectListener('moveFwd', ({catID, roll, preCats, preBoard}) => {
 
-		console.log('moveFwd fired')
-
 		const curCellNum = preCats[catID][0]
 		let tmpCats = preCats
 		let curStack = []

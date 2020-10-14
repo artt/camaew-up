@@ -1,6 +1,5 @@
 import React from 'react'
 import Dice from './Dice'
-import {random} from 'lodash'
 import CardStack from './CardStack'
 
 import { useEffectListener } from 'bgio-effects/react';
@@ -12,7 +11,6 @@ export default function Camp({stack, dice, makeSmallBet, rollClick, myTurn}) {
 	const [diceUI, setDiceUI] = React.useState(dice)
 
 	useEffectListener('rollReset', (finalDice) => {
-		console.log('reset heard by camp')
 		setDiceUI(finalDice)
 	}, []);
 

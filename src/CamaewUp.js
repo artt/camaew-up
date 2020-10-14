@@ -1,7 +1,6 @@
 import {sum, cloneDeep} from 'lodash'
 import { EffectsPlugin } from 'bgio-effects/plugin';
 import { config } from './effects-config';
-import {random} from 'lodash'
 
 
 function genArray(size, data) {

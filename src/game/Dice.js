@@ -7,26 +7,28 @@ export default function Dice({rollClick, myTurn}) {
 
 	const [dice, setDice] = React.useState(null)
 	const [catID, setCatID] = React.useState(null)
-	const [z, setZ] = React.useState(myTurn)
+	const [btnActive, setBtnActive] = React.useState(myTurn)
 
 	let diceInterval = null
 
 	useEffectListener('roll', (catID) => {
-		console.log('roll')
 		setCatID(catID)
 		diceInterval = setInterval(() => {
 			setDice(random(1, 3))
 		}, 100)
 	});
 
-	useEffectListener('rollDone', rollDoneHandler);
-	useEffectListener('rollReset', rollResetHandler);
+	// function rollDoneHandler(finalDice) {
+	// 	clearInterval(diceInterval)
+	// 	setDice(finalDice)
+	// 	setZ(false)
+	// }
 
-	function rollDoneHandler(finalDice) {
+	const rollDoneHandler = React.useCallback((finalDice) => {
 		clearInterval(diceInterval)
 		setDice(finalDice)
-		setZ(false)
-	}
+		setBtnActive(false)
+	})
 
 	function rollResetHandler() {
 		setDice(null)
@@ -34,18 +36,21 @@ export default function Dice({rollClick, myTurn}) {
 	}
 
 	React.useEffect(() => {
-		setZ(myTurn)
+		setBtnActive(myTurn)
 		if (!myTurn) {
 			rollDoneHandler()
 			rollResetHandler()
 		}
 	}, [myTurn])
 
+	useEffectListener('rollDone', rollDoneHandler);
+	useEffectListener('rollReset', rollResetHandler);
+
 	return(
 		<div id="dice-wrapper" className="center">
-			<div id="main-dice" className={`rolled-dice ${z ? 'active' : ''}`}
+			<div id="main-dice" className={`rolled-dice ${btnActive ? 'active' : ''}`}
 					onClick={() => {
-						if (z) {
+						if (btnActive) {
 							rollClick()
 						}
 					}}>

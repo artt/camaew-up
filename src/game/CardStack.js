@@ -1,10 +1,11 @@
 import React from 'react'
-import {random, cloneDeep} from 'lodash'
+import { random } from 'lodash'
 import { useEffectListener } from 'bgio-effects/react';
 
 export default function CardStack({label, stack, cardClass, stackClass, clickHandler, doubleClickHandler, dragOverHandler, dropHandler}) {
 
 	const [z, setZ] = React.useState([])
+	const [oldLength, setOldLength] = React.useState(0)
 
 	function genRandomArray(l) {
 		let tmp = Array(l)
@@ -15,16 +16,14 @@ export default function CardStack({label, stack, cardClass, stackClass, clickHan
 	}
 
 	React.useEffect(() => {
-		if (stackClass && stackClass === 'betzone-win') {
-			console.log(stack)
-		}
-		if (stack.length > z.length) {
-			setZ(z.concat(genRandomArray(stack.length - z.length)))
+		if (stack.length > oldLength) {
+			setZ(z => z.concat(genRandomArray(stack.length - oldLength)))
 		}
 		else {
-			setZ(z.slice(0, stack.length))
+			setZ(z => z.slice(0, stack.length))
 		}
-	}, [stack])
+		setOldLength(stack.length)
+	}, [stack, oldLength])
 
 	useEffectListener('endSmallRound', () => {
 		setZ(genRandomArray(stack.length))
