@@ -59,14 +59,15 @@ export default function Dice({rollClick, myTurn}) {
 		if (document.getElementById('rolled-dice')) {
 			anime({
 				targets: '#rolled-dice',
-				translateX: [-30, pointB.x - pointA.x - 20], //[0, pointB.x - pointA.x], -30
-				translateY: [0, pointB.y - pointA.y + 10], // 0, //[0, pointB.y - pointA.y],  0
+				// need to fix this
+				translateX: [-30, pointB.x - pointA.x - 20],
+				translateY: [0, pointB.y - pointA.y + 10],
 				height: ['60px', '40px'],
 				width: ['60px', '40px'],
 				borderRadius: ['10px', '7px'],
 				rotate: `${-space * (numCats - 1) / 2 + space * catID + 360}deg`,
-				duration: 400,
-				easing: 'easeOutExpo'
+				duration: 600,
+				easing: 'easeOutElastic'
 			});
 		}
 	})
