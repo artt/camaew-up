@@ -19,10 +19,11 @@ export default function Camp({stack, dice, makeSmallBet, rollClick, myTurn}) {
 			{
 				[...Array(stack.length)].map((e, i) => {
 					return(
-						<div className="tent" key={"tent" + i}
+						<div id={"tent" + i} className="tent" key={"tent" + i}
 								style={{transform: `translateX(-50%) rotate(${-space * (stack.length - 1) / 2 + space * i}deg)`}} >
 							<CardStack
 									stack={stack[i]}
+									stackClass="tentstack"
 									cardClass={`tokencolor-${i}`}
 									clickHandler={() => {
 										if (stack[i].length > 0)

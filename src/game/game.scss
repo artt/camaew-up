@@ -89,6 +89,10 @@ $token-colors: blue, green, orange, yellow, white, purple;
 		transform: translateX(-50%);
 	}
 
+	.abs {
+		position: absolute;
+	}
+
 	.card-shape {
 		font-size: 1.5rem;
 		width: 100px;
@@ -100,11 +104,6 @@ $token-colors: blue, green, orange, yellow, white, purple;
 		background: black;
 		box-shadow: 1px 1px 3px rgba(black, 1);
 		transition-duration: 0.2s;
-		@at-root .myturn#{&} {
-			&:hover {
-				transform: scale(1.2);
-			}
-		}
 	}
 
 	@for $i from 0 through length($token-colors) - 1 {
@@ -291,6 +290,17 @@ $token-colors: blue, green, orange, yellow, white, purple;
 			position: absolute;
 			left: 50%;
 			transform-origin: 50% 300%;
+			.tentstack .card-wrapper {
+				transition-duration: 0.1s;
+				@at-root .myturn#{&} {
+					&:hover {
+						transform: translateY(-10px) scale(1.05);
+						.card-standard {
+							box-shadow: 5px 5px 10px rgba(black, 0.5);
+						}
+					}
+				}
+			}
 		}
 	}
 

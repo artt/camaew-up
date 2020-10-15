@@ -49,6 +49,8 @@
     position: absolute;
     left: 50%;
     transform: translateX(-50%); }
+  #game .abs {
+    position: absolute; }
   #game .card-shape {
     font-size: 1.5rem;
     width: 100px;
@@ -59,8 +61,6 @@
     background: black;
     box-shadow: 1px 1px 3px black;
     transition-duration: 0.2s; }
-    .myturn#game .card-standard:hover {
-      transform: scale(1.2); }
   #game .tokencolor-0 {
     background: blue;
     color: white; }
@@ -188,5 +188,11 @@
       position: absolute;
       left: 50%;
       transform-origin: 50% 300%; }
+      #game #camp .tent .tentstack .card-wrapper {
+        transition-duration: 0.1s; }
+        .myturn#game #camp .tent .tentstack .card-wrapper:hover {
+          transform: translateY(-10px) scale(1.05); }
+          .myturn#game #camp .tent .tentstack .card-wrapper:hover .card-standard {
+            box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5); }
 
 /*# sourceMappingURL=game.css.map */
