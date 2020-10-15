@@ -23,7 +23,9 @@
   },
   "scripts": {
     "host": "REACT_APP_AGENT=host react-scripts start",
+    "host-win": "cmd /v /c \"set REACT_APP_AGENT=host&& npm start\"",
     "client": "REACT_APP_AGENT=client PORT=3001 react-scripts start",
+    "client-win": "cmd /v /c \"set REACT_APP_AGENT=client&& set PORT=3001&& npm start\"",
     "dev": "( sleep 10 && npm run client ) & npm run host",
     "start": "react-scripts start",
     "build": "react-scripts build",

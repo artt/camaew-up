@@ -100,6 +100,11 @@ $token-colors: blue, green, orange, yellow, white, purple;
 		background: black;
 		box-shadow: 1px 1px 3px rgba(black, 1);
 		transition-duration: 0.2s;
+		@at-root .myturn#{&} {
+			&:hover {
+				transform: scale(1.2);
+			}
+		}
 	}
 
 	@for $i from 0 through length($token-colors) - 1 {
