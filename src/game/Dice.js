@@ -1,11 +1,11 @@
 import React from 'react'
 import {random} from 'lodash'
 import anime from 'animejs/lib/anime.es.js';
-import { getTranslate } from '../utils'
+import { getTranslate, getRotation } from '../utils'
 
 import { useEffectListener } from 'bgio-effects/react';
 
-export default function Dice({rollClick, myTurn}) {
+export default function Dice({rollClick, myTurn, misc}) {
 
 	const [dice, setDice] = React.useState(null)
 	const [catID, setCatID] = React.useState(null)
@@ -41,8 +41,6 @@ export default function Dice({rollClick, myTurn}) {
 	useEffectListener('rollDone', (x) => rollDoneHandler(x));
 	useEffectListener('rollReset', rollResetHandler);
 	useEffectListener('rollMove', (catID) => {
-		const space = 15
-		const numCats = 5
 		const [dx, dy] = getTranslate('main-dice', `rolled-dice-${catID}`)
 		if (document.getElementById('rolled-dice')) {
 			anime({
@@ -53,7 +51,7 @@ export default function Dice({rollClick, myTurn}) {
 				height: ['60px', '40px'],
 				width: ['60px', '40px'],
 				borderRadius: ['10px', '7px'],
-				rotate: `${-space * (numCats - 1) / 2 + space * catID + 360}deg`,
+				rotate: `${getRotation(misc, catID) + 360}deg`,
 				duration: 600,
 				easing: 'easeOutElastic'
 			});

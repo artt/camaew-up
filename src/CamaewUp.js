@@ -251,6 +251,7 @@ const CamaewUp = {
 			numPlayers: ctx.numPlayers,
 			lastDiceRolled: -1,
 			cleanUp: -1,
+			spacing: 15,
 		}
 		log(G, {move: "text", text: "Welcome!"})
 

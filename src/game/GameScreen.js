@@ -11,6 +11,11 @@ export default function GameScreen({G, ctx, moves, playerID, gameMetadata, gameI
 	// convert string back to number for easier processing
 	playerID = Number(playerID)
 
+	const misc = {
+		numCats: G.numCats,
+		spacing: G.spacing,
+	}
+
 	return (
 		<div id="game" className={playerID === Number(ctx.currentPlayer) ? 'myturn' : ''}>
 
@@ -20,7 +25,8 @@ export default function GameScreen({G, ctx, moves, playerID, gameMetadata, gameI
 						dice={G.dice}
 						makeSmallBet={bet => moves.makeSmallBet(playerID, bet)}
 						rollClick={() => moves.roll(playerID)}
-						myTurn={playerID === Number(ctx.currentPlayer)} />
+						myTurn={playerID === Number(ctx.currentPlayer)}
+						misc={misc} />
 				<BetArea
 						bigStack={G.bigStack}
 						playerID={playerID}

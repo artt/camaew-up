@@ -2,15 +2,25 @@ import React from 'react'
 import Dice from './Dice'
 import CardStack from './CardStack'
 import anime from 'animejs/lib/anime.es.js';
-import { getTranslate } from '../utils'
+import { getTranslate, getRotation, deg2rad } from '../utils'
 
 import { useEffectListener } from 'bgio-effects/react';
 
-export default function Camp({stack, dice, makeSmallBet, rollClick, myTurn}) {
+export default function Camp({stack, dice, makeSmallBet, rollClick, myTurn, misc}) {
 
 	const space = 15
 
 	const [diceUI, setDiceUI] = React.useState(dice)
+
+	function getCardTranslate(tentID, playerID, misc) {
+		const [dx, dy] = getTranslate(`tentstack-${tentID}`, `player-card-${playerID}`)
+		const a = Math.sqrt(dx*dx + dy*dy)
+		const theta = -deg2rad(getRotation(misc, tentID))
+		const alpha = Math.atan2(dy, dx)
+		const beta = Math.PI / 2 - alpha - theta
+		console.log(dx, dy, theta)
+		return [a * Math.sin(beta), a * Math.cos(beta)]
+	}
 
 	useEffectListener('rollReset', (finalDice) => {
 		setDiceUI(finalDice)
@@ -18,14 +28,13 @@ export default function Camp({stack, dice, makeSmallBet, rollClick, myTurn}) {
 
 	useEffectListener('makeSmallBet', ({playerID, bet, card}) => {
 		console.log(`tentstack-${bet}-card-${card}`)
-		const [dx, dy] = getTranslate(`tentstack-${bet}`, `player-card-${playerID}`)
-		console.log(dx, dy)
+		const [dx, dy] = getCardTranslate(bet, playerID, misc)
 		if (document.getElementById(`tentstack-${bet}-card-${card}`)) {
 			anime({
 				targets: `#tentstack-${bet}-card-${card}`,
 				// need to fix this				
-				translateX: [0, 50],
-				// translateY: [0, 50],
+				translateX: [0, dx],
+				translateY: [0, dy],
 				// height: ['60px', '40px'],
 				// width: ['60px', '40px'],
 				// borderRadius: ['10px', '7px'],
@@ -43,7 +52,7 @@ export default function Camp({stack, dice, makeSmallBet, rollClick, myTurn}) {
 				[...Array(stack.length)].map((e, i) => {
 					return(
 						<div id={"tent" + i} className="tent" key={"tent" + i}
-								style={{transform: `translateX(-50%) rotate(${-space * (stack.length - 1) / 2 + space * i}deg)`}} >
+								style={{transform: `translateX(-50%) rotate(${getRotation(misc, i)}deg)`}} >
 							<CardStack
 									stack={stack[i]}
 									emptyID={"tentstack-" + i}
@@ -65,7 +74,7 @@ export default function Camp({stack, dice, makeSmallBet, rollClick, myTurn}) {
 					)
 				})
 			}
-			<Dice rollClick={rollClick} myTurn={myTurn} />
+			<Dice rollClick={rollClick} myTurn={myTurn} misc={misc} />
 		</div>
 	)
 }

@@ -4,7 +4,8 @@
   cellmargin: 3px;
   tokenwidth: 80px;
   tokenheight: 30px;
-  tokenmargin: 5px; }
+  tokenmargin: 5px;
+}
 
 #game {
   height: 100vh;
@@ -12,187 +13,243 @@
   color: white;
   display: grid;
   grid-template-rows: 1fr 150px;
-  grid-template-columns: 3fr 1fr; }
-  #game #board {
-    grid-column: 1/3; }
-  #game .flex {
-    display: flex; }
-  #game .fullframe {
-    height: 100%;
-    width: 100%; }
-  #game .fill {
-    height: fit-content;
-    width: fit-content; }
-  #game .center-table {
-    text-align: center;
-    display: table-cell;
-    vertical-align: middle; }
-  #game .center-margin {
-    margin-left: auto;
-    margin-right: auto; }
-  #game .noselect, #game .panel {
-    -moz-user-select: none;
-    -webkit-user-select: none;
-    -ms-user-select: none;
-    user-select: none; }
-  .myturn#game .actionable {
-    cursor: pointer; }
-  #game .dice-shape-big, #game #main #dice-wrapper #main-dice {
-    border-radius: 10px;
-    width: 60px;
-    height: 60px; }
-  #game .dice-shape-small {
-    border-radius: 7px;
-    width: 40px;
-    height: 40px; }
-  #game .center {
-    position: absolute;
-    left: 50%;
-    transform: translateX(-50%); }
-  #game .abs {
-    position: absolute; }
-  #game .card-shape {
-    font-size: 1.5rem;
-    width: 100px;
-    height: 140px;
-    border-radius: 10px; }
-  #game .card-standard {
-    border: solid 5px white;
-    background: black;
-    box-shadow: 1px 1px 3px black;
-    transition-duration: 0.2s; }
-  #game .tokencolor-0 {
-    background: blue;
-    color: white; }
-  #game .tokencolor-1 {
-    background: green;
-    color: white; }
-  #game .tokencolor-2 {
-    background: orange;
-    color: black; }
-  #game .tokencolor-3 {
-    background: yellow;
-    color: black; }
-  #game .tokencolor-4 {
-    background: white;
-    color: black; }
-  #game .tokencolor-5 {
-    background: purple;
-    color: white; }
-  #game .circle-shape {
-    border-radius: 50%; }
-  #game .empty-area {
-    color: rgba(255, 255, 255, 0.3);
-    border: solid 3px rgba(255, 255, 255, 0.3); }
-  #game .small-stack {
-    width: 120px;
-    height: 160px;
-    position: relative; }
-  #game .log-area {
-    width: 500px;
-    height: 300px;
-    overflow-y: scroll;
-    color: white; }
-  #game #players {
-    display: flex; }
-    #game #players > div {
-      margin-top: auto;
-      width: 100%; }
-    #game #players .player-card {
-      overflow: hidden;
-      background: rgba(255, 255, 255, 0.3);
-      border-radius: 10px;
-      margin: 5px;
-      color: black;
-      display: grid;
-      grid-template-columns: 100px auto; }
-      #game #players .player-card.current {
-        border: solid 3px yellow; }
-      #game #players .player-card .player-details {
-        padding: 5px; }
-      #game #players .player-card .bet-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fill, 20px); }
-    #game #players .modcard,
-    #game #players .betcard {
-      padding: 0 0.5rem;
-      border-radius: 0.25rem;
-      margin: 0 0.1rem; }
-    #game #players .modcard {
-      background: grey; }
-  #game #board {
-    width: 100%;
-    overflow: scroll;
-    position: relative; }
-    #game #board .cell-container {
-      display: inline-flex; }
-    #game #board .cell {
-      width: 120px;
-      height: 120px;
-      background-color: rgba(255, 255, 255, 0.8);
-      border-radius: 3px;
-      margin: 3px;
-      position: relative; }
-      #game #board .cell .cell-content {
-        position: absolute;
-        bottom: 0; }
-    #game #board .cell-extra {
-      background-color: rgba(255, 255, 255, 0.2); }
-    #game #board .cell-mod {
-      margin: 5px; }
-    #game #board .tape {
-      background: red; }
-    #game #board .cucumber {
-      background: green; }
-    #game #board .cat {
-      position: absolute;
-      width: 80px;
-      height: 30px;
-      border-radius: 5px;
-      margin: 0;
-      text-align: center;
-      transition-duration: 0.1s; }
-  #game #main {
-    position: relative; }
-    #game #main #betarea {
-      width: 400px;
-      display: flex;
-      position: absolute;
-      top: 340px;
-      left: 50%;
-      transform: translateX(-50%);
-      z-index: 50; }
-    #game #main .di-table {
-      display: table; }
-    #game #main .betzone-win {
-      margin-left: auto; }
-    #game #main #dice-wrapper {
-      top: 250px; }
-      #game #main #dice-wrapper #main-dice {
-        position: relative;
-        z-index: 100;
-        color: rgba(255, 255, 255, 0.3);
-        transition-duration: 0.1s; }
-        #game #main #dice-wrapper #main-dice.active:hover {
-          transform: scale(1.2); }
-        #game #main #dice-wrapper #main-dice.active .empty-area {
-          height: 60px;
-          border-color: white;
-          color: white; }
-  #game #camp {
-    position: relative;
-    width: 100%;
-    top: 20px; }
-    #game #camp .tent {
-      width: fit-content;
-      position: absolute;
-      left: 50%;
-      transform-origin: 50% 300%; }
-      #game #camp .tent .tentstack .card-wrapper {
-        transition-duration: 0.1s; }
-        .myturn#game #camp .tent .tentstack .card-wrapper:hover {
-          transform: translateY(-10px) scale(1.05); }
-          .myturn#game #camp .tent .tentstack .card-wrapper:hover .card-standard {
-            box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5); }
+  grid-template-columns: 3fr 1fr;
+}
+#game #board {
+  grid-column: 1/3;
+}
+#game .flex {
+  display: flex;
+}
+#game .fullframe {
+  height: 100%;
+  width: 100%;
+}
+#game .fill {
+  height: fit-content;
+  width: fit-content;
+}
+#game .center-table {
+  text-align: center;
+  display: table-cell;
+  vertical-align: middle;
+}
+#game .center-margin {
+  margin-left: auto;
+  margin-right: auto;
+}
+#game .noselect, #game .panel {
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+.myturn#game .actionable {
+  cursor: pointer;
+}
+
+#game .dice-shape-big, #game #main #dice-wrapper #main-dice {
+  border-radius: 10px;
+  width: 60px;
+  height: 60px;
+}
+#game .dice-shape-small {
+  border-radius: 7px;
+  width: 40px;
+  height: 40px;
+}
+#game .center {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+}
+#game .abs {
+  position: absolute;
+}
+#game .card-shape {
+  font-size: 1.5rem;
+  width: 100px;
+  height: 140px;
+  border-radius: 10px;
+}
+#game .card-standard {
+  border: solid 5px white;
+  background: black;
+  box-shadow: 1px 1px 3px black;
+  transition-duration: 0.2s;
+}
+#game .tokencolor-0 {
+  background: blue;
+  color: white;
+}
+#game .tokencolor-1 {
+  background: green;
+  color: white;
+}
+#game .tokencolor-2 {
+  background: orange;
+  color: black;
+}
+#game .tokencolor-3 {
+  background: yellow;
+  color: black;
+}
+#game .tokencolor-4 {
+  background: white;
+  color: black;
+}
+#game .tokencolor-5 {
+  background: purple;
+  color: white;
+}
+#game .circle-shape {
+  border-radius: 50%;
+}
+#game .empty-area {
+  color: rgba(255, 255, 255, 0.3);
+  border: solid 3px rgba(255, 255, 255, 0.3);
+}
+#game .small-stack {
+  width: 120px;
+  height: 160px;
+  position: relative;
+}
+#game .log-area {
+  width: 500px;
+  height: 300px;
+  overflow-y: scroll;
+  color: white;
+}
+#game #players {
+  display: flex;
+}
+#game #players > div {
+  margin-top: auto;
+  width: 100%;
+}
+#game #players .player-card {
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 10px;
+  margin: 5px;
+  color: black;
+  display: grid;
+  grid-template-columns: 100px auto;
+}
+#game #players .player-card.current {
+  border: solid 3px yellow;
+}
+#game #players .player-card .player-details {
+  padding: 5px;
+}
+#game #players .player-card .bet-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, 20px);
+}
+#game #players .modcard,
+#game #players .betcard {
+  padding: 0 0.5rem;
+  border-radius: 0.25rem;
+  margin: 0 0.1rem;
+}
+#game #players .modcard {
+  background: grey;
+}
+#game #board {
+  width: 100%;
+  overflow: scroll;
+  position: relative;
+}
+#game #board .cell-container {
+  display: inline-flex;
+}
+#game #board .cell {
+  width: 120px;
+  height: 120px;
+  background-color: rgba(255, 255, 255, 0.8);
+  border-radius: 3px;
+  margin: 3px;
+  position: relative;
+}
+#game #board .cell .cell-content {
+  position: absolute;
+  bottom: 0;
+}
+#game #board .cell-extra {
+  background-color: rgba(255, 255, 255, 0.2);
+}
+#game #board .cell-mod {
+  margin: 5px;
+}
+#game #board .tape {
+  background: red;
+}
+#game #board .cucumber {
+  background: green;
+}
+#game #board .cat {
+  position: absolute;
+  width: 80px;
+  height: 30px;
+  border-radius: 5px;
+  margin: 0;
+  text-align: center;
+  transition-duration: 0.1s;
+}
+#game #main {
+  position: relative;
+}
+#game #main #betarea {
+  width: 400px;
+  display: flex;
+  position: absolute;
+  top: 340px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 50;
+}
+#game #main .di-table {
+  display: table;
+}
+#game #main .betzone-win {
+  margin-left: auto;
+}
+#game #main #dice-wrapper {
+  top: 250px;
+}
+#game #main #dice-wrapper #main-dice {
+  position: relative;
+  z-index: 100;
+  color: rgba(255, 255, 255, 0.3);
+  transition-duration: 0.1s;
+}
+#game #main #dice-wrapper #main-dice.active:hover {
+  transform: scale(1.2);
+}
+#game #main #dice-wrapper #main-dice.active .empty-area {
+  height: 60px;
+  border-color: white;
+  color: white;
+}
+#game #camp {
+  position: relative;
+  width: 100%;
+  top: 20px;
+}
+#game #camp .tent {
+  width: fit-content;
+  position: absolute;
+  left: 50%;
+  transform-origin: 50% 300%;
+}
+#game #camp .tent .tentstack .card-wrapper {
+  transition-duration: 0.1s;
+}
+.myturn#game #camp .tent .tentstack .card-wrapper:hover {
+  transform: translateY(-10px) scale(1.05);
+}
+.myturn#game #camp .tent .tentstack .card-wrapper:hover .card-standard {
+  box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5);
+}
 
 /*# sourceMappingURL=game.css.map */
