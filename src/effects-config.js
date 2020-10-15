@@ -35,6 +35,11 @@ export const config = {
 			duration: 0.3,
 		},
 
+		makeSmallBet: {
+			create: (data) => (data),
+			duration: 0.4,
+		},
+
 		endSmallRound: {}
 	},
 };

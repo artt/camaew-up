@@ -1,6 +1,7 @@
 import React from 'react'
 import {random} from 'lodash'
 import anime from 'animejs/lib/anime.es.js';
+import { getTranslate } from '../utils'
 
 import { useEffectListener } from 'bgio-effects/react';
 
@@ -19,17 +20,6 @@ export default function Dice({rollClick, myTurn}) {
 		}, 100)
 	});
 
-	// function rollDoneHandler(finalDice) {
-	// 	clearInterval(diceInterval)
-	// 	setDice(finalDice)
-	// 	setZ(false)
-	// }
-	
-	function getCenter(elem) {
-		return {x: (elem.left + elem.right) / 2, y: (elem.top + elem.bottom) / 2}
-		// return {x: elem.x + elem.width / 2, y: elem.y + elem.height / 2}
-	}
-
 	const rollDoneHandler = React.useCallback(({catID, roll}) => {
 		clearInterval(diceInterval)
 		setDice(roll)
@@ -44,7 +34,6 @@ export default function Dice({rollClick, myTurn}) {
 	React.useEffect(() => {
 		setBtnActive(myTurn)
 		if (!myTurn) {
-			// rollDoneHandler()
 			rollResetHandler()
 		}
 	}, [myTurn])
@@ -54,14 +43,13 @@ export default function Dice({rollClick, myTurn}) {
 	useEffectListener('rollMove', (catID) => {
 		const space = 15
 		const numCats = 5
-		const pointA = getCenter(document.getElementById('rolled-dice').getBoundingClientRect())
-		const pointB = getCenter(document.getElementById(`rolled-dice-${catID}`).getBoundingClientRect())
+		const [dx, dy] = getTranslate('main-dice', `rolled-dice-${catID}`)
 		if (document.getElementById('rolled-dice')) {
 			anime({
 				targets: '#rolled-dice',
 				// need to fix this
-				translateX: [-30, pointB.x - pointA.x - 20],
-				translateY: [0, pointB.y - pointA.y + 10],
+				translateX: [0, dx],
+				translateY: [0, dy + 10],
 				height: ['60px', '40px'],
 				width: ['60px', '40px'],
 				borderRadius: ['10px', '7px'],
@@ -88,10 +76,12 @@ export default function Dice({rollClick, myTurn}) {
 					</div>
 				</div>
 				{dice &&
-					<div id="rolled-dice" className={`center dice-shape-big tokencolor-${catID}`}>
-						<div className="di-table fullframe">
-							<div className="center-table">
-								{dice}
+					<div className="center">
+						<div id="rolled-dice" className={`dice-shape-big tokencolor-${catID}`}>
+							<div className="di-table fullframe">
+								<div className="center-table">
+									{dice}
+								</div>
 							</div>
 						</div>
 					</div>

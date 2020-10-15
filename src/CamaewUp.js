@@ -290,6 +290,7 @@ const CamaewUp = {
 		},
 		makeSmallBet: (G, ctx, playerID, bet) => {
 			const card = makeSmallBet(G, playerID, bet)
+			ctx.effects.makeSmallBet({playerID: playerID, bet: bet, card: card})
 			log(G, {playerID: playerID, move: "smallBet", catID: bet, card: card})
 		},
 		makeBigBet: (G, ctx, playerID, bet, side) => {

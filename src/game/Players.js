@@ -23,9 +23,9 @@ function SmallBetTable({bets}) {
 	)	
 }
 
-function Player({name, data, isCurrent}) {
+function Player({playerID, name, data, isCurrent}) {
 	return(
-		<div className={`player-card xx ${isCurrent ? 'current' : ''}`}>
+		<div id={"player-card-" + playerID} className={`player-card ${isCurrent ? 'current' : ''}`}>
 			<div>
 				<img alt={name || "Player"} src={`https://api.adorable.io/avatars/100/${name || "Player"}.png`} />
 			</div>
@@ -49,6 +49,7 @@ export default function Players({playerID, currentPlayer, players, gameMetadata}
 				[...Array(players.length)].map((e, i) => {
 					const p = (playerID + 1 + i) % players.length
 					return <Player
+										playerID={p}
 										name={gameMetadata[p].name}
 										data={players[p]}
 										isCurrent={currentPlayer === p}
