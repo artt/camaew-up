@@ -146,6 +146,15 @@ $token-colors: blue, green, orange, yellow, white, purple;
 		@extend .noselect;
 	}
 
+	.motion-path {
+		position: absolute;
+		// top: 161px;
+		// left: 149px;
+		svg {
+			position: absolute;
+		}
+	}
+
 	#players {
 
 		display: flex;

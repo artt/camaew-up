@@ -1,4 +1,4 @@
-function getCenter(elem) {
+export function getCenter(elem) {
 	return {x: (elem.left + elem.right) / 2, y: (elem.top + elem.bottom) / 2}
 }
 

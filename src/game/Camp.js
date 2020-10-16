@@ -27,18 +27,26 @@ export default function Camp({stack, dice, makeSmallBet, rollClick, myTurn, misc
 
 	useEffectListener('makeSmallBet', ({playerID, bet, card}) => {
 		const [dx, dy] = getCardTranslate(bet, playerID, misc)
-		if (document.getElementById(`tentstack-${bet}-card-${card}`)) {
+		const xxx = document.getElementById(`tentstack-${bet}-card-${card}`)
+		if (xxx) {
 			anime({
 				targets: `#tentstack-${bet}-card-${card}`,
-				// need to fix this				
 				translateX: [0, dx],
 				translateY: [0, dy],
-				// height: ['60px', '40px'],
-				// width: ['60px', '40px'],
-				// borderRadius: ['10px', '7px'],
-				// rotate: `${-space * (numCats - 1) / 2 + space * catID + 360}deg`,
-				duration: 600,
-				easing: 'easeOutExpo'
+				rotate: [
+					{value: 0, duration: 200},
+					{value: '1turn'}
+				],
+				opacity: [
+					{value: 1, duration: 200},
+					{value: 0}
+				],
+				scale: [
+					{value: 1, duration: 200},
+					{value: 0.5}
+				],
+				duration: 300,
+				easing: 'easeInSine'
 			});
 		}
 	})
@@ -47,7 +55,8 @@ export default function Camp({stack, dice, makeSmallBet, rollClick, myTurn, misc
 	return(
 		<div id="camp">
 			{
-				[...Array(stack.length)].map((e, i) => {
+				[...Array(stack.length)].map((e, ii) => {
+					const i = misc.numCats - 1 - ii
 					return(
 						<div id={"tent" + i} className="tent" key={"tent" + i}
 								style={{transform: `translateX(-50%) rotate(${getRotation(misc, i)}deg)`}} >

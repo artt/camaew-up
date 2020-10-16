@@ -25,8 +25,8 @@ function SmallBetTable({bets}) {
 
 function Player({playerID, name, data, isCurrent}) {
 	return(
-		<div id={"player-card-" + playerID} className={`player-card ${isCurrent ? 'current' : ''}`}>
-			<div>
+		<div className={`player-card ${isCurrent ? 'current' : ''}`}>
+			<div id={"player-card-" + playerID}>
 				<img alt={name || "Player"} src={`https://api.adorable.io/avatars/100/${name || "Player"}.png`} />
 			</div>
 			<div className="player-details">

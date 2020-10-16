@@ -120,6 +120,12 @@
   overflow-y: scroll;
   color: white;
 }
+#game .motion-path {
+  position: absolute;
+}
+#game .motion-path svg {
+  position: absolute;
+}
 #game #players {
   display: flex;
 }
