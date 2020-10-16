@@ -18,7 +18,6 @@ export default function Camp({stack, dice, makeSmallBet, rollClick, myTurn, misc
 		const theta = -deg2rad(getRotation(misc, tentID))
 		const alpha = Math.atan2(dy, dx)
 		const beta = Math.PI / 2 - alpha - theta
-		console.log(dx, dy, theta)
 		return [a * Math.sin(beta), a * Math.cos(beta)]
 	}
 
@@ -27,7 +26,6 @@ export default function Camp({stack, dice, makeSmallBet, rollClick, myTurn, misc
 	}, []);
 
 	useEffectListener('makeSmallBet', ({playerID, bet, card}) => {
-		console.log(`tentstack-${bet}-card-${card}`)
 		const [dx, dy] = getCardTranslate(bet, playerID, misc)
 		if (document.getElementById(`tentstack-${bet}-card-${card}`)) {
 			anime({
@@ -40,7 +38,7 @@ export default function Camp({stack, dice, makeSmallBet, rollClick, myTurn, misc
 				// borderRadius: ['10px', '7px'],
 				// rotate: `${-space * (numCats - 1) / 2 + space * catID + 360}deg`,
 				duration: 600,
-				easing: 'easeOutElastic'
+				easing: 'easeOutExpo'
 			});
 		}
 	})
