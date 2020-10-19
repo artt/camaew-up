@@ -1,7 +1,7 @@
 import React from 'react'
 import BetCards from './BetCards'
 import Mod from './Mod'
-import CoinSVG from '../assets/coin.svg';
+import {ReactComponent as CoinSVG} from '../assets/coin.svg';
 
 function SmallBetTable({bets}) {
 	return(
@@ -34,7 +34,7 @@ function Player({playerID, name, data, isCurrent}) {
 					{name || "Player"}
 				</div>
 				<div>
-					<img src={CoinSVG} alt="Coins" height={16} /> {data.coins}
+					<CoinSVG /> {data.coins}
 				</div>
 				<SmallBetTable bets={data.smallBets}/>
 			</div>

@@ -153,14 +153,20 @@
 #game #players .player-card {
   overflow: hidden;
   background: rgba(255, 255, 255, 0.3);
-  border-radius: 10px;
+  border-radius: 20px 0 0 20px;
   margin: 5px;
-  color: black;
+  margin-right: 0;
+  color: white;
   display: grid;
   grid-template-columns: 100px auto;
 }
+#game #players .player-card svg {
+  fill: white;
+  width: 10px;
+}
 #game #players .player-card.current {
   border: solid 3px yellow;
+  border-right: none;
 }
 #game #players .player-card .player-details {
   padding: 5px;

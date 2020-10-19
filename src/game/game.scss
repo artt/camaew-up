@@ -191,15 +191,21 @@ $token-colors: blue, green, orange, yellow, white, purple;
 		.player-card {
 			overflow: hidden;
 			background: rgba(white, 0.3);
-			border-radius: 10px;
+			border-radius: 20px 0 0 20px;
 			margin: 5px;
-			color: black;
+			margin-right: 0;
+			color: white;
+			svg {
+				fill: white;
+				width: 10px;
+			}
 			// grid
 			display: grid;
 			grid-template-columns: 100px auto;
 
 			&.current {
 				border: solid 3px yellow;
+				border-right: none;
 			}
 
 			.player-details {
