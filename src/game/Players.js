@@ -26,10 +26,7 @@ function SmallBetTable({bets}) {
 function Player({playerID, name, data, isCurrent}) {
 	return(
 		<div className={`player-card ${isCurrent ? 'current' : ''}`}>
-			<div id={"player-card-" + playerID}>
-				<img alt={name || "Player"} src={`https://api.adorable.io/avatars/100/${name || "Player"}.png`} />
-			</div>
-			<div className="player-details">
+			<div className="player-details fullframe">
 				<div>
 					{name || "Player"}
 				</div>
@@ -37,6 +34,9 @@ function Player({playerID, name, data, isCurrent}) {
 					<CoinSVG /> {data.coins}
 				</div>
 				<SmallBetTable bets={data.smallBets}/>
+			</div>
+			<div id={"player-card-" + playerID} className="profile-pic">
+				<img alt={name || "Player"} src={`https://api.adorable.io/avatars/100/${name || "Player"}.png`} />
 			</div>
 		</div>
 	)
