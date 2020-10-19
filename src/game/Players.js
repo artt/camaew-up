@@ -5,11 +5,11 @@ import {ReactComponent as CoinSVG} from '../assets/coin.svg';
 
 function SmallBetTable({bets}) {
 	return(
-		<React.Fragment>
+		<div className="flex">
 			{
 				bets.map((color, j) => {
 					return(
-						<div className="flex" key={"smallBets" + j}>
+						<div className="flex">
 							{
 								color.map(card => {
 									return <div className={`tokencolor-${j} card`} key={"smallbetcard" + card}>{card}</div>
@@ -19,7 +19,7 @@ function SmallBetTable({bets}) {
 					)
 				})
 			}
-		</React.Fragment>
+		</div>
 	)	
 }
 
