@@ -58,10 +58,14 @@
   width: 40px;
   height: 40px;
 }
-#game .center {
+#game .center, #game .center-both {
   position: absolute;
   left: 50%;
   transform: translateX(-50%);
+}
+#game .center-both {
+  top: 50%;
+  transform: translateX(-50%) translateY(-50%);
 }
 #game .abs {
   position: absolute;
@@ -110,9 +114,22 @@
   border: solid 3px rgba(255, 255, 255, 0.3);
 }
 #game .small-stack {
-  width: 120px;
-  height: 160px;
+  width: 100px;
+  height: 140px;
+  margin: 10px;
   position: relative;
+}
+#game .small-stack .indicator {
+  width: 0;
+  height: 0;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.5);
+}
+#game .small-stack.hovering .indicator {
+  width: 200px;
+  height: 200px;
+  opacity: 0.1;
+  transition-duration: 0.5s;
 }
 #game .log-area {
   width: 500px;

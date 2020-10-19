@@ -89,6 +89,12 @@ $token-colors: blue, green, orange, yellow, white, purple;
 		transform: translateX(-50%);
 	}
 
+	.center-both {
+		@extend .center;
+		top: 50%;
+		transform: translateX(-50%) translateY(-50%);
+	}
+
 	.abs {
 		position: absolute;
 	}
@@ -129,9 +135,24 @@ $token-colors: blue, green, orange, yellow, white, purple;
 	}
 
 	.small-stack {
-		width: 120px;
-		height: 160px;
+		width: 100px;
+		height: 140px;
+		margin: 10px;
 		position: relative;
+		.indicator {
+			width: 0;
+			height: 0;
+			border-radius: 50%;
+			background: rgba(white, 0.5);
+		}
+		&.hovering {
+			.indicator {
+				width: 200px;
+				height: 200px;
+				opacity: 0.1;
+				transition-duration: 0.5s;
+			}
+		}
 	}
 
 	.log-area {

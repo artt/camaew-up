@@ -46,7 +46,7 @@ export default function Camp({stack, dice, makeSmallBet, rollClick, myTurn, misc
 					{value: 0.5}
 				],
 				duration: 300,
-				easing: 'easeInSine'
+				easing: 'easeOutSine'
 			});
 		}
 	})
