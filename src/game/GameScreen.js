@@ -12,6 +12,7 @@ export default function GameScreen({G, ctx, moves, playerID, gameMetadata, gameI
 
 	// convert string back to number for easier processing
 	playerID = Number(playerID)
+	const myTurn = (playerID === Number(ctx.currentPlayer))
 
 	const misc = {
 		numCats: G.numCats,
@@ -42,7 +43,7 @@ export default function GameScreen({G, ctx, moves, playerID, gameMetadata, gameI
 	// }, [])
 
 	return (
-		<div id="game" className={playerID === Number(ctx.currentPlayer) ? 'myturn' : ''}>
+		<div id="game" className={myTurn ? 'myturn' : ''}>
 			{/*<div className="motion-path">
 			{document.getElementById('tentstack-0') !== null &&
 				[...Array(G.numCats)].map((e, i) => {
@@ -68,7 +69,7 @@ export default function GameScreen({G, ctx, moves, playerID, gameMetadata, gameI
 						dice={G.dice}
 						makeSmallBet={bet => moves.makeSmallBet(playerID, bet)}
 						rollClick={() => moves.roll(playerID)}
-						myTurn={playerID === Number(ctx.currentPlayer)}
+						myTurn={myTurn}
 						misc={misc} />
 				<BetArea
 						bigStack={G.bigStack}

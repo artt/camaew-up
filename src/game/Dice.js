@@ -56,6 +56,7 @@ export default function Dice({rollClick, myTurn, misc}) {
 				easing: 'easeOutElastic'
 			});
 		}
+		// document.getElementById('main-dice').classList.remove('active')
 	})
 
 	return(
