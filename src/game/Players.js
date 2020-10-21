@@ -1,5 +1,4 @@
 import React from 'react'
-import BetCards from './BetCards'
 import Mod from './Mod'
 import {ReactComponent as CoinSVG} from '../assets/coin.svg';
 
@@ -21,6 +20,39 @@ function SmallBetTable({bets}) {
 			}
 		</div>
 	)	
+}
+
+
+function BetCards({cards}) {
+
+	function drag(e) {
+		e.dataTransfer.setData("betID", e.target.getAttribute("bet_id"))
+	}
+
+	return(
+		<div>
+			<div className="section">Bet Cards</div>
+				<div className="flex">
+				{
+					cards.map((x, i) => {
+						if (x) {
+							return(
+								<div
+										className={`tokencolor-${i} betcard`}
+										bet_id={i}
+										draggable="true"
+										onDragStart={drag}
+										key={"betCards" + i}>
+									X
+								</div>
+							)
+						}
+						return null;
+					})
+				}
+			</div>
+		</div>
+	)
 }
 
 function Player({playerID, name, data, isCurrent}) {

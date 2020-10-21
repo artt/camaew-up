@@ -194,7 +194,7 @@ $token-colors: blue, green, orange, yellow, white, purple;
 			position: relative;
 			margin: 20px;
 			margin-right: 0;
-			width: 100%;
+			width: 260px;
 			height: 120px;
 			svg {
 				fill: white;
@@ -216,7 +216,7 @@ $token-colors: blue, green, orange, yellow, white, purple;
 
 			.player-details {
 				color: white;
-				background: scale-color($color-3, $lightness: 0%);
+				background: scale-color($color-2, $lightness: 0%);
 				position: absolute;
 				top: 20px;
 				left: 20px;
@@ -247,7 +247,8 @@ $token-colors: blue, green, orange, yellow, white, purple;
 
 	#board {
 		width: 100%;
-		overflow: scroll;
+		overflow-x: scroll;
+		overflow-y: visible;
 		position: relative;
 		
 		.cell-container {
@@ -256,7 +257,7 @@ $token-colors: blue, green, orange, yellow, white, purple;
 		.cell {
 			width: $cellwidth;
 			height: $cellheight;
-			background-color: rgba($color-2, 0.5); //rgba(255, 255, 255, 0.8);
+			background-color: rgba($color-3, 0.5); //rgba(255, 255, 255, 0.8);
 			border-radius: 3px;
 			margin: $cellmargin;
 			position: relative;

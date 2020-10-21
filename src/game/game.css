@@ -154,7 +154,7 @@
   position: relative;
   margin: 20px;
   margin-right: 0;
-  width: 100%;
+  width: 260px;
   height: 120px;
 }
 #game #players .player-card svg {
@@ -174,7 +174,7 @@
 }
 #game #players .player-card .player-details {
   color: white;
-  background: #48806d;
+  background: #c09e6c;
   position: absolute;
   top: 20px;
   left: 20px;
@@ -198,7 +198,8 @@
 }
 #game #board {
   width: 100%;
-  overflow: scroll;
+  overflow-x: scroll;
+  overflow-y: visible;
   position: relative;
 }
 #game #board .cell-container {
@@ -207,7 +208,7 @@
 #game #board .cell {
   width: 120px;
   height: 120px;
-  background-color: rgba(192, 158, 108, 0.5);
+  background-color: rgba(72, 128, 109, 0.5);
   border-radius: 3px;
   margin: 3px;
   position: relative;
