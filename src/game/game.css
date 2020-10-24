@@ -70,11 +70,15 @@
 #game .abs {
   position: absolute;
 }
-#game .card-shape {
+#game .card-shape, #game .card-shape-small {
+  margin: 10px;
   font-size: 1.5rem;
   width: 100px;
   height: 140px;
   border-radius: 10px;
+}
+#game .card-shape-small {
+  height: 50px;
 }
 #game .card-standard {
   border: solid 5px white;
@@ -152,14 +156,22 @@
 }
 #game #players .player-card {
   position: relative;
-  margin: 20px;
-  margin-right: 0;
-  width: 260px;
-  height: 120px;
+  margin: 20px 0;
+  width: 280px;
+  height: 130px;
 }
 #game #players .player-card svg {
   fill: white;
   width: 1em;
+}
+#game #players .player-card .smallbet-stack {
+  position: absolute;
+  top: -10px;
+  right: 0;
+}
+#game #players .player-card .smallbet-stack .betcard {
+  position: absolute;
+  top: 0;
 }
 #game #players .player-card .profile-pic {
   position: absolute;
@@ -178,7 +190,7 @@
   position: absolute;
   top: 20px;
   left: 20px;
-  height: 100px;
+  height: 110px;
   padding: 5px;
   padding-left: 100px;
   border-bottom-left-radius: 20px;
