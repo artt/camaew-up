@@ -57,7 +57,6 @@ export default function Camp({stack, dice, makeSmallBet, rollClick, myTurn, misc
 			{
 				[...Array(stack.length)].map((e, ii) => {
 					const i = misc.numCats - 1 - ii
-					console.log(misc)
 					return(
 						<div id={"tent" + i} className="tent" key={"tent" + i}
 								style={{transform: `translateX(-50%) rotate(${getRotation(misc, i)}deg)`}} >

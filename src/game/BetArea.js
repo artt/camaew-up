@@ -9,15 +9,22 @@ export default function BetArea({bigStack, playerID, makeBigBet}) {
 
 	function handleBigBetDrop(e, side) {
 		e.preventDefault();
+		console.log(e)
+		// if (e.dataTransfer.getData("type") === "bigbet")
 		makeBigBet(playerID, Number(e.dataTransfer.getData("betID")), side)
 	}
 
 	const betZoneLose = React.useRef(null)
 	const betZoneWin = React.useRef(null)
 
+	function foo(elem, e) {
+		console.log(e.dataTransfer.getData("Text"))
+		elem.current.classList.toggle('hovering')
+	}
+
 	function putEventListeners(elem) {
-		const tmp1 = elem.current.addEventListener('dragenter', () => elem.current.classList.toggle('hovering'))		
-		const tmp2 = elem.current.addEventListener('dragleave', () => elem.current.classList.toggle('hovering'))		
+		const tmp1 = elem.current.addEventListener('dragenter', (e) => foo(elem, e))		
+		const tmp2 = elem.current.addEventListener('dragleave', (e) => foo(elem, e))		
 		const tmp3 = elem.current.addEventListener('drop', () => elem.current.classList.remove('hovering'))		
 		return () => {
 			elem.current.removeEventListener(tmp1)

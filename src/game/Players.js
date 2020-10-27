@@ -23,9 +23,12 @@ function SmallBetTable({bets}) {
 }
 
 
-function BetCards({cards}) {
+function BetCards({cards, playerID}) {
 
 	function drag(e) {
+		e.dataTransfer.setData("Text", e.target.id)
+		e.dataTransfer.setData("type", "bigbet")
+		e.dataTransfer.setData("playerID", playerID)
 		e.dataTransfer.setData("betID", e.target.getAttribute("bet_id"))
 	}
 
@@ -38,11 +41,13 @@ function BetCards({cards}) {
 						return(
 							<div
 									className={`card-standard card-shape-small betcard tokencolor-${i}`}
-									style={{right: `${(cards.length - i - 1)*20 - 5}px`}}
+									id={`bigbet-player-${playerID}-card-${i}`}
+									style={{right: `${(cards.length - i - 2)*20 + 5}px`}}
 									bet_id={i}
 									draggable="true"
 									onDragStart={drag}
-									key={"betCards" + i}>
+									key={"betCards" + i}
+									elem_type="bigbet">
 								X
 							</div>
 						)
@@ -59,7 +64,7 @@ function Player({playerID, name, data, isCurrent}) {
 	return(
 		<div className={`player-card ${isCurrent ? 'current' : ''}`}>
 
-			<BetCards cards={data.betCards} />
+			<BetCards cards={data.betCards} playerID={playerID} />
 
 			<div className="player-details fullframe">
 				<div>

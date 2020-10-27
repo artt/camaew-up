@@ -114,8 +114,11 @@ $token-colors: blue, green, orange, yellow, white, purple;
 		height: 50px;
 	}
 
-	.card-standard {
+	.margin-10px {
 		margin: 10px;
+	}
+
+	.card-standard {
 		border: solid 5px white;
 		background: black;
 		box-shadow: 1px 1px 3px rgba(black, 1);

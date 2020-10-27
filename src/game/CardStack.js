@@ -49,7 +49,7 @@ export default function CardStack({label, stack, emptyID, cardClass, stackClass,
 					<div className="center" key={"small-card" + i}>
 						<div id={emptyID + "-card-" + x} className="card-wrapper">
 							<div
-									className={"card-standard card-shape di-table " + (myTurn ? 'actionable ' : '') + (cardClass || '')}
+									className={"card-standard margin-10px card-shape di-table " + (myTurn ? 'actionable ' : '') + (cardClass || '')}
 									style={{transform: `translateY(-10px) rotate(${stackPos ? stackPos[i] : 0}deg)`}}>
 								<div className="center-table">
 									{x}
