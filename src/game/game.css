@@ -71,7 +71,6 @@
   position: absolute;
 }
 #game .card-shape, #game .card-shape-small {
-  margin: 10px;
   font-size: 1.5rem;
   width: 100px;
   height: 140px;

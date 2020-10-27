@@ -10,8 +10,8 @@ export default function CardStack({label, stack, emptyID, cardClass, stackClass,
 	function genRandomArray(l) {
 		let tmp = Array(l)
 		for (let i = 0; i < l; i ++) {
-			// tmp[i] = random(-7.5, 7.5, true)
-			tmp[i] = random(0, 0, true)
+			tmp[i] = random(-7.5, 7.5, true)
+			// tmp[i] = random(0, 0, true)
 		}
 		return tmp
 	}
