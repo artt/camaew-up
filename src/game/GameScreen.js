@@ -3,7 +3,7 @@ import Players from './Players'
 import RaceTrack from './RaceTrack'
 import Camp from './Camp'
 import BetArea from './BetArea'
-import { getCenter } from '../utils'
+// import { getCenter } from '../utils'
 
 import './game.css'
 
@@ -19,10 +19,10 @@ export default function GameScreen({G, ctx, moves, playerID, gameMetadata, gameI
 		spacing: G.spacing,
 	}
 
-	const [pos, setPos] = React.useState({
-		tents: Array(G.numCats).fill([0, 0]),
-		players: Array(G.numPlayers).fill([0, 0])
-	})
+	// const [pos, setPos] = React.useState({
+	// 	tents: Array(G.numCats).fill([0, 0]),
+	// 	players: Array(G.numPlayers).fill([0, 0])
+	// })
 
 	// React.useEffect(() => {
 	// 	function resizeHandler() {

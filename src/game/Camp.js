@@ -8,8 +8,6 @@ import { useEffectListener } from 'bgio-effects/react';
 
 export default function Camp({stack, dice, makeSmallBet, rollClick, myTurn, misc}) {
 
-	const space = 15
-
 	const [diceUI, setDiceUI] = React.useState(dice)
 
 	function getCardTranslate(tentID, playerID, misc) {

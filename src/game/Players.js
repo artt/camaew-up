@@ -9,7 +9,7 @@ function SmallBetTable({bets}) {
 			{
 				bets.map((color, j) => {
 					return(
-						<div className="flex">
+						<div className="flex" key={`smallbet-table-${j}`}>
 							{
 								color.map(card => {
 									return <div className={`tokencolor-${j} card`} key={"smallbetcard" + card}>{card}</div>
