@@ -26,10 +26,10 @@ function SmallBetTable({bets}) {
 function BetCards({cards, playerID}) {
 
 	function drag(e) {
-		e.dataTransfer.setData("Text", e.target.id)
-		e.dataTransfer.setData("type", "bigbet")
+		e.dataTransfer.setData("type_bigbet", "identifier")
 		e.dataTransfer.setData("playerID", playerID)
 		e.dataTransfer.setData("betID", e.target.getAttribute("bet_id"))
+		e.dataTransfer.effectAllowed = "yyy";
 	}
 
 	return(
