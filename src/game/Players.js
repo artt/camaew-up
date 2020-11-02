@@ -23,7 +23,7 @@ function SmallBetTable({bets}) {
 }
 
 
-function BetCards({cards, playerID}) {
+function BetCards({cards, playerID, isCurrent, canControl}) {
 
 	function drag(e) {
 		e.dataTransfer.setData("type_bigbet", "identifier")
@@ -44,7 +44,7 @@ function BetCards({cards, playerID}) {
 									id={`bigbet-player-${playerID}-card-${i}`}
 									style={{right: `${(cards.length - i - 2)*20 + 5}px`}}
 									bet_id={i}
-									draggable="true"
+									draggable={canControl && isCurrent}
 									onDragStart={drag}
 									key={"betCards" + i}
 									elem_type="bigbet">
@@ -60,11 +60,11 @@ function BetCards({cards, playerID}) {
 	)
 }
 
-function Player({playerID, name, data, isCurrent}) {
+function Player({playerID, name, data, isCurrent, canControl}) {
 	return(
 		<div className={`player-card ${isCurrent ? 'current' : ''}`}>
 
-			<BetCards cards={data.betCards} playerID={playerID} />
+			<BetCards cards={data.betCards} playerID={playerID} isCurrent={isCurrent} canControl={canControl} />
 
 			<div className="player-details fullframe">
 				<div>
@@ -95,6 +95,7 @@ export default function Players({playerID, currentPlayer, players, gameMetadata}
 										name={gameMetadata[p].name}
 										data={players[p]}
 										isCurrent={currentPlayer === p}
+										canControl={playerID === p}
 										key={"player" + p} />
 				})
 			}
