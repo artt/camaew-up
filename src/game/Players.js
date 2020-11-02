@@ -1,6 +1,7 @@
 import React from 'react'
 import Mod from './Mod'
 import {ReactComponent as CoinSVG} from '../assets/coin.svg';
+import {sum} from 'lodash'
 
 function SmallBetTable({bets}) {
 	return(
@@ -23,13 +24,12 @@ function SmallBetTable({bets}) {
 }
 
 
-function BetCards({cards, playerID, isCurrent, canControl}) {
+function BetCards({cards, playerID, isCurrent}) {
 
 	function drag(e) {
 		e.dataTransfer.setData("type_bigbet", "identifier")
 		e.dataTransfer.setData("playerID", playerID)
 		e.dataTransfer.setData("betID", e.target.getAttribute("bet_id"))
-		e.dataTransfer.effectAllowed = "yyy";
 	}
 
 	return(
@@ -44,7 +44,7 @@ function BetCards({cards, playerID, isCurrent, canControl}) {
 									id={`bigbet-player-${playerID}-card-${i}`}
 									style={{right: `${(cards.length - i - 2)*20 + 5}px`}}
 									bet_id={i}
-									draggable={canControl && isCurrent}
+									draggable={isCurrent}
 									onDragStart={drag}
 									key={"betCards" + i}
 									elem_type="bigbet">
@@ -60,11 +60,38 @@ function BetCards({cards, playerID, isCurrent, canControl}) {
 	)
 }
 
+function OtherCards({numCards}) {
+
+	return(
+		<div className="smallbet-stack">
+			<div className="flex">
+			{
+				Array(numCards).fill(0).map((x, i) => {
+					return(
+						<div
+								className={`card-standard card-shape-small betcard`}
+								style={{right: `${(numCards - i - 2)*20 + 5}px`}}
+								bet_id={i}
+								key={"betCards" + i}
+								elem_type="bigbet">
+							X
+						</div>
+					)
+				})
+			}
+			</div>
+		</div>
+	)
+}
+
 function Player({playerID, name, data, isCurrent, canControl}) {
 	return(
 		<div className={`player-card ${isCurrent ? 'current' : ''}`}>
 
-			<BetCards cards={data.betCards} playerID={playerID} isCurrent={isCurrent} canControl={canControl} />
+			{canControl
+				? <BetCards cards={data.betCards} playerID={playerID} isCurrent={isCurrent} />
+				: <OtherCards numCards={sum(data.betCards)} />
+			}
 
 			<div className="player-details fullframe">
 				<div>
