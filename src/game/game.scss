@@ -191,6 +191,10 @@ $token-colors: blue, green, orange, yellow, white, purple;
 		}
 	}
 
+	.react-draggable-dragging {
+		z-index: 10000 !important;
+	}
+
 	#players {
 
 		display: flex;
@@ -225,9 +229,21 @@ $token-colors: blue, green, orange, yellow, white, purple;
 				position: absolute;
 				width: 100px;
 				height: 100px;
+				background: white;
 				border-radius: 20px;
 				overflow: hidden;
 				box-shadow: 5px 5px 10px rgba(black, 0.2);
+			}
+
+			.modcard {
+				background: grey;
+				position: absolute;
+				width: 80px;
+				height: 80px;
+				border-radius: 50%;
+				top: 60px;
+				left: 10px;
+				box-shadow: 2px 2px 5px rgba(black, 0.2);
 			}
 
 			&.current .profile-pic {
@@ -252,15 +268,10 @@ $token-colors: blue, green, orange, yellow, white, purple;
 			}
 		}
 
-		.modcard,
 		.betcard {
 			padding: 0 0.5rem;
 			border-radius: 0.25rem;
 			margin: 0 0.1rem;
-		}
-
-		.modcard {
-			background: grey;
 		}
 
 	}
@@ -284,6 +295,9 @@ $token-colors: blue, green, orange, yellow, white, purple;
 			.cell-content {
 				position: absolute;
 				bottom: 0;
+			}
+			&.hovering {
+				background-color: scale-color(rgba($color-3, 0.5), $lightness: 30%); //rgba(255, 255, 255, 0.8);
 			}
 		}
 		.cell-extra {

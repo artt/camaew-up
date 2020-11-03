@@ -1,4 +1,5 @@
 import React from 'react';
+import {addDropListeners} from '../utils'
 
 export default function Cell({cellData, cell_id, isExtra, playerID, gameMetadata, prePlaceMod, preMoveMod, preFlipMod}) {
 
@@ -8,7 +9,8 @@ export default function Cell({cellData, cell_id, isExtra, playerID, gameMetadata
 
 	function drop(e) {
 		e.preventDefault();
-		prePlaceMod(Number(cell_id), e.dataTransfer.getData("type"))
+		if (e.dataTransfer.types.includes("type_mod"))
+			prePlaceMod(Number(cell_id), e.dataTransfer.getData("type"))
 	}
 
 	function handleModClick() {
@@ -16,11 +18,21 @@ export default function Cell({cellData, cell_id, isExtra, playerID, gameMetadata
 	}
 
 	function drag(e) {
+		e.dataTransfer.setData("type_mod", "identifier")
 		e.dataTransfer.setData("type", "move")
 	}
 
+	const cell = React.useRef(null)
+
+	React.useEffect(() => {
+		addDropListeners(cell, "type_mod")
+	})
+
 	return (
-		<div className={`cell ${isExtra ? 'cell-extra' : ''}`} onDragOver={allowDrop} onDrop={drop}>
+		<div className={`cell ${isExtra ? 'cell-extra' : ''}`}
+				onDragOver={allowDrop}
+				onDrop={drop}
+				ref={cell}>
 			<div className="cell-content">
 			{/*
 				cellData.stack.slice(0).reverse().map((x, i) => {

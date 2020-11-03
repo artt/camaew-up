@@ -1,7 +1,7 @@
 import React from 'react'
-import Mod from './Mod'
 import {ReactComponent as CoinSVG} from '../assets/coin.svg';
 import {sum} from 'lodash'
+import Draggable from 'react-draggable'
 
 function SmallBetTable({bets}) {
 	return(
@@ -23,7 +23,6 @@ function SmallBetTable({bets}) {
 	)	
 }
 
-
 function BetCards({cards, playerID, isCurrent}) {
 
 	function drag(e) {
@@ -40,7 +39,7 @@ function BetCards({cards, playerID, isCurrent}) {
 					if (x) {
 						return(
 							<div
-									className={`card-standard card-shape-small betcard tokencolor-${i}`}
+									className={`card-standard card-shape-small betcard tokencolor-${i}` + (isCurrent ? ' actionable' : '')}
 									id={`bigbet-player-${playerID}-card-${i}`}
 									style={{right: `${(cards.length - i - 2)*20 + 5}px`}}
 									bet_id={i}
@@ -84,6 +83,26 @@ function OtherCards({numCards}) {
 	)
 }
 
+function Mod({hasMod, playerID, isCurrent, canControl}) {
+
+	function drag(e) {
+		e.dataTransfer.setData("type_mod", "identifier")
+		e.dataTransfer.setData("playerID", e.target.getAttribute("player_id"))
+		e.dataTransfer.setData("type", "place")
+	}
+
+	return(
+			<div
+					className="modcard"
+					draggable={canControl && isCurrent}
+					player_id={playerID}
+					onDragStart={drag}
+				>
+				X
+			</div>
+	)
+}
+
 function Player({playerID, name, data, isCurrent, canControl}) {
 	return(
 		<div className={`player-card ${isCurrent ? 'current' : ''}`}>
@@ -102,6 +121,10 @@ function Player({playerID, name, data, isCurrent, canControl}) {
 				</div>
 				<SmallBetTable bets={data.smallBets}/>
 			</div>
+
+			{data.modPos === -1 &&
+				<Mod playerID={playerID} isCurrent={isCurrent} canControl={canControl} />
+			}
 
 			<div id={"player-card-" + playerID} className="profile-pic">
 				<img alt={name || "Player"} src={`https://api.adorable.io/avatars/100/${name || "Player"}.png`} />
@@ -126,7 +149,6 @@ export default function Players({playerID, currentPlayer, players, gameMetadata}
 										key={"player" + p} />
 				})
 			}
-			<Mod hasMod={players[playerID].modPos === -1} playerID={playerID} />
 		</div>
 	)
 }

@@ -1,5 +1,6 @@
 import React from 'react'
 import CardStack from './CardStack'
+import {addDropListeners} from '../utils'
 
 export default function BetArea({bigStack, playerID, makeBigBet}) {
 
@@ -16,30 +17,9 @@ export default function BetArea({bigStack, playerID, makeBigBet}) {
 	const betZoneLose = React.useRef(null)
 	const betZoneWin = React.useRef(null)
 
-	function customDragHandler(elem, e) {
-		if (e.dataTransfer.types.includes("type_bigbet"))
-			elem.current.classList.toggle('hovering')
-	}
-
-	function customDropHandler(elem, e) {
-		if (e.dataTransfer.types.includes("type_bigbet"))
-			elem.current.classList.remove('hovering')
-	}
-
-	function putEventListeners(elem) {
-		const tmp1 = elem.current.addEventListener('dragenter', (e) => customDragHandler(elem, e))		
-		const tmp2 = elem.current.addEventListener('dragleave', (e) => customDragHandler(elem, e))		
-		const tmp3 = elem.current.addEventListener('drop', (e) => customDropHandler(elem, e))		
-		return () => {
-			elem.current.removeEventListener(tmp1)
-			elem.current.removeEventListener(tmp2)
-			elem.current.removeEventListener(tmp3)
-		}
-	}
-
 	React.useEffect(() => {
-		putEventListeners(betZoneLose)
-		putEventListeners(betZoneWin)
+		addDropListeners(betZoneLose, "type_bigbet")
+		addDropListeners(betZoneWin, "type_bigbet")
 	}, [])
 
 	return(

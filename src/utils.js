@@ -15,3 +15,24 @@ export function getRotation(misc, catID) {
 export function deg2rad(degrees) {
   return degrees * (Math.PI / 180);
 }
+
+function customDragHandler(elem, e, elemType) {
+	if (e.dataTransfer.types.includes(elemType))
+		elem.current.classList.toggle('hovering')
+}
+
+function customDropHandler(elem, e, elemType) {
+	if (e.dataTransfer.types.includes(elemType))
+		elem.current.classList.remove('hovering')
+}
+
+export function addDropListeners(elem, elemType) {
+	const tmp1 = elem.current.addEventListener('dragenter', (e) => customDragHandler(elem, e, elemType))		
+	const tmp2 = elem.current.addEventListener('dragleave', (e) => customDragHandler(elem, e, elemType))		
+	const tmp3 = elem.current.addEventListener('drop', (e) => customDropHandler(elem, e, elemType))		
+	return () => {
+		elem.current.removeEventListener(tmp1)
+		elem.current.removeEventListener(tmp2)
+		elem.current.removeEventListener(tmp3)
+	}
+}

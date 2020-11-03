@@ -13,10 +13,10 @@ export default function RaceTrack({G, playerID, gameMetadata, placeMod, moveMod,
 
 	const [cats, setCats] = React.useState(G.cats)
 	
-	function prePlaceMod(cellID, type) {
+	function checkModPlacement(cellID, type) {
 		if (type === "place" && G.players[playerID].modPos > -1) {
 			console.error("Player has already placed his/her mod.")
-			return
+			return false
 		}
 		if (G.board[cellID].stack.length > 0) {
 			console.error("Cannot place mod where cats are.")
@@ -25,17 +25,23 @@ export default function RaceTrack({G, playerID, gameMetadata, placeMod, moveMod,
 		if ((cellID > 0 && G.board[cellID-1].mod !== null && G.board[cellID-1].mod.playerID !== playerID)
 				|| (cellID < G.board.length - 1 && G.board[cellID+1].mod !== null && G.board[cellID+1].mod !== playerID)) {
 			console.error("Cannot place mod adjacent to an existing mod.")
-			return
+			return false
 		}
 		if (G.board[cellID].mod !== null) {
 			if (G.board[cellID].mod.playerID === playerID)
-				return
+				return false
 			console.error("Cannot place mod on top of an existing mod.")
-			return
+			return false
 		}
-		setCellID(cellID)
-		setType(type)
-		setShowPlaceDialog(true)
+		return true
+	}
+
+	function prePlaceMod(cellID, type) {
+		if (checkModPlacement(cellID, type)) {
+			setCellID(cellID)
+			setType(type)
+			setShowPlaceDialog(true)			
+		}
 	}
 
 	function preFlipMod(cellID) {
